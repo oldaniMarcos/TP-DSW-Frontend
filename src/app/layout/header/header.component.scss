@@ -1,0 +1,16 @@
+.wrapper {
+  width: 100%;
+  padding: 1.25rem 0.5rem;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--border-color);
+
+  a {
+    text-decoration: none;
+    font-weight: 300;
+    color: black;
+
+    &.active {
+      font-weight: 900;
+    }
+  }
+}
