@@ -1,0 +1,77 @@
+/* Estilos base: para dispositivos móviles */
+.login-container {
+  max-width: 100%;
+  padding: 20px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  font-size: 1em;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 15px;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Media query para pantallas más grandes */
+@media (min-width: 768px) {
+  .login-container {
+    max-width: 400px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  input {
+    font-size: 1.2em;
+    padding: 15px;
+  }
+
+  .submit-button {
+    font-size: 1.2em;
+    padding: 15px 30px;
+  }
+}
