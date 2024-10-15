@@ -23,10 +23,10 @@ export class LoginComponent {
 
     if (role === 'admin') {
       // Redirige al dashboard de administrador
-      this.router.navigate(['/admin-dashboard']);
+      this.router.navigate(['/admin']);
     } else if (role === 'user') {
       // Redirige al dashboard de usuario
-      this.router.navigate(['/user-dashboard']);
+      this.router.navigate(['/home']);
     } else {
       // Si las credenciales son incorrectas
       this.errorMessage = 'Credenciales incorrectas';

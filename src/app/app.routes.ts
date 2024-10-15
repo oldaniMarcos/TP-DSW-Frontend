@@ -2,13 +2,18 @@ import { Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component.js';
 import { HomeComponent } from './components/home/home.component.js';
 import { LoginComponent } from './components/login/login.component.js';
-import { MenuClientesComponent } from './components/menu-clientes/menu-clientes.component.js';
+import { MascotasComponent } from './components/mascotas/mascotas.component.js';
+import { AtencionesComponent } from './components/atenciones/atenciones.component.js';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 
-  { path: 'menu-clientes', component: MenuClientesComponent },
+  { path: 'home', component: HomeComponent},
+
+  { path: "mascotas", component: MascotasComponent},
+
+  { path: "atenciones", component: AtencionesComponent},
 
   { path: 'login', component: LoginComponent },
 
