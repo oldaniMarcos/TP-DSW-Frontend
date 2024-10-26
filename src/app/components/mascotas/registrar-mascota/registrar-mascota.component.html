@@ -1,0 +1,26 @@
+<h2>Registrar mascota</h2>
+
+<form #form="ngForm" (ngSubmit)="cerrar()">
+  <input type="text" name="nombre" ngModel placeholder="Nombre" required />
+
+  <select name="especie" ngModel required>
+    <option value="" disabled selected>Especie</option>
+    <option value="Perro">Perro</option>
+    <option value="Gato">Gato</option>
+  </select>
+
+  <select name="raza" ngModel required>
+    <option value="" disabled selected>Raza</option>
+    <option value="Mixto">Mixto</option>
+    <option value="Labrador">Labrador</option>
+  </select>
+
+  <input type="date" name="fechaNacimiento" ngModel required />
+
+  <div class="modal-buttons">
+    <button type="submit" class="btn btn-registrar">Registrar</button>
+    <button type="button" class="btn btn-cancelar" (click)="cerrar()">
+      Cancelar
+    </button>
+  </div>
+</form>

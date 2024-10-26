@@ -1,1 +1,27 @@
-<p>mascotas works!</p>
+<div class="mascotas-container">
+  <h2>Mascotas</h2>
+
+  <button class="btn btn-agregar" (click)="toggleModal()">+</button>
+
+  <div class="modal-overlay" *ngIf="mostrarModal">
+    <div class="modal-content">
+      <app-registrar-mascota
+        (cerrarModal)="toggleModal()"
+      ></app-registrar-mascota>
+    </div>
+  </div>
+
+  <div class="tarjetas">
+    <app-mascota-card
+      *ngFor="let mascota of mascotas"
+      [mascota]="mascota"
+    ></app-mascota-card>
+  </div>
+
+  <!-- Paginación, se podría mejorar según las necesidades -->
+  <div class="paginacion">
+    <button>&lt;</button>
+    <span>1 / 1</span>
+    <button>&gt;</button>
+  </div>
+</div>

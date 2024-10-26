@@ -9,15 +9,18 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 
-  { path: 'home', component: HomeComponent},
+  { path: 'home', component: HomeComponent },
 
-  { path: "mascotas", component: MascotasComponent},
+  { path: 'mascotas', component: MascotasComponent },
 
-  { path: "atenciones", component: AtencionesComponent},
+  { path: 'atenciones', component: AtencionesComponent },
 
   { path: 'login', component: LoginComponent },
 
+  { path: 'mascotas', component: MascotasComponent },
+
   { path: 'page-not-found', component: PageNotFoundComponent },
+
   // Wildcard route, selecciona esta ruta si el URL no coincide con ningun path
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },
 ];

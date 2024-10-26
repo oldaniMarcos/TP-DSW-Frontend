@@ -1,1 +1,19 @@
-<p>atenciones works!</p>
+<div class="atenciones">
+  <h2>Atenciones</h2>
+
+  <div *ngFor="let atencion of atenciones">
+    <app-atencion-card
+      [mascota]="atencion.mascota"
+      [fecha]="atencion.fecha"
+      [observaciones]="atencion.observaciones"
+      [precio]="atencion.precio"
+    >
+    </app-atencion-card>
+  </div>
+
+  <div class="pagination">
+    <button>&lt;</button>
+    <span>1 / 1</span>
+    <button>&gt;</button>
+  </div>
+</div>
