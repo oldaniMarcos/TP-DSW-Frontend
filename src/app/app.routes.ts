@@ -4,6 +4,10 @@ import { HomeComponent } from './components/home/home.component.js';
 import { LoginComponent } from './components/login/login.component.js';
 import { MascotasComponent } from './components/mascotas/mascotas.component.js';
 import { AtencionesComponent } from './components/atenciones/atenciones.component.js';
+import { AdminComponent } from './components/admin/admin.component.js';
+import { RegistrarAtencionComponent } from './components/registrar-atencion/registrar-atencion.component.js';
+import { GestionComponent } from './components/gestion/gestion.component.js';
+import { ListadosComponent } from './components/listados/listados.component.js';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -14,6 +18,14 @@ export const routes: Routes = [
   { path: 'mascotas', component: MascotasComponent },
 
   { path: 'atenciones', component: AtencionesComponent },
+
+  { path: 'admin', component: AdminComponent },
+
+  { path: 'registrar-atencion', component: RegistrarAtencionComponent },
+
+  { path: 'gestion', component: GestionComponent },
+
+  { path: 'listados', component: ListadosComponent },
 
   { path: 'login', component: LoginComponent },
 
