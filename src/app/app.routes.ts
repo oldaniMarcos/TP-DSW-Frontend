@@ -8,12 +8,15 @@ import { AdminComponent } from './components/admin/admin.component.js';
 import { RegistrarAtencionComponent } from './components/registrar-atencion/registrar-atencion.component.js';
 import { GestionComponent } from './components/gestion/gestion.component.js';
 import { ListadosComponent } from './components/listados/listados.component.js';
+import { ProfileComponent } from './components/profile/profile.component.js';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 
   { path: 'home', component: HomeComponent },
+
+  { path: 'profile', component: ProfileComponent },
 
   { path: 'mascotas', component: MascotasComponent },
 

@@ -1,5 +1,6 @@
-<header class="wrapper row align-center justify-right">
-  <div class="row gap-1">
-    logo para ver profile del cliente
-  </div>
+<header class="wrapper row align-center space-between" [ngStyle]="changeStyle()">
+  @if(isHomeRoute && isAdminRoute) {
+    <img src="back.svg" alt="Back" class="img" (click)="goBack()">
+  }
+    <img src="profile.svg" alt="Profile" class="img" routerLink="/profile">
 </header>
