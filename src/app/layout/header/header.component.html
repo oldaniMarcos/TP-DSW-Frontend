@@ -2,5 +2,7 @@
   @if(isHomeRoute && isAdminRoute) {
     <img src="back.svg" alt="Back" class="img" (click)="goBack()">
   }
+  @if(isProfileRoute) {
     <img src="profile.svg" alt="Profile" class="img" routerLink="/profile">
+  }
 </header>

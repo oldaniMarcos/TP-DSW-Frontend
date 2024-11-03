@@ -15,6 +15,7 @@ export class HeaderComponent {
 
   isHomeRoute = false
   isAdminRoute = false
+  isProfileRoute = false
 
   goBack() {
     this.location.back()
@@ -28,12 +29,12 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
-    //esconder el boton de retorno en rutas home y admin
     this.router.events.subscribe(() => {
       
       const currentRoute = this.router.url;
       this.isHomeRoute = currentRoute !== '/home';
       this.isAdminRoute = currentRoute !== '/admin';
+      this.isProfileRoute = currentRoute !== '/profile';
     });
   }
 }
