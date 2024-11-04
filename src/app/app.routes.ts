@@ -9,12 +9,16 @@ import { RegistrarAtencionComponent } from './components/registrar-atencion/regi
 import { GestionComponent } from './components/gestion/gestion.component.js';
 import { ListadosComponent } from './components/listados/listados.component.js';
 import { ProfileComponent } from './components/profile/profile.component.js';
+import { AtencionesAdminComponent } from './components/atenciones-admin/atenciones-admin.component.js';
+import { ClientesComponent } from './components/clientes/clientes.component.js';
+import { EspeciesComponent } from './components/especies/especies.component.js';
+import { InsumosComponent } from './components/insumos/insumos.component.js';
+import { VeterinariosComponent } from './components/veterinarios/veterinarios.component.js';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
 
-  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
 
   { path: 'profile', component: ProfileComponent },
 
@@ -22,17 +26,27 @@ export const routes: Routes = [
 
   { path: 'atenciones', component: AtencionesComponent },
 
+  { path: 'login', component: LoginComponent },
+
+  // RUTAS DE ADMIN
+
   { path: 'admin', component: AdminComponent },
 
   { path: 'registrar-atencion', component: RegistrarAtencionComponent },
 
   { path: 'gestion', component: GestionComponent },
 
+  { path: 'atenciones-admin', component: AtencionesAdminComponent },
+
+  { path: 'clientes', component: ClientesComponent },
+
+  { path: 'especies', component: EspeciesComponent },
+
+  { path: 'insumos', component: InsumosComponent },
+
+  { path: 'veterinarios', component: VeterinariosComponent },
+
   { path: 'listados', component: ListadosComponent },
-
-  { path: 'login', component: LoginComponent },
-
-  { path: 'mascotas', component: MascotasComponent },
 
   { path: 'page-not-found', component: PageNotFoundComponent },
 

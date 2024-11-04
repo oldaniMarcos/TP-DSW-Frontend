@@ -3,3 +3,10 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 10px
 }
+
+
+@media (min-width: 650px) {
+  .grid-button-group {
+  grid-template-columns: repeat(3, 1fr);
+  }
+}
