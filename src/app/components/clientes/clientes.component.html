@@ -1,2 +1,24 @@
-<h1>lista de clientes</h1>
-<h1>botones para ver sus animales, crear cliente, modificar, borrar?</h1>
+<div class="clientes">
+    <h2>Clientes</h2>
+
+    <button class="btn-agregar" (click)="toggleModal()">Agregar</button>
+  
+    <div *ngFor="let cliente of clientes">
+      <app-cliente-card
+        [dni]="cliente.dni"
+        [nombre]="cliente.nombre"
+        [apellido]="cliente.apellido"
+        [telefono]="cliente.telefono"
+        [direccion]="cliente.direccion"
+        [email]="cliente.email"
+      >
+      </app-cliente-card>
+    </div>
+  
+    <div class="pagination">
+      <button>&lt;</button>
+      <span>1 / 1</span>
+      <button>&gt;</button>
+    </div>
+  </div>
+  

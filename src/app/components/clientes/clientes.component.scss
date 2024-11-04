@@ -1,0 +1,32 @@
+.clientes {
+    text-align: center;
+    padding: 1rem;
+  
+    .cliente-card {
+      margin: 0.5rem auto;
+      width: 90%;
+    }
+  
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1rem;
+  
+      button {
+        background-color: #e0e0e0;
+        border: none;
+        padding: 0.5rem 1rem;
+        margin: 0 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    }
+  
+    @media (min-width: 768px) {
+      .atencion-card {
+        width: 60%;
+      }
+    }
+  }
+  

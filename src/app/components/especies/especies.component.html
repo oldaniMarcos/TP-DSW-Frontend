@@ -1,1 +1,17 @@
-<h1>lista de especies con boton para crear, editar, borrar, ver razas</h1>
+<div class="especies">
+    <h2>Especies</h2>
+  
+    <div *ngFor="let especie of especies">
+      <app-especie-card
+        [descripcion]="especie.descripcion"
+      >
+      </app-especie-card>
+    </div>
+  
+    <div class="pagination">
+      <button>&lt;</button>
+      <span>1 / 1</span>
+      <button>&gt;</button>
+    </div>
+  </div>
+  
