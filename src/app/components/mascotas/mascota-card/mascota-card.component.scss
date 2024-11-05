@@ -19,22 +19,5 @@
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
-
-    .btn {
-      padding: 0.5rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .btn-delete {
-      background-color: #e57373;
-      color: white;
-    }
-
-    .btn-edit {
-      background-color: #ffeb3b;
-    }
   }
 }

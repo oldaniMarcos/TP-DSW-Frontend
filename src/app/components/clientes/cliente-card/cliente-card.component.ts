@@ -10,7 +10,7 @@ export class ClienteCardComponent {
   @Input() dni!: number;
 
   //no usado ahora
-  @Input() nombre!: string;
+  @Input() nombre!: string;   //el cliente tiene un atributo nombreYApellido
   @Input() apellido!: string;
   @Input() telefono!: number;
   @Input() direccion!: string;

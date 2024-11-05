@@ -1,1 +1,17 @@
-<h1>lista de veterinarios con botones de crear, editar, borrar</h1>
+<h2>Veterinarios</h2>
+
+<div class="veterinarios">
+
+  <button class="btn" (click)="addVet()">Nuevo</button>
+
+  <div *ngFor="let veterinario of veterinarios">
+    <app-veterinario-card [nombreYApellido]="veterinario.nombreYApellido" [nroMatricula]="veterinario.nroMatricula">
+    </app-veterinario-card>
+  </div>
+
+  <div class="pagination">
+    <button>&lt;</button>
+    <span>1 / 1</span>
+    <button>&gt;</button>
+  </div>
+</div>

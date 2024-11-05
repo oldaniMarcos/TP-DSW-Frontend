@@ -1,7 +1,8 @@
-<div class="mascotas-container">
-  <h2>Mascotas</h2>
+<h2>Mascotas</h2>
 
-  <button class="btn-agregar" (click)="toggleModal()">Agregar</button>
+<div class="mascotas-container">
+
+  <button class="btn" (click)="toggleModal()">Agregar</button>
 
   <div class="modal-overlay" *ngIf="mostrarModal">
     <div class="modal-content">
@@ -20,8 +21,8 @@
 
   <!-- Paginación, se podría mejorar según las necesidades -->
   <div class="pagination">
-    <button>&lt;</button>
+    <button class="button">&lt;</button>
     <span>1 / 1</span>
-    <button>&gt;</button>
+    <button class="button">&gt;</button>
   </div>
 </div>

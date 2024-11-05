@@ -1,0 +1,34 @@
+.atenciones {
+  text-align: center;
+
+  .atencion-admin-card {
+    margin: 0.5rem auto;
+    width: 90%;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+
+    button {
+      background-color: #e0e0e0;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+
+  .btn {
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .atencion-admin-card {
+      width: 60%;
+    }
+  }
+}

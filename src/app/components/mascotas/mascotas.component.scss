@@ -3,14 +3,6 @@
   padding: 16px;
 }
 
-.btn-agregar {
-  background-color: #5bc0de;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  margin: 1rem;
-}
-
 .tarjetas {
   display: flex;
   flex-wrap: wrap;
@@ -50,7 +42,7 @@ app-mascota-card {
   margin-top: 1rem;
 }
 
-button {
+.button {
   background-color: #e0e0e0;
   border: none;
   padding: 0.5rem 1rem;

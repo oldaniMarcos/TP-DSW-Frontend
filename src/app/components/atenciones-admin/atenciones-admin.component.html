@@ -1,1 +1,16 @@
-<h1>lista de atenciones + un boton para crear un nuevo precio de atencion</h1>
+<h2>Atenciones</h2>
+
+<div class="atenciones">
+  <button class="btn" (click)="addPrice">Nuevo precio</button>
+
+  <div *ngFor="let atencion of atenciones">
+    <app-atencion-admin-card [fechaHora]="atencion.fechaHora" [nombreYApellido]="atencion.nombreYApellido">
+    </app-atencion-admin-card>
+  </div>
+
+  <div class="pagination">
+    <button>&lt;</button>
+    <span>1 / 1</span>
+    <button>&gt;</button>
+  </div>
+</div>

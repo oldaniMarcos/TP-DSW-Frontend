@@ -1,1 +1,17 @@
-<h1>lista de insumos con botones para crar, editar, borrar, ver tipos de insumos, ver precios</h1>
+<h2>Insumos</h2>
+
+<div class="insumos">
+
+  <button class="btn" (click)="addInsumo()">Nuevo</button>
+
+  <div *ngFor="let insumo of insumos">
+    <app-insumo-card [descripcion]="insumo.descripcion">
+    </app-insumo-card>
+  </div>
+
+  <div class="pagination">
+    <button>&lt;</button>
+    <span>1 / 1</span>
+    <button>&gt;</button>
+  </div>
+</div>
