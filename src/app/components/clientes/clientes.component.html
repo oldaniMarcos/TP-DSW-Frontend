@@ -1,7 +1,7 @@
-<div class="clientes">
-    <h2>Clientes</h2>
+<h2>Clientes</h2>
 
-    <button class="btn-agregar" (click)="toggleModal()">Agregar</button>
+<div class="clientes">
+    <button class="btn" (click)="toggleModal()">Agregar</button>
   
     <div *ngFor="let cliente of clientes">
       <app-cliente-card

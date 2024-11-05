@@ -8,6 +8,8 @@ import { Component, Input } from '@angular/core';
 })
 export class ClienteCardComponent {
   @Input() dni!: number;
+
+  //no usado ahora
   @Input() nombre!: string;
   @Input() apellido!: string;
   @Input() telefono!: number;

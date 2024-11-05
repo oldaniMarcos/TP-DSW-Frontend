@@ -1,6 +1,5 @@
 .clientes {
     text-align: center;
-    padding: 1rem;
   
     .cliente-card {
       margin: 0.5rem auto;
@@ -21,6 +20,10 @@
         border-radius: 4px;
         cursor: pointer;
       }
+    }
+
+    .btn {
+      margin-bottom: 1rem;
     }
   
     @media (min-width: 768px) {

@@ -3,6 +3,10 @@
   padding: 0.5rem 0.5rem;
   box-sizing: border-box;
   border-bottom: 1px solid var(--border-color);
+  background-color: white;
+
+  position: static; //cambiar a fixed y arreglar las pantallas
+  top: 0;
 
   a {
     text-decoration: none;
@@ -16,5 +20,6 @@
 
   .img {
     height: 2.25rem;
+    cursor: pointer;
   }
 }

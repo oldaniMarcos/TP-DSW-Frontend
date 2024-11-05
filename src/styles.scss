@@ -44,11 +44,11 @@ app-root {
 }
 
 .mb-15 {
-  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .mb-25 {
-  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .wrap {
@@ -115,14 +115,6 @@ app-root {
       height: 150px;
       background-color: #eaeaea;
       border: 2px solid #ddd;
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-align: center;
     }
 
     .button-group {
@@ -133,39 +125,64 @@ app-root {
       width: 100%;
     }
 
-    .btn {
-      background-color: #80d4ff;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: bold;
-      transition: background-color 0.3s;
 
-      &:hover {
-        background-color: #66c2ff;
-      }
-    }
-
-    .salir {
-      background-color: #ff6666;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-
-      &:hover {
-        background-color: #ff4d4d;
-      }
     }
   }
-}
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1.5rem;
+    text-align: center;
+  }
+
+  .btn {
+    background-color: #80d4ff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #66c2ff;
+    }
+  }
+
+  .edit {
+    background-color: #ffd06a;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #ffc64b;
+    }
+  }
+
+  .salir, .delete {
+    background-color: #ff6666;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #ff3f3f;
+    }
+  }
 
 @media (min-width: 650px) {
   .menu-container {

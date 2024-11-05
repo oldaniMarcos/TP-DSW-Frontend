@@ -10,28 +10,8 @@
     display: flex;
     gap: 10px;
     margin-top: 10px;
+    justify-content: center;
   }
   
-  button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  button:nth-child(1) {
-    background-color: #4caf50; /* Color para el botón Editar */
-    color: white;
-  }
-  
-  button:nth-child(2) {
-    background-color: #f44336; /* Color para el botón Eliminar */
-    color: white;
-  }
-  
-  button:nth-child(3) {
-    background-color: #2196f3; /* Color para el botón Ver Razas */
-    color: white;
-  }
+
   

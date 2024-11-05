@@ -17,5 +17,11 @@ export class EspeciesComponent {
     {
       descripcion: "Gato",
     },
+        {
+      descripcion: "Loro",
+    },
+        {
+      descripcion: "Conejo",
+    },
   ];  
 }
