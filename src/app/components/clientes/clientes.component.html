@@ -6,8 +6,7 @@
     <div *ngFor="let cliente of clientes">
       <app-cliente-card
         [dni]="cliente.dni"
-        [nombre]="cliente.nombre"
-        [apellido]="cliente.apellido"
+        [nombreYApellido]="cliente.nombreYApellido"
         [telefono]="cliente.telefono"
         [direccion]="cliente.direccion"
         [email]="cliente.email"

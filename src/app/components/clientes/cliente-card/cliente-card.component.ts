@@ -7,12 +7,9 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./cliente-card.component.scss'],
 })
 export class ClienteCardComponent {
-  @Input() dni!: number;
-
-  //no usado ahora
-  @Input() nombre!: string;   //el cliente tiene un atributo nombreYApellido
-  @Input() apellido!: string;
-  @Input() telefono!: number;
+  @Input() dni!: string;
+  @Input() nombreYApellido!: string; 
+  @Input() telefono!: string;
   @Input() direccion!: string;
   @Input() email!: string;
 }

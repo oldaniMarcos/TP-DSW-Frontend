@@ -18,3 +18,14 @@ export interface Options {
     includeHeaders?: string[];
   } | boolean;
 }
+
+export interface Cliente {
+  id?: number,
+  dni: string,
+  nombreYApellido: string,
+  telefono: string,
+  direccion: string,
+  email: string,
+  usuario: string,
+  password: string,
+}
