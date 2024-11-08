@@ -28,8 +28,8 @@ export class InsumoService {
     return this.apiService.post<Insumo, Insumo>(this.URL, insumo, {})
   }
 
-  put(codInsumo: number, insumo: Insumo): Observable<Insumo> {
-    return this.apiService.put<Insumo, Insumo>(`${this.URL}/${codInsumo}`, insumo, {})
+  patch(codInsumo: number, insumo: Insumo): Observable<Insumo> {
+    return this.apiService.patch<Insumo, Insumo>(`${this.URL}/${codInsumo}`, insumo, {})
   }
 
   delete(codInsumo: number): Observable<void> {

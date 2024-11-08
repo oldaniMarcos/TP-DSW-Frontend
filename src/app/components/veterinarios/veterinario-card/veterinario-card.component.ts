@@ -1,18 +1,48 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
+import { Veterinario } from '../../../../types';
+import { FormsModule } from '@angular/forms';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-veterinario-card',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, ConfirmPopupModule, ToastModule],
   templateUrl: './veterinario-card.component.html',
   styleUrl: './veterinario-card.component.scss'
 })
 export class VeterinarioCardComponent {
-  @Input() idVeterinario!: number
-  @Input() nroMatricula!: string
-  @Input() dni!: string
-  @Input() nombreYApellido!: string
-  @Input() telefono!: string
-  @Input() direccion!: string
-  @Input() email!: string
+
+  constructor(private confirmationService: ConfirmationService) { }
+
+  @ViewChild('deleteButton') deleteButton: any
+
+  @Input() veterinario!: Veterinario
+
+  @Output() edit: EventEmitter<Veterinario> = new EventEmitter<Veterinario>()
+  @Output() delete: EventEmitter<Veterinario> = new EventEmitter<Veterinario>()
+
+  editVeterinario() {
+    this.edit.emit(this.veterinario)
+  }
+
+  confirmDelete() {
+    this.confirmationService.confirm({
+      target: this.deleteButton.nativeElement,
+      message: '¿Eliminar este veterinario?',
+      accept: () => {
+        this.deleteVeterinario()
+      },
+    })
+  }
+
+  deleteVeterinario() {
+    this.delete.emit(this.veterinario)
+  }
+
+  ngOnInit() {
+
+  }
+
 }

@@ -58,7 +58,7 @@ export class AtencionesAdminComponent {
   }
 
   updateAtencion(idAtencion: number, atencion: Atencion): void {
-    this.atencionService.put(idAtencion, atencion).subscribe(
+    this.atencionService.patch(idAtencion, atencion).subscribe(
       (updatedAtencion: Atencion) => {
         const index = this.atenciones.findIndex(c => c.idAtencion === idAtencion);
         if (index > -1) this.atenciones[index] = updatedAtencion;

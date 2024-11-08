@@ -27,8 +27,8 @@ export class EspecieService {
     return this.apiService.post<Especie, Especie>(this.URL, especie, {});
   }
 
-  put(codEspecie: number, especie: Especie): Observable<Especie> {
-    return this.apiService.put<Especie, Especie>(`${this.URL}/${codEspecie}`, especie, {});
+  patch(codEspecie: number, especie: Especie): Observable<Especie> {
+    return this.apiService.patch<Especie, Especie>(`${this.URL}/${codEspecie}`, especie, {});
   }
 
   delete(codEspecie: number): Observable<void> {

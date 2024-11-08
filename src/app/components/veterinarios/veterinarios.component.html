@@ -2,10 +2,11 @@
 
 <div class="veterinarios">
 
-  <button class="btn" (click)="addVet()">Nuevo</button>
+  <!--Crear vet-->
+  <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
   <div *ngFor="let veterinario of veterinarios">
-    <app-veterinario-card [nombreYApellido]="veterinario.nombreYApellido" [nroMatricula]="veterinario.nroMatricula">
+    <app-veterinario-card [veterinario]="veterinario" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">
     </app-veterinario-card>
   </div>
 
@@ -15,3 +16,9 @@
     <button>&gt;</button>
   </div>
 </div>
+
+<!--create-->
+<app-veterinario-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear veterinario"></app-veterinario-popup>
+
+<!--update-->
+<app-veterinario-popup [veterinario]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar veterinario"></app-veterinario-popup>

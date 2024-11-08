@@ -58,7 +58,7 @@ export class InsumosComponent {
   }
 
   updateInsumo(codInsumo: number, insumo: Insumo): void {
-    this.insumoService.put(codInsumo, insumo).subscribe(
+    this.insumoService.patch(codInsumo, insumo).subscribe(
       (updatedInsumo: Insumo) => {
         const index = this.insumos.findIndex(c => c.codInsumo === codInsumo);
         if (index > -1) this.insumos[index] = updatedInsumo;

@@ -168,7 +168,7 @@ h2 {
   }
 }
 
-.salir, .delete {
+.salir, .delete, .cancel {
   background-color: #ff6666;
   color: white;
   padding: 10px;
@@ -181,6 +181,19 @@ h2 {
 
   &:hover {
     background-color: #ff3f3f;
+  }
+}
+
+.label {
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+.form-wrapper {
+  .row {
+    span {
+      flex: 1;
+    }
   }
 }
 

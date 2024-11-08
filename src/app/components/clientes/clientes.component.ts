@@ -58,7 +58,7 @@ export class ClientesComponent {
   }
 
   updateCliente(id: number, cliente: Cliente): void {
-    this.clienteService.put(id, cliente).subscribe(
+    this.clienteService.patch(id, cliente).subscribe(
       (updatedCliente: Cliente) => {
         const index = this.clientes.findIndex(c => c.id === id);
         if (index > -1) this.clientes[index] = updatedCliente;

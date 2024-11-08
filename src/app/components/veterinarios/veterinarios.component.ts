@@ -3,18 +3,28 @@ import { Component } from '@angular/core';
 import { VeterinarioCardComponent } from './veterinario-card/veterinario-card.component.js';
 import { Veterinario } from '../../../types.js';
 import { VeterinarioService } from '../../services/veterinario.service.js';
+import { VeterinarioPopupComponent } from './veterinario-popup/veterinario-popup.component.js';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-veterinarios',
   standalone: true,
-  imports: [CommonModule, VeterinarioCardComponent],
+  imports: [CommonModule, VeterinarioCardComponent, VeterinarioPopupComponent, ButtonModule],
   templateUrl: './veterinarios.component.html',
   styleUrl: './veterinarios.component.scss'
 })
 export class VeterinariosComponent {
 
   veterinarios: Veterinario[] = []
-  selected: Veterinario | null = null
+  selected: Veterinario = {
+    idVeterinario: 0,
+    nroMatricula: '',
+    dni: '',
+    nombreYApellido: '',
+    direccion: '',
+    telefono: '',
+    email: '',
+  }
 
   constructor(
     private veterinarioService: VeterinarioService
@@ -58,7 +68,7 @@ export class VeterinariosComponent {
   }
 
   updateVeterinario(idVeterinario: number, veterinario: Veterinario): void {
-    this.veterinarioService.put(idVeterinario, veterinario).subscribe(
+    this.veterinarioService.patch(idVeterinario, veterinario).subscribe(
       (updatedVeterinario: Veterinario) => {
         const index = this.veterinarios.findIndex(c => c.idVeterinario === idVeterinario);
         if (index > -1) this.veterinarios[index] = updatedVeterinario;
@@ -80,5 +90,37 @@ export class VeterinariosComponent {
     );
   }
 
-  addVet(): void {}
+  displayCreatePopup: boolean = false
+  displayUpdatePopup: boolean = false
+
+  //toggle popups
+
+  toggleCreatePopup() {
+    this.displayCreatePopup = true
+  }
+
+  toggleUpdatePopup(veterinario: Veterinario) {
+    this.selected = veterinario
+    this.displayUpdatePopup = true
+  }
+
+  toggleDeletePopup(veterinario: Veterinario) {
+    if (!veterinario.idVeterinario) return
+
+    this.deleteVeterinario(veterinario.idVeterinario)
+  }
+
+  // confirmaciones
+
+  onConfirmCreate(veterinario: Veterinario) {
+    this.createVeterinario(veterinario)
+    this.displayCreatePopup = false
+  }
+
+  onConfirmUpdate(veterinario: Veterinario) {
+    if (!this.selected.idVeterinario) return
+
+    this.updateVeterinario(this.selected.idVeterinario, veterinario)
+    this.displayUpdatePopup = false
+  }
 }

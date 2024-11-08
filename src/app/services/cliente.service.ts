@@ -27,8 +27,8 @@ export class ClienteService {
     return this.apiService.post<Cliente, Cliente>(this.URL, cliente, {})
   }
 
-  put(id: number, cliente: Cliente): Observable<Cliente> {
-    return this.apiService.put<Cliente, Cliente>(`${this.URL}/${id}`, cliente, {})
+  patch(id: number, cliente: Cliente): Observable<Cliente> {
+    return this.apiService.patch<Cliente, Cliente>(`${this.URL}/${id}`, cliente, {})
   }
 
   delete(id: number): Observable<void> {

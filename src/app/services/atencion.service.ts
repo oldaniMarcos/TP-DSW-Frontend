@@ -27,8 +27,8 @@ export class AtencionService {
     return this.apiService.post<Atencion, Atencion>(this.URL, atencion, {})
   }
 
-  put(idAtencion: number, atencion: Atencion): Observable<Atencion> {
-    return this.apiService.put<Atencion, Atencion>(`${this.URL}/${idAtencion}`, atencion, {})
+  patch(idAtencion: number, atencion: Atencion): Observable<Atencion> {
+    return this.apiService.patch<Atencion, Atencion>(`${this.URL}/${idAtencion}`, atencion, {})
   }
 
   delete(idAtencion: number): Observable<void> {

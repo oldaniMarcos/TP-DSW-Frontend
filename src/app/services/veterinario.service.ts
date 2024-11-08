@@ -27,8 +27,8 @@ export class VeterinarioService {
     return this.apiService.post<Veterinario, Veterinario>(this.URL, veterinario, {})
   }
 
-  put(idVeterinario: number, veterinario: Veterinario): Observable<Veterinario> {
-    return this.apiService.put<Veterinario, Veterinario>(`${this.URL}/${idVeterinario}`, veterinario, {})
+  patch(idVeterinario: number, veterinario: Veterinario): Observable<Veterinario> {
+    return this.apiService.patch<Veterinario, Veterinario>(`${this.URL}/${idVeterinario}`, veterinario, {})
   }
 
   delete(idVeterinario: number): Observable<void> {

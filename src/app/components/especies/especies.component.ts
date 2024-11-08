@@ -60,7 +60,7 @@ export class EspeciesComponent implements OnInit{
   }
 
   updateEspecie(codEspecie: number, especie: Especie): void {
-    this.especieService.put(codEspecie, especie).subscribe(
+    this.especieService.patch(codEspecie, especie).subscribe(
       (updatedEspecie: Especie) => {
         const index = this.especies.findIndex(e => e.codEspecie === codEspecie);
         if (index > -1) this.especies[index] = updatedEspecie;
