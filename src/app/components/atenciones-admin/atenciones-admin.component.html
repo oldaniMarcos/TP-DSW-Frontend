@@ -4,8 +4,7 @@
   <button class="btn" (click)="addPrice()">Nuevo precio</button>
 
   <div *ngFor="let atencion of atenciones">
-    <app-atencion-admin-card [fechaHora]="atencion.fechaHora" [nombreYApellido]="atencion.nombreYApellido">
-    </app-atencion-admin-card>
+    <app-atencion-admin-card [fechaHora]="atencion.fechaHora"></app-atencion-admin-card>
   </div>
 
   <div class="pagination">
@@ -14,3 +13,6 @@
     <button>&gt;</button>
   </div>
 </div>
+
+
+<!--- PONER COMO ATRIBUTO EL NOMBRE Y APELLIDO DE CLIENTE -->

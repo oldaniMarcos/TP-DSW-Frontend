@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AtencionAdminCardComponent } from './atencion-admin-card/atencion-admin-card.component.js';
+import { Atencion } from '../../../types.js';
+import { AtencionService } from '../../services/atencion.service.js';
 
 @Component({
   selector: 'app-atenciones-admin',
@@ -11,32 +13,72 @@ import { AtencionAdminCardComponent } from './atencion-admin-card/atencion-admin
 })
 export class AtencionesAdminComponent {
 
-  atenciones = [
-    {
-      idAtencion: 1,
-      fechaHora: "01-01-2024",
-      resultado: "OK",  //estos dos atributos tienen el mismo significado, cambiar o borrar uno
-      observaciones: "OK",
+  atenciones: Atencion[] = []
+  selected: Atencion | null = null
 
-      nombreYApellido: "Juan Perez",
+  constructor(
+    private atencionService: AtencionService
+  ) { }
+
+  ngOnInit() {
+    this.findAtenciones()
+  }
+
+  findAtenciones(): void {
+    this.atencionService.findAll().subscribe(
+      (data: Atencion[]) => {
+        this.atenciones = data
+      },
+      (error) => {
+        console.error('Error al buscar atenciones:', error)
+      }
+    )
+  }
+
+  findAtencion(idAtencion: number): void {
+    this.atencionService.findOne(idAtencion).subscribe(
+      (data: Atencion) => {
+        this.selected = data
+      },
+      (error) => {
+        console.error(`Error al buscar atencion con ID ${idAtencion}:`, error)
+      }
+    )
+  }
+
+  createAtencion(atencion: Atencion): void {
+  this.atencionService.post(atencion).subscribe(
+    (newAtencion: Atencion) => {
+      this.atenciones.push(newAtencion); 
     },
-    {
-      idAtencion: 2,
-      fechaHora: "02-01-2024",
-      resultado: "OK",
-      observaciones: "OK",
-
-      nombreYApellido: "Juana Perez",
-    },
-    {
-      idAtencion: 3,
-      fechaHora: "03-01-2024",
-      resultado: "OK",
-      observaciones: "OK",
-
-      nombreYApellido: "Juanita Perez",
+    (error) => {
+      console.error('Error al crear una atencion:', error);
     }
-  ]
+  );
+  }
+
+  updateAtencion(idAtencion: number, atencion: Atencion): void {
+    this.atencionService.put(idAtencion, atencion).subscribe(
+      (updatedAtencion: Atencion) => {
+        const index = this.atenciones.findIndex(c => c.idAtencion === idAtencion);
+        if (index > -1) this.atenciones[index] = updatedAtencion;
+      },
+      (error) => {
+        console.error(`Error al actualizar atencion con ID ${idAtencion}:`, error);
+      }
+    );
+  }
+
+  deleteAtencion(idAtencion: number): void {
+    this.atencionService.delete(idAtencion).subscribe(
+      () => {
+        this.atenciones = this.atenciones.filter(c => c.idAtencion !== idAtencion);
+      },
+      (error) => {
+        console.error(`Error al eliminar atencion con ID ${idAtencion}:`, error);
+      }
+    );
+  }
 
   addPrice(): void {
   }  

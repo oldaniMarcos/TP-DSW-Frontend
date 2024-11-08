@@ -13,5 +13,5 @@ export class AtencionAdminCardComponent {
   @Input() resultado!: string
   @Input() observaciones!: string
 
-  @Input() nombreYApellido!: string //del cliente
+ // @Input() nombreYApellido!: string //del cliente
 }

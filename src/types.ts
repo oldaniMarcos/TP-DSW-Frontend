@@ -39,3 +39,10 @@ export interface Veterinario {
   direccion: string,
   email: string,
 }
+
+export interface Atencion {
+  idAtencion?: number,
+  fechaHora: string,
+  resultado: string,
+  observaciones: string,
+}
