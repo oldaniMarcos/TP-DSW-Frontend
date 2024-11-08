@@ -12,7 +12,8 @@ export class EspecieCardComponent {
   // Eventos de salida para las acciones de editar, eliminar y ver razas
   @Output() editarEspecie = new EventEmitter<void>();
   @Output() eliminarEspecie = new EventEmitter<void>();
-  @Output() verRazasEspecie = new EventEmitter<void>();
+  @Input() codEspecie!: number;
+  @Output() verRazas = new EventEmitter<number>();
 
   // Métodos para emitir los eventos correspondientes
   editar() {
@@ -23,7 +24,7 @@ export class EspecieCardComponent {
     this.eliminarEspecie.emit();
   }
 
-  verRazas() {
-    this.verRazasEspecie.emit();
+  onVerRazas() {
+    this.verRazas.emit(this.codEspecie);
   }
 }

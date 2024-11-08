@@ -46,3 +46,22 @@ export interface Atencion {
   resultado: string,
   observaciones: string,
 }
+
+export interface Insumo {
+  codInsumo?: number,
+  descripcion: string,
+  stock: number,
+  fechaVencimiento: string,
+  tipoInsumoCodTipoInsumo: number,
+}
+
+export interface Especie {
+  codEspecie?: number,
+  descripcion: string,
+}
+
+export interface Raza {
+  codRaza?: number,
+  descripcion: string,
+  especieCodEspecie: number,
+}

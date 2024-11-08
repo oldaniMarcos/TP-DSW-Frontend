@@ -8,6 +8,13 @@
       >
       </app-especie-card>
     </div>
+
+    <div *ngIf="razas.length > 0">
+      <h4>Razas</h4>
+      <ul>
+        <li *ngFor="let raza of razas">{{ raza.descripcion }}</li>
+      </ul>
+    </div>
   
     <div class="pagination">
       <button>&lt;</button>
