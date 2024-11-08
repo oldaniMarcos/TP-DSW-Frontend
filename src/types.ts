@@ -29,3 +29,13 @@ export interface Cliente {
   usuario: string,
   password: string,
 }
+
+export interface Veterinario {
+  idVeterinario?: number,
+  nroMatricula: string,
+  dni: string,
+  nombreYApellido: string,
+  telefono: string,
+  direccion: string,
+  email: string,
+}

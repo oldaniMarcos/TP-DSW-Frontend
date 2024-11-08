@@ -9,7 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class VeterinarioCardComponent {
   @Input() idVeterinario!: number
-  @Input() nroMatricula!: number
+  @Input() nroMatricula!: string
   @Input() dni!: string
   @Input() nombreYApellido!: string
   @Input() telefono!: string
