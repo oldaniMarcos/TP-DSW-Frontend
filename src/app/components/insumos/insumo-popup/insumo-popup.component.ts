@@ -21,7 +21,7 @@ export class InsumoPopupComponent {
       descripcion: ['', [Validators.required]],
       stock: ['', [Validators.required]],
       fechaVencimiento: ['', [Validators.required]],
-      tipoInsumoCodTipoInsumo: ['', [Validators.required]],
+      idTipoInsumo: ['', [Validators.required]],
     })
   }
 
@@ -37,17 +37,17 @@ export class InsumoPopupComponent {
     descripcion: '',
     stock: 0,
     fechaVencimiento: '',
-    tipoInsumoCodTipoInsumo: 0,
+    idTipoInsumo: 0,
   }
 
   onConfirm() {
-    const { descripcion, stock, fechaVencimiento, tipoInsumoCodTipoInsumo} = this.insumoForm.value
+    const { descripcion, stock, fechaVencimiento, idTipoInsumo} = this.insumoForm.value
 
     this.confirm.emit({
       descripcion: descripcion || '',
-      stock: stock || 0,
+      stock: Number(stock) || 0,
       fechaVencimiento: fechaVencimiento || '',
-      tipoInsumoCodTipoInsumo: tipoInsumoCodTipoInsumo || 0,
+      idTipoInsumo: Number(idTipoInsumo) || 0,
     })
 
     this.display = false

@@ -21,7 +21,7 @@ export class InsumosComponent {
     descripcion: '',
     stock: 0,
     fechaVencimiento: '',
-    tipoInsumoCodTipoInsumo: 0,
+    idTipoInsumo: 0,
   }
 
   constructor(
@@ -55,6 +55,7 @@ export class InsumosComponent {
   }
 
   createInsumo(insumo: Insumo): void {
+  console.log(insumo);
   this.insumoService.post(insumo).subscribe(
     (newInsumo: Insumo) => {
       this.insumos.push(newInsumo); 

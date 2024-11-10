@@ -52,7 +52,7 @@ export interface Insumo {
   descripcion: string,
   stock: number,
   fechaVencimiento: string,
-  tipoInsumoCodTipoInsumo: number,
+  idTipoInsumo: number,
 }
 
 export interface Especie {
