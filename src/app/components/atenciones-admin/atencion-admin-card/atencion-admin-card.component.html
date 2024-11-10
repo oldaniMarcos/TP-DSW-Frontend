@@ -1,10 +1,17 @@
 <div class="atencion-admin-card">
-  <h3>{{ fechaHora }}</h3>
-  <!-- <p><strong>Cliente:</strong> {{ nombreYApellido }}</p> -->
-  
+  <!--deberia ir el nombre de la mascota o el cliente-->
+  <h3>{{ atencion.fechaHora }}</h3>
+  <p><strong>Resultado:</strong> {{ atencion.resultado }}</p>
+  <p><strong>Observaciones:</strong> {{ atencion.observaciones }}</p>
+
   <div class="actions">
-    <button class="btn">Ver</button>
-    <button class="edit">Editar</button>
-    <button class="delete">Eliminar</button>
+    <button type="button" class="btn">Ver</button>
+
+    <button type="button" (click)="editAtencion()" class="edit">Editar</button>
+
+    <button type="button" (click)="confirmDelete()" #deleteButton class="delete">Eliminar</button>
   </div>
+
 </div>
+
+<p-confirmPopup></p-confirmPopup>

@@ -1,10 +1,13 @@
-<h2>Atenciones</h2>
-
 <div class="atenciones">
-  <button class="btn" (click)="addPrice()">Nuevo precio</button>
+  <h2>Atenciones</h2>
+
+  <!--falta boton para crear nueva entidad precioAtencion-->
 
   <div *ngFor="let atencion of atenciones">
-    <app-atencion-admin-card [fechaHora]="atencion.fechaHora"></app-atencion-admin-card>
+    <app-atencion-admin-card
+      [atencion]="atencion" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)"
+    >
+    </app-atencion-admin-card>
   </div>
 
   <div class="pagination">
@@ -14,5 +17,8 @@
   </div>
 </div>
 
+<!--create, no esta siendo usado-->
+<app-atencion-admin-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear atencion"></app-atencion-admin-popup>
 
-<!--- PONER COMO ATRIBUTO EL NOMBRE Y APELLIDO DE CLIENTE -->
+<!--update-->
+<app-atencion-admin-popup [atencion]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar atencion"></app-atencion-admin-popup>

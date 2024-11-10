@@ -1,20 +1,27 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AtencionAdminCardComponent } from './atencion-admin-card/atencion-admin-card.component.js';
-import { Atencion } from '../../../types.js';
-import { AtencionService } from '../../services/atencion.service.js';
+import { CommonModule } from '@angular/common';
+import { Atencion } from '../../../types';
+import { AtencionService } from '../../services/atencion.service';
+import { ButtonModule } from 'primeng/button';
+import { AtencionAdminCardComponent } from './atencion-admin-card/atencion-admin-card.component';
+import { AtencionAdminPopupComponent } from './atencion-admin-popup/atencion-admin-popup.component';
 
 @Component({
   selector: 'app-atenciones-admin',
   standalone: true,
-  imports: [CommonModule, AtencionAdminCardComponent],
+  imports: [CommonModule, AtencionAdminCardComponent, AtencionAdminPopupComponent, ButtonModule],
   templateUrl: './atenciones-admin.component.html',
-  styleUrl: './atenciones-admin.component.scss'
+  styleUrls: ['./atenciones-admin.component.scss'],
 })
 export class AtencionesAdminComponent {
 
   atenciones: Atencion[] = []
-  selected: Atencion | null = null
+  selected: Atencion = {
+    idAtencion: 0,
+    fechaHora: '',
+    resultado: '',
+    observaciones: ''
+  }
 
   constructor(
     private atencionService: AtencionService
@@ -41,7 +48,7 @@ export class AtencionesAdminComponent {
         this.selected = data
       },
       (error) => {
-        console.error(`Error al buscar atencion con ID ${idAtencion}:`, error)
+        console.error(`Error al buscar atencion con id ${idAtencion}:`, error)
       }
     )
   }
@@ -64,7 +71,7 @@ export class AtencionesAdminComponent {
         if (index > -1) this.atenciones[index] = updatedAtencion;
       },
       (error) => {
-        console.error(`Error al actualizar atencion con ID ${idAtencion}:`, error);
+        console.error(`Error al actualizar atencion con id ${idAtencion}:`, error);
       }
     );
   }
@@ -75,11 +82,43 @@ export class AtencionesAdminComponent {
         this.atenciones = this.atenciones.filter(c => c.idAtencion !== idAtencion);
       },
       (error) => {
-        console.error(`Error al eliminar atencion con ID ${idAtencion}:`, error);
+        console.error(`Error al eliminar atencion con id ${idAtencion}:`, error);
       }
     );
   }
 
-  addPrice(): void {
-  }  
+  displayCreatePopup: boolean = false
+  displayUpdatePopup: boolean = false
+
+  //toggle popups
+
+  toggleCreatePopup() {
+    this.displayCreatePopup = true
+  }
+
+  toggleUpdatePopup(atencion: Atencion) {
+    this.selected = atencion
+    this.displayUpdatePopup = true
+  }
+
+  toggleDeletePopup(atencion: Atencion) {
+    if (!atencion.idAtencion) return
+
+    this.deleteAtencion(atencion.idAtencion)
+  }
+
+  // confirmaciones
+
+  onConfirmCreate(atencion: Atencion) {
+    this.createAtencion(atencion)
+    this.displayCreatePopup = false
+  }
+
+  onConfirmUpdate(atencion: Atencion) {
+    if (!this.selected.idAtencion) return
+
+    this.updateAtencion(this.selected.idAtencion, atencion)
+    this.displayUpdatePopup = false
+  }
+
 }

@@ -1,0 +1,28 @@
+<p-dialog [title]="title" [(visible)]="display" [modal]="true" [closable]="false">
+
+    <div class="column gap-1 form-wrapper" [formGroup]="atencionForm">
+
+        <div class="row gap-05">
+            <span class="label">Fecha y hora:</span>
+            <input type="text" formControlName="fechaHora">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Resultado:</span>
+            <input type="text" formControlName="resultado">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Observaciones:</span>
+            <input type="text" formControlName="observaciones">
+        </div>
+
+    </div>
+
+    <p-footer>
+        <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!atencionForm.valid">Confirmar</button>
+
+        <button type="button" class="cancel" (click)="onCancel()">Cancelar</button>
+    </p-footer>
+
+</p-dialog>

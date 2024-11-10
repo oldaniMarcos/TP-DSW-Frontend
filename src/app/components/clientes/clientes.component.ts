@@ -3,18 +3,28 @@ import { CommonModule } from '@angular/common';
 import { ClienteCardComponent } from './cliente-card/cliente-card.component';
 import { ClienteService } from '../../services/cliente.service.js';
 import { Cliente } from '../../../types.js';
+import { ClientePopupComponent } from './cliente-popup/cliente-popup.component';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, ClienteCardComponent],
+  imports: [CommonModule, ClienteCardComponent, ClientePopupComponent], 
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss'],
 })
 export class ClientesComponent {
 
   clientes: Cliente[] = []
-  selected: Cliente | null = null
+  selected: Cliente = {
+    id: 0,
+    dni: '',
+    nombreYApellido: '',
+    telefono: '',
+    direccion: '',
+    email: '',
+    usuario: '',
+    password: ''
+  }
 
   constructor(
     private clienteService: ClienteService
@@ -80,9 +90,40 @@ export class ClientesComponent {
     );
   }
 
-  mostrarModal: boolean = false;
-  toggleModal(): void {
-    this.mostrarModal = !this.mostrarModal;
+
+  displayCreatePopup: boolean = false
+  displayUpdatePopup: boolean = false
+
+  //toggle popups
+
+  toggleCreatePopup() {
+    this.displayCreatePopup = true
+  }
+
+  toggleUpdatePopup(cliente: Cliente) {
+    this.selected = cliente
+    this.displayUpdatePopup = true
+  }
+
+  toggleDeletePopup(cliente: Cliente) {
+    if (!cliente.id) return
+
+    this.deleteCliente(cliente.id)
+  }
+
+  // confirmaciones
+
+  onConfirmCreate(cliente: Cliente) {
+    this.createCliente(cliente)
+    this.displayCreatePopup = false
+  }
+
+  onConfirmUpdate(cliente: Cliente) {
+    if (!this.selected.id) return
+
+    this.updateCliente(this.selected.id, cliente)
+    this.displayUpdatePopup = false
+
   }  
 
 }

@@ -1,10 +1,14 @@
 <div class="cliente-card">
-    <h3>{{ nombreYApellido }}</h3>
-    <p><strong>DNI:</strong> {{ dni }}</p>
+    <h3>{{ cliente.nombreYApellido }}</h3>
+    <p><strong>DNI:</strong> {{ cliente.dni }}</p>
 
     <div class="actions">
-      <button class="btn">Ver</button>
-      <button class="edit">Editar</button>
-      <button class="delete">Eliminar</button>
+      <button type="button" class="btn">Ver</button>
+  
+      <button type="button" (click)="editCliente()" class="edit">Editar</button>
+  
+      <button type="button" (click)="confirmDelete()" #deleteButton class="delete">Eliminar</button>
     </div>
   </div>
+
+  <p-confirmPopup></p-confirmPopup>
