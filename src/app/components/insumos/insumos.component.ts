@@ -3,18 +3,26 @@ import { Component } from '@angular/core';
 import { InsumoCardComponent } from './insumo-card/insumo-card.component.js';
 import { Insumo } from '../../../types.js';
 import { InsumoService } from '../../services/insumo.service.js';
+import { InsumoPopupComponent } from './insumo-popup/insumo-popup.component.js';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-insumos',
   standalone: true,
-  imports: [CommonModule, InsumoCardComponent],
+  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, ButtonModule],
   templateUrl: './insumos.component.html',
   styleUrl: './insumos.component.scss'
 })
 export class InsumosComponent {
 
   insumos: Insumo[] = []
-  selected: Insumo | null = null
+  selected: Insumo = {
+    codInsumo: 0,
+    descripcion: '',
+    stock: 0,
+    fechaVencimiento: '',
+    tipoInsumoCodTipoInsumo: 0,
+  }
 
   constructor(
     private insumoService: InsumoService
@@ -41,7 +49,7 @@ export class InsumosComponent {
         this.selected = data
       },
       (error) => {
-        console.error(`Error al buscar insumo con id ${codInsumo}:`, error)
+        console.error(`Error al buscar insumo con código ${codInsumo}:`, error)
       }
     )
   }
@@ -58,6 +66,8 @@ export class InsumosComponent {
   }
 
   updateInsumo(codInsumo: number, insumo: Insumo): void {
+
+    console.log('Datos a enviar:', insumo);
     this.insumoService.patch(codInsumo, insumo).subscribe(
       (updatedInsumo: Insumo) => {
         const index = this.insumos.findIndex(c => c.codInsumo === codInsumo);
@@ -80,9 +90,37 @@ export class InsumosComponent {
     );
   }
 
-  mostrarModal: boolean = false;
-  toggleModal(): void {
-    this.mostrarModal = !this.mostrarModal;
-  }  
-  addInsumo(): void {}
+  displayCreatePopup: boolean = false
+  displayUpdatePopup: boolean = false
+
+  //toggle popups
+
+  toggleCreatePopup() {
+    this.displayCreatePopup = true
+  }
+
+  toggleUpdatePopup(insumo: Insumo) {
+    this.selected = insumo
+    this.displayUpdatePopup = true
+  }
+
+  toggleDeletePopup(insumo: Insumo) {
+    if (!insumo.codInsumo) return
+
+    this.deleteInsumo(insumo.codInsumo)
+  }
+
+  // confirmaciones
+
+  onConfirmCreate(insumo: Insumo) {
+    this.createInsumo(insumo)
+    this.displayCreatePopup = false
+  }
+
+  onConfirmUpdate(insumo: Insumo) {
+    if (!this.selected.codInsumo) return
+
+    this.updateInsumo(this.selected.codInsumo, insumo)
+    this.displayUpdatePopup = false
+  }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service.js';
 import { environment } from '../../environment.js';
 import { Observable } from 'rxjs';
-import { Insumo } from '../../types.js';
+import { Insumo, TipoInsumo } from '../../types.js';
 
 
 @Injectable({
@@ -11,6 +11,7 @@ import { Insumo } from '../../types.js';
 export class InsumoService {
 
   private URL = `${environment.URL}/insumo`
+  private tipoURL = `${environment.URL}/tipo-insumo`;
 
   constructor(
     private apiService: ApiService
@@ -34,5 +35,9 @@ export class InsumoService {
 
   delete(codInsumo: number): Observable<void> {
     return this.apiService.delete<void>(`${this.URL}/${codInsumo}`, {})
+  }
+
+  findAllTipos(): Observable<TipoInsumo[]> {
+    return this.apiService.get<TipoInsumo[]>(this.tipoURL, {});
   }
 }

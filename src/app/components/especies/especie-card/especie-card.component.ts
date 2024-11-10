@@ -1,30 +1,48 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
+import { Especie } from '../../../../types';
+import { FormsModule } from '@angular/forms';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-especie-card',
   standalone: true,
+  imports: [FormsModule, ConfirmPopupModule, ToastModule],
   templateUrl: './especie-card.component.html',
-  styleUrls: ['./especie-card.component.scss'],
+  styleUrl: './especie-card.component.scss'
 })
 export class EspecieCardComponent {
-  @Input() descripcion!: string;
 
-  // Eventos de salida para las acciones de editar, eliminar y ver razas
-  @Output() editarEspecie = new EventEmitter<void>();
-  @Output() eliminarEspecie = new EventEmitter<void>();
-  @Input() codEspecie!: number;
-  @Output() verRazas = new EventEmitter<number>();
+  constructor(private confirmationService: ConfirmationService) { }
 
-  // Métodos para emitir los eventos correspondientes
-  editar() {
-    this.editarEspecie.emit();
+  @ViewChild('deleteButton') deleteButton: any
+
+  @Input() especie!: Especie
+
+  @Output() verRazasClick = new EventEmitter<number>();
+  @Output() delete: EventEmitter<Especie> = new EventEmitter<Especie>()
+
+  verRazas() {
+    this.verRazasClick.emit(this.especie.codEspecie);
   }
 
-  eliminar() {
-    this.eliminarEspecie.emit();
+  confirmDelete() {
+    this.confirmationService.confirm({
+      target: this.deleteButton.nativeElement,
+      message: '¿Eliminar este especie?',
+      accept: () => {
+        this.deleteEspecie()
+      },
+    })
   }
 
-  onVerRazas() {
-    this.verRazas.emit(this.codEspecie);
+  deleteEspecie() {
+    this.delete.emit(this.especie)
   }
+
+  ngOnInit() {
+
+  }
+
 }

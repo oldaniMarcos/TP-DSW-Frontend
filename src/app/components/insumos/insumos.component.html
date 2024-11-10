@@ -2,10 +2,11 @@
 
 <div class="insumos">
 
-  <button class="btn" (click)="addInsumo()">Nuevo</button>
+  <!--Crear vet-->
+  <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
   <div *ngFor="let insumo of insumos">
-    <app-insumo-card [descripcion]="insumo.descripcion">
+    <app-insumo-card [insumo]="insumo" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">
     </app-insumo-card>
   </div>
 
@@ -15,3 +16,9 @@
     <button>&gt;</button>
   </div>
 </div>
+
+<!--create-->
+<app-insumo-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear insumo"></app-insumo-popup>
+
+<!--update-->
+<app-insumo-popup [insumo]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar insumo"></app-insumo-popup>

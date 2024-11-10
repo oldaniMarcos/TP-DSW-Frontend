@@ -10,6 +10,7 @@ import { environment } from '../../environment.js';
 export class EspecieService {
 
   private URL = `${environment.URL}/especie`;
+  private razaURL = `${environment.URL}/raza`;
 
   constructor(
     private apiService: ApiService
@@ -36,7 +37,7 @@ export class EspecieService {
   }
 
   findRazasByEspecie(codEspecie: number): Observable<Raza[]> {
-    return this.apiService.get<Raza[]>(`${this.URL}/${codEspecie}/raza`, {});
+    return this.apiService.get<Raza[]>(`${this.razaURL}/${codEspecie}/raza`, {});
   }
   
 }

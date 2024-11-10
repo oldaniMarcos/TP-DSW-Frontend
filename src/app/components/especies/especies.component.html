@@ -2,24 +2,25 @@
 
 <div class="especies">
 
-    <div *ngFor="let especie of especies">
-      <app-especie-card
-        [descripcion]="especie.descripcion"
-      >
-      </app-especie-card>
-    </div>
+  <!--Crear vet-->
+  <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
-    <div *ngIf="razas.length > 0">
-      <h4>Razas</h4>
-      <ul>
-        <li *ngFor="let raza of razas">{{ raza.descripcion }}</li>
-      </ul>
-    </div>
-  
-    <div class="pagination">
-      <button>&lt;</button>
-      <span>1 / 1</span>
-      <button>&gt;</button>
-    </div>
+  <div *ngFor="let especie of especies">
+    <app-especie-card [especie]="especie"
+    (verRazasClick)="cargarRazas($event)"
+    (delete)="toggleDeletePopup($event)">
+    </app-especie-card>
   </div>
-  
+
+  <div class="pagination">
+    <button>&lt;</button>
+    <span>1 / 1</span>
+    <button>&gt;</button>
+  </div>
+</div>
+
+<!--create-->
+<app-especie-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear especie"></app-especie-popup>
+
+<!--update-->
+<app-especie-popup [especie]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar especie"></app-especie-popup>

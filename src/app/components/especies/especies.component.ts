@@ -1,68 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import { EspecieCardComponent } from './especie-card/especie-card.component';
 import { CommonModule } from '@angular/common';
-import { Especie, Raza } from '../../../types.js';
+import { Component } from '@angular/core';
+import { EspecieCardComponent } from './especie-card/especie-card.component.js';
+import { Especie } from '../../../types.js';
 import { EspecieService } from '../../services/especie.service.js';
+import { EspeciePopupComponent } from './especie-popup/especie-popup.component.js';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-especies',
   standalone: true,
-  imports: [CommonModule, EspecieCardComponent],
+  imports: [CommonModule, EspecieCardComponent, EspeciePopupComponent, ButtonModule],
   templateUrl: './especies.component.html',
   styleUrl: './especies.component.scss'
 })
-export class EspeciesComponent implements OnInit{
+export class EspeciesComponent {
 
-  especies: Especie[] = [];
-  razas: Raza[] = [];
-  selected: Especie | null = null;
-
+  especies: Especie[] = []
+  selected: Especie = {
+    codEspecie: 0,
+    descripcion: '',
+  }
 
   constructor(
     private especieService: EspecieService
   ) { }
 
   ngOnInit() {
-    this.findEspecies();
+    this.findEspecies()
   }
 
   findEspecies(): void {
     this.especieService.findAll().subscribe(
       (data: Especie[]) => {
-        this.especies = data;
+        this.especies = data
       },
       (error) => {
-        console.error('Error al buscar especies:', error);
+        console.error('Error al buscar especies:', error)
       }
-    );
+    )
   }
 
   findEspecie(codEspecie: number): void {
     this.especieService.findOne(codEspecie).subscribe(
       (data: Especie) => {
-        this.selected = data;
+        this.selected = data
       },
       (error) => {
-        console.error(`Error al buscar especie con código ${codEspecie}:`, error);
+        console.error(`Error al buscar especie con id ${codEspecie}:`, error)
       }
-    );
+    )
   }
 
   createEspecie(especie: Especie): void {
-    this.especieService.post(especie).subscribe(
-      (newEspecie: Especie) => {
-        this.especies.push(newEspecie);
-      },
-      (error) => {
-        console.error('Error al crear una especie:', error);
-      }
-    );
+  this.especieService.post(especie).subscribe(
+    (newEspecie: Especie) => {
+      this.especies.push(newEspecie); 
+    },
+    (error) => {
+      console.error('Error al crear un especie:', error);
+    }
+  );
   }
 
   updateEspecie(codEspecie: number, especie: Especie): void {
     this.especieService.patch(codEspecie, especie).subscribe(
       (updatedEspecie: Especie) => {
-        const index = this.especies.findIndex(e => e.codEspecie === codEspecie);
+        const index = this.especies.findIndex(c => c.codEspecie === codEspecie);
         if (index > -1) this.especies[index] = updatedEspecie;
       },
       (error) => {
@@ -74,7 +77,7 @@ export class EspeciesComponent implements OnInit{
   deleteEspecie(codEspecie: number): void {
     this.especieService.delete(codEspecie).subscribe(
       () => {
-        this.especies = this.especies.filter(e => e.codEspecie !== codEspecie);
+        this.especies = this.especies.filter(c => c.codEspecie !== codEspecie);
       },
       (error) => {
         console.error(`Error al eliminar especie con código ${codEspecie}:`, error);
@@ -82,9 +85,49 @@ export class EspeciesComponent implements OnInit{
     );
   }
 
-  findRazasByEspecie(codEspecie: number): void {
-    this.especieService.findRazasByEspecie(codEspecie).subscribe(data => {
-      this.razas = data;
-    });
+  displayCreatePopup: boolean = false
+  displayUpdatePopup: boolean = false
+
+  //toggle popups
+
+  toggleCreatePopup() {
+    this.displayCreatePopup = true
+  }
+
+  toggleUpdatePopup(especie: Especie) {
+    this.selected = especie
+    this.displayUpdatePopup = true
+  }
+
+  toggleDeletePopup(especie: Especie) {
+    if (!especie.codEspecie) return
+
+    this.deleteEspecie(especie.codEspecie)
+  }
+
+  // confirmaciones
+
+  onConfirmCreate(especie: Especie) {
+    this.createEspecie(especie)
+    this.displayCreatePopup = false
+  }
+
+  onConfirmUpdate(especie: Especie) {
+    if (!this.selected.codEspecie) return
+
+    this.updateEspecie(this.selected.codEspecie, especie)
+    this.displayUpdatePopup = false
+  }
+
+  cargarRazas(codEspecie: number) {
+    this.especieService.findRazasByEspecie(codEspecie).subscribe(
+      (razas) => {
+        console.log('Razas:', razas);
+      
+      },
+      (error) => {
+        console.error('Error al obtener razas:', error);
+      }
+    );
   }
 }
