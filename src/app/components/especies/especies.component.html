@@ -4,6 +4,7 @@
 
   <!--Crear vet-->
   <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
+  <button class="btn" routerLink="/razas">Razas</button>
 
   <div *ngFor="let especie of especies">
     <app-especie-card [especie]="especie"

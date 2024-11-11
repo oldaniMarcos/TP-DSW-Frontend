@@ -35,9 +35,5 @@ export class EspecieService {
   delete(codEspecie: number): Observable<void> {
     return this.apiService.delete<void>(`${this.URL}/${codEspecie}`, {});
   }
-
-  findRazasByEspecie(codEspecie: number): Observable<Raza[]> {
-    return this.apiService.get<Raza[]>(`${this.razaURL}/${codEspecie}/raza`, {});
-  }
   
 }

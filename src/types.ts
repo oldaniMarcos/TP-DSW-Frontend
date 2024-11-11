@@ -63,7 +63,7 @@ export interface Especie {
 export interface Raza {
   codRaza?: number,
   descripcion: string,
-  especieCodEspecie: number,
+  idEspecie: number,
 }
 
 export interface TipoInsumo {

@@ -1,32 +1,37 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { EspecieCardComponent } from './especie-card/especie-card.component.js';
-import { Especie } from '../../../types.js';
+import { Especie, Raza } from '../../../types.js';
 import { EspecieService } from '../../services/especie.service.js';
 import { EspeciePopupComponent } from './especie-popup/especie-popup.component.js';
 import { ButtonModule } from 'primeng/button';
+import { RazaService } from '../../services/raza.service.js';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-especies',
   standalone: true,
-  imports: [CommonModule, EspecieCardComponent, EspeciePopupComponent, ButtonModule],
+  imports: [CommonModule, EspecieCardComponent, EspeciePopupComponent, ButtonModule, RouterLink],
   templateUrl: './especies.component.html',
   styleUrl: './especies.component.scss'
 })
 export class EspeciesComponent {
 
   especies: Especie[] = []
+  razas: Raza[] = []
   selected: Especie = {
     codEspecie: 0,
     descripcion: '',
   }
 
   constructor(
-    private especieService: EspecieService
+    private especieService: EspecieService,
+    private razaService: RazaService
   ) { }
 
   ngOnInit() {
     this.findEspecies()
+    this.findRazas()
   }
 
   findEspecies(): void {
@@ -119,15 +124,22 @@ export class EspeciesComponent {
     this.displayUpdatePopup = false
   }
 
-  cargarRazas(codEspecie: number) {
-    this.especieService.findRazasByEspecie(codEspecie).subscribe(
-      (razas) => {
-        console.log('Razas:', razas);
-      
+
+  findRazas(): void {
+    this.razaService.findAll().subscribe(
+      (data: Raza[]) => {
+        this.razas = data
       },
       (error) => {
-        console.error('Error al obtener razas:', error);
+        console.error('Error al buscar razas:', error)
       }
-    );
+    )
+  }
+
+  //no usado por el momento, mejor hacer seccion de razas y filtrar ahi
+  cargarRazas(codEspecie: number) {
+
+    console.log(this.razas);
+
   }
 }
