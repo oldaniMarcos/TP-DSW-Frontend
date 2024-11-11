@@ -2,6 +2,17 @@
 
 <div class="clientes">
     <button class="btn" (click)="toggleCreatePopup()">Agregar</button>
+
+    <div>
+      <input
+  type="text"
+  [(ngModel)]="dniFiltro"
+  (input)="findClientes()"
+  placeholder="Buscar por DNI"
+  class="search-input"
+/>
+    </div>
+    
   
     <div *ngFor="let cliente of clientes">
       <app-cliente-card [cliente]="cliente" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">

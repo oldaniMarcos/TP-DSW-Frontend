@@ -4,11 +4,13 @@ import { ClienteCardComponent } from './cliente-card/cliente-card.component';
 import { ClienteService } from '../../services/cliente.service.js';
 import { Cliente } from '../../../types.js';
 import { ClientePopupComponent } from './cliente-popup/cliente-popup.component';
+import { FormsModule } from '@angular/forms';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, ClienteCardComponent, ClientePopupComponent], 
+  imports: [CommonModule, ClienteCardComponent, ClientePopupComponent, FormsModule, FloatLabelModule], 
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss'],
 })
@@ -24,7 +26,21 @@ export class ClientesComponent {
     email: '',
     usuario: '',
     password: ''
-  }
+  };
+
+  clientesFiltrados: Cliente[] = []
+  selectedFiltrado: Cliente = {
+    id: 0,
+    dni: '',
+    nombreYApellido: '',
+    telefono: '',
+    direccion: '',
+    email: '',
+    usuario: '',
+    password: ''
+  };
+
+  dniFiltro: string = '';
 
   constructor(
     private clienteService: ClienteService
@@ -37,12 +53,18 @@ export class ClientesComponent {
   findClientes(): void {
     this.clienteService.findAll().subscribe(
       (data: Cliente[]) => {
-        this.clientes = data
+        if (this.dniFiltro) {
+          // Filtra los clientes por DNI si se ingresó un filtro
+          this.clientes = data.filter(cliente => cliente.dni.includes(this.dniFiltro));
+        } else {
+          // Si no hay filtro, muestra todos los clientes
+          this.clientes = data;
+        }
       },
       (error) => {
-        console.error('Error al buscar clientes:', error)
+        console.error('Error al buscar clientes:', error);
       }
-    )
+    );
   }
 
   findCliente(id: number): void {
@@ -54,6 +76,17 @@ export class ClientesComponent {
         console.error(`Error al buscar cliente con id ${id}:`, error)
       }
     )
+  }
+
+  filtrarPorDni() {
+    if (this.dniFiltro) {
+      this.clientesFiltrados = this.clientes.filter(cliente =>
+        cliente.dni.includes(this.dniFiltro)
+      );
+    } else {
+      // Si el campo de búsqueda está vacío, muestra todos los clientes
+      this.clientesFiltrados = this.clientes;
+    }
   }
 
   createCliente(cliente: Cliente): void {
