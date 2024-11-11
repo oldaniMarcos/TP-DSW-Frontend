@@ -1,0 +1,25 @@
+<h2>Razas</h2>
+
+<div class="razas">
+
+  <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
+
+  <div *ngFor="let raza of razas">
+    <app-raza-card [raza]="raza"
+    (delete)="toggleDeletePopup($event)">
+    </app-raza-card>
+  </div>
+
+  <div class="pagination">
+    <button>&lt;</button>
+    <span>1 / 1</span>
+    <button>&gt;</button>
+  </div>
+</div>
+
+<!--create-->
+<app-raza-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear raza"></app-raza-popup>
+
+<!--update-->
+<app-raza-popup [raza]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar raza"></app-raza-popup>
+

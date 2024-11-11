@@ -1,0 +1,12 @@
+<div class="raza-card">
+    <h3>{{ raza.descripcion }}</h3>
+  
+    <div class="actions">
+  
+      <button type="button" (click)="editRaza()" class="edit">Editar</button>
+  
+      <button type="button" (click)="confirmDelete()" #deleteButton class="delete">Eliminar</button>
+    </div>
+  </div>
+  
+  <p-confirmPopup></p-confirmPopup>

@@ -51,7 +51,7 @@ export class EspeciesComponent {
         this.selected = data
       },
       (error) => {
-        console.error(`Error al buscar especie con id ${codEspecie}:`, error)
+        console.error(`Error al buscar especie con ID ${codEspecie}:`, error)
       }
     )
   }
@@ -62,7 +62,7 @@ export class EspeciesComponent {
       this.especies.push(newEspecie); 
     },
     (error) => {
-      console.error('Error al crear un especie:', error);
+      console.error('Error al crear una especie:', error);
     }
   );
   }

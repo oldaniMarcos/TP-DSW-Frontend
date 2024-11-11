@@ -14,6 +14,7 @@ import { ClientesComponent } from './components/clientes/clientes.component.js';
 import { EspeciesComponent } from './components/especies/especies.component.js';
 import { InsumosComponent } from './components/insumos/insumos.component.js';
 import { VeterinariosComponent } from './components/veterinarios/veterinarios.component.js';
+import { RazasComponent } from './components/razas/razas.component.js';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -41,6 +42,8 @@ export const routes: Routes = [
   { path: 'clientes', component: ClientesComponent },
 
   { path: 'especies', component: EspeciesComponent },
+
+  { path: 'razas', component: RazasComponent },
 
   { path: 'insumos', component: InsumosComponent },
 
