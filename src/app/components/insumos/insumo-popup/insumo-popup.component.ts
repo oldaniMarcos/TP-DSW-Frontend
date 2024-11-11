@@ -21,7 +21,7 @@ export class InsumoPopupComponent {
       descripcion: ['', [Validators.required]],
       stock: ['', [Validators.required]],
       fechaVencimiento: ['', [Validators.required]],
-      idTipoInsumo: ['', [Validators.required]],
+      idTipoInsumo: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
     })
   }
 

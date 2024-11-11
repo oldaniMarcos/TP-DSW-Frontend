@@ -55,7 +55,6 @@ export class InsumosComponent {
   }
 
   createInsumo(insumo: Insumo): void {
-  console.log(insumo);
   this.insumoService.post(insumo).subscribe(
     (newInsumo: Insumo) => {
       this.insumos.push(newInsumo); 

@@ -17,14 +17,14 @@
             <input type="text" formControlName="fechaVencimiento">
         </div>
 
-        <div class="form-group">
+        <div class="row gap-05">
             <label for="idTipoInsumo">Tipo de Insumo:</label>
             <select id="idTipoInsumo" formControlName="idTipoInsumo">
               <option *ngFor="let tipo of tiposInsumo" [value]="tipo.codTipoInsumo">
                 {{ tipo.descripcion }}
               </option>
             </select>
-          </div>
+        </div>
 
     </div>
 
