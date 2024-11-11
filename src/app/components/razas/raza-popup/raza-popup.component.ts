@@ -41,7 +41,7 @@ export class RazaPopupComponent {
 
     this.confirm.emit({
       descripcion: descripcion || '',
-      idEspecie: idEspecie || 0
+      idEspecie: Number(idEspecie) || 0
     })
 
     this.display = false

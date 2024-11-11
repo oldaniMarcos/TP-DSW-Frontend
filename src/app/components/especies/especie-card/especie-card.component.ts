@@ -19,13 +19,7 @@ export class EspecieCardComponent {
   @ViewChild('deleteButton') deleteButton: any
 
   @Input() especie!: Especie
-
-  @Output() verRazasClick = new EventEmitter<number>();
   @Output() delete: EventEmitter<Especie> = new EventEmitter<Especie>()
-
-  verRazas() {
-    this.verRazasClick.emit(this.especie.codEspecie);
-  }
 
   confirmDelete() {
     this.confirmationService.confirm({

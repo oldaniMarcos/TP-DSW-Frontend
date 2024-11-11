@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RazaPopupComponent } from './raza-popup/raza-popup.component.js';
 import { RazaCardComponent } from './raza-card/raza-card.component.js';
-import { Raza } from '../../../types.js';
+import { Especie, Raza } from '../../../types.js';
 import { RazaService } from '../../services/raza.service.js';
+import { EspecieService } from '../../services/especie.service.js';
 
 @Component({
   selector: 'app-razas',
@@ -14,6 +15,7 @@ import { RazaService } from '../../services/raza.service.js';
 })
 export class RazasComponent {
 
+
   razas: Raza[] = []
   selected: Raza = {
     codRaza: 0,
@@ -21,14 +23,28 @@ export class RazasComponent {
     idEspecie: 0,
   }
 
+  /*
+  razasFiltro: Raza[] = []
+  selectedFiltro: Raza = {
+    codRaza: 0,
+    descripcion: '',
+    idEspecie: 0
+  }
+
+  especies: Especie[] = []
+  espFiltro: string = ''
+  */
+
   constructor (
-    private razaService: RazaService,
+    private razaService: RazaService, private especieService: EspecieService
   ) {}
 
   ngOnInit() {
     this.findRazas()
+    //this.findEspecies()
   }
 
+  
   findRazas(): void {
     this.razaService.findAll().subscribe(
       (data: Raza[]) => {
@@ -39,6 +55,20 @@ export class RazasComponent {
       }
     )
   }
+
+  // no usado por el momento
+  /*
+  findEspecies(): void {
+    this.especieService.findAll().subscribe(
+      (data: Especie[]) => {
+        this.especies = data
+      },
+      (error) => {
+        console.error('Error al buscar especies:', error)
+      }
+    )
+  }
+  */
 
   findRaza(codRaza: number): void {
     this.razaService.findOne(codRaza).subscribe(

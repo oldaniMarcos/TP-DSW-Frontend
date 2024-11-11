@@ -1,5 +1,9 @@
 .razas {
     text-align: center;
+
+    .btn {
+      margin-bottom: 1rem;
+    }
   
     .raza-card {
       margin: 0.5rem auto;
@@ -20,6 +24,23 @@
         border-radius: 4px;
         cursor: pointer;
       }
+    }
+
+    .search-input {
+      width: 80%;
+      max-width: 300px;
+      padding: 8px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #66afe9;
+      box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
     }
   
     @media (min-width: 768px) {

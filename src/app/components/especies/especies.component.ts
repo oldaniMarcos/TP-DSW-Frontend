@@ -5,7 +5,6 @@ import { Especie, Raza } from '../../../types.js';
 import { EspecieService } from '../../services/especie.service.js';
 import { EspeciePopupComponent } from './especie-popup/especie-popup.component.js';
 import { ButtonModule } from 'primeng/button';
-import { RazaService } from '../../services/raza.service.js';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -25,13 +24,11 @@ export class EspeciesComponent {
   }
 
   constructor(
-    private especieService: EspecieService,
-    private razaService: RazaService
+    private especieService: EspecieService
   ) { }
 
   ngOnInit() {
     this.findEspecies()
-    this.findRazas()
   }
 
   findEspecies(): void {
@@ -122,24 +119,5 @@ export class EspeciesComponent {
 
     this.updateEspecie(this.selected.codEspecie, especie)
     this.displayUpdatePopup = false
-  }
-
-
-  findRazas(): void {
-    this.razaService.findAll().subscribe(
-      (data: Raza[]) => {
-        this.razas = data
-      },
-      (error) => {
-        console.error('Error al buscar razas:', error)
-      }
-    )
-  }
-
-  //no usado por el momento, mejor hacer seccion de razas y filtrar ahi
-  cargarRazas(codEspecie: number) {
-
-    console.log(this.razas);
-
   }
 }

@@ -4,9 +4,21 @@
 
   <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
+  <!--no se usa por el momento
+  <div class="row gap-05">
+    <label for="idEspecie">Especie:</label>
+    <select id="idEspecie" formControlName="idEspecie" >
+      <option *ngFor="let especie of especies" [value]="especie.codEspecie">
+        {{ especie.descripcion }}
+      </option>
+    </select>
+  </div>
+  -->
+
   <div *ngFor="let raza of razas">
     <app-raza-card [raza]="raza"
-    (delete)="toggleDeletePopup($event)">
+    (delete)="toggleDeletePopup($event)"
+    (edit)="toggleUpdatePopup($event)">
     </app-raza-card>
   </div>
 

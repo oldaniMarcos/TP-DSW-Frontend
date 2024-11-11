@@ -7,7 +7,6 @@
 
   <div *ngFor="let especie of especies">
     <app-especie-card [especie]="especie"
-    (verRazasClick)="cargarRazas($event)"
     (delete)="toggleDeletePopup($event)">
     </app-especie-card>
   </div>
