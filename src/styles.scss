@@ -221,6 +221,37 @@ h2 {
   border: none;
 }
 
+.sidebar {
+
+  .p-sidebar-header {
+    padding: 0.5rem 0.5rem 0 0 ;
+  }
+
+  .p-sidebar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    font-size: 2.25rem;
+    color: black;
+  }
+
+  h1, h2 {
+    margin: 0.5rem;
+  }
+
+  img {
+    height: 20vh;
+  }
+
+  .btn {
+    margin: 1rem;
+  }
+
+}
+
 @media (min-width: 650px) {
   .menu-container {
     .content {
@@ -244,5 +275,9 @@ h2 {
         font-size: 18px;
       }
     }
+  }
+
+  .sidebar img {
+    height: 10vw;
   }
 }

@@ -8,7 +8,6 @@ import { AdminComponent } from './components/admin/admin.component.js';
 import { RegistrarAtencionComponent } from './components/registrar-atencion/registrar-atencion.component.js';
 import { GestionComponent } from './components/gestion/gestion.component.js';
 import { ListadosComponent } from './components/listados/listados.component.js';
-import { ProfileComponent } from './components/profile/profile.component.js';
 import { AtencionesAdminComponent } from './components/atenciones-admin/atenciones-admin.component.js';
 import { ClientesComponent } from './components/clientes/clientes.component.js';
 import { EspeciesComponent } from './components/especies/especies.component.js';
@@ -23,8 +22,6 @@ export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
 
   { path: 'login', component: LoginComponent },
-
-  { path: 'profile', component: ProfileComponent }, //no esta en uso, se usa la sidebar
 
   // RUTAS DE CLIENTE
 

@@ -1,19 +1,25 @@
-@if(is404Route && isNotAuthorizedRoute) {
+@if(!is404Route && !isNotAuthorizedRoute) {
   <header class="wrapper row align-center space-between" [ngStyle]="changeStyle()">
-    @if(isHomeRoute && isAdminRoute) {
-      <img src="back.svg" alt="Back" class="img" (click)="goBack()">
+    @if(!isAdminRoute && !isHomeRoute) {
+      <img src="back.svg" alt="Back" class="img" (click)="goBack()" >
     }
-    @if(isProfileRoute) {
       <p-button (onClick)="sidebarVisible = true" styleClass="p-button-profile"> 
       <img src="profile.svg" alt="Profile" class="img" >
       </p-button>
-    }
+    
   </header>
 }
 
-<p-sidebar [(visible)]="sidebarVisible" position="right">
-  <h3>Sidebar</h3>
-  <p>
-    profile del cliente aca
-  </p>
+<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="sidebar">
+  <img src="profile.svg" alt="Foto de perfil">
+  @if(!isAdmin()) {
+  <h1>{{ nombreYApellido }}</h1>
+  <h2><strong>DNI: </strong>{{ dni }}</h2>
+  <h2>{{ email }}</h2>
+  <button class="btn salir" (click)="logout()">Cerrar sesión</button>
+  }
+  @if(isAdmin()) {
+    <h1>Administrador</h1>
+    <button class="btn salir" (click)="logout()">Cerrar sesión</button>
+    }
 </p-sidebar>

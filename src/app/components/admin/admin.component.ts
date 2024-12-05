@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { LocalStorageService } from '../../services/local-storage.service.js';
 
 @Component({
   selector: 'app-admin',
@@ -10,10 +11,12 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 })
 export class AdminComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router
+    , private localStorage: LocalStorageService
+  ) {}
 
   logout() {
-    localStorage.removeItem('rol');
+    this.localStorage.clear();
     this.router.navigate(['/login']);
   }
 
