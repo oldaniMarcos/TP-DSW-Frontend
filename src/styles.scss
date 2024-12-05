@@ -197,6 +197,30 @@ h2 {
   }
 }
 
+.p-confirmPopup {
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgb(66, 66, 66);;
+
+  .p-button.p-button-text {
+      background-color: #ff6666;
+      color: white;
+      border: 1px solid #ff6666;
+    }
+
+  .p-button {
+    background-color: #80d4ff;
+    border: 1px solid #80d4ff;
+  }
+  
+}
+
+.p-button-profile {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
 @media (min-width: 650px) {
   .menu-container {
     .content {

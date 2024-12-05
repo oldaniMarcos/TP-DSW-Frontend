@@ -21,13 +21,28 @@ export class LoginComponent {
   onSubmit() {
     this.clienteService.login(this.loginData.usuario, this.loginData.password).subscribe(
       (res) => {
-        this.router.navigate(['/home'])
+
+        localStorage.setItem('rol', res.rol)
+
+        if (res.rol === 'admin') {
+          this.router.navigate(['/admin'])
+        }
+        else {
+          this.router.navigate(['/home'])
+        }
       },
       () => {
         this.errorMessage = 'Credenciales incorrectas';
       }
     )
   }
-}
 
-// falta una forma de loguear al admin 
+  ngOnInit(): void {
+    const rol = localStorage.getItem('rol');
+    if (rol === 'admin') {
+      this.router.navigate(['/admin']);
+    } else if (rol === 'cliente') {
+      this.router.navigate(['/home']);
+    } else return
+  }
+}

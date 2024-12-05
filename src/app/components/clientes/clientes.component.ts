@@ -5,12 +5,12 @@ import { ClienteService } from '../../services/cliente.service.js';
 import { Cliente } from '../../../types.js';
 import { ClientePopupComponent } from './cliente-popup/cliente-popup.component';
 import { FormsModule } from '@angular/forms';
-import { FloatLabelModule } from 'primeng/floatlabel';
+import { ClienteVerPopupComponent } from './cliente-ver-popup/cliente-ver-popup.component.js';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, ClienteCardComponent, ClientePopupComponent, FormsModule, FloatLabelModule], 
+  imports: [CommonModule, ClienteCardComponent, ClientePopupComponent, ClienteVerPopupComponent, FormsModule], 
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss'],
 })
@@ -78,6 +78,7 @@ export class ClientesComponent {
     )
   }
 
+  /*
   filtrarPorDni() {
     if (this.dniFiltro) {
       this.clientesFiltrados = this.clientes.filter(cliente =>
@@ -87,7 +88,7 @@ export class ClientesComponent {
       // Si el campo de búsqueda está vacío, muestra todos los clientes
       this.clientesFiltrados = this.clientes;
     }
-  }
+  }*/
 
   createCliente(cliente: Cliente): void {
   this.clienteService.post(cliente).subscribe(
@@ -126,6 +127,7 @@ export class ClientesComponent {
 
   displayCreatePopup: boolean = false
   displayUpdatePopup: boolean = false
+  displaySelectPopup: boolean = false
 
   //toggle popups
 
@@ -136,6 +138,11 @@ export class ClientesComponent {
   toggleUpdatePopup(cliente: Cliente) {
     this.selected = cliente
     this.displayUpdatePopup = true
+  }
+
+  toggleSelectPopup(cliente: Cliente) {
+    this.selected = cliente
+    this.displaySelectPopup = true
   }
 
   toggleDeletePopup(cliente: Cliente) {

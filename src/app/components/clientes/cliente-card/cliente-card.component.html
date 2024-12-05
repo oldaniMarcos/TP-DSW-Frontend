@@ -3,7 +3,7 @@
     <p><strong>DNI:</strong> {{ cliente.dni }}</p>
 
     <div class="actions">
-      <button type="button" class="btn">Ver</button>
+      <button type="button" (click)="selectCliente()" class="btn">Ver</button>
   
       <button type="button" (click)="editCliente()" class="edit">Editar</button>
   
@@ -11,4 +11,4 @@
     </div>
   </div>
 
-  <p-confirmPopup></p-confirmPopup>
+<p-confirmPopup defaultFocus="none" styleClass="p-confirmPopup"></p-confirmPopup>

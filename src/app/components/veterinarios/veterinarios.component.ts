@@ -5,11 +5,12 @@ import { Veterinario } from '../../../types.js';
 import { VeterinarioService } from '../../services/veterinario.service.js';
 import { VeterinarioPopupComponent } from './veterinario-popup/veterinario-popup.component.js';
 import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-veterinarios',
   standalone: true,
-  imports: [CommonModule, VeterinarioCardComponent, VeterinarioPopupComponent, ButtonModule],
+  imports: [CommonModule, VeterinarioCardComponent, VeterinarioPopupComponent, ButtonModule, FormsModule],
   templateUrl: './veterinarios.component.html',
   styleUrl: './veterinarios.component.scss'
 })
@@ -26,6 +27,19 @@ export class VeterinariosComponent {
     email: '',
   }
 
+  veterinariosFiltrados: Veterinario[] = []
+  selectedFiltrado: Veterinario = {
+    idVeterinario: 0,
+    nroMatricula: '',
+    dni: '',
+    nombreYApellido: '',
+    direccion: '',
+    telefono: '',
+    email: '',
+  }
+
+  matFiltro: string = ''
+
   constructor(
     private veterinarioService: VeterinarioService
   ) { }
@@ -37,7 +51,11 @@ export class VeterinariosComponent {
   findVeterinarios(): void {
     this.veterinarioService.findAll().subscribe(
       (data: Veterinario[]) => {
-        this.veterinarios = data
+        if (this.matFiltro) {
+          this.veterinarios = data.filter(veterinario => veterinario.nroMatricula.includes(this.matFiltro))
+        } else {
+          this.veterinarios = data
+        }
       },
       (error) => {
         console.error('Error al buscar veterinarios:', error)

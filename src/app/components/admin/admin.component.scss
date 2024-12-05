@@ -1,0 +1,9 @@
+.img {
+  height: 50vw;
+}
+
+@media (min-width: 650px) {
+  .img {
+    height: 35vh;
+  }
+}

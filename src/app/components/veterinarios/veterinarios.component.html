@@ -5,6 +5,11 @@
   <!--Crear vet-->
   <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
+  <div>
+    <input type="text" [(ngModel)]="matFiltro" (input)="findVeterinarios()" placeholder="Buscar por Matricula"
+      class="search-input" />
+  </div>
+
   <div *ngFor="let veterinario of veterinarios">
     <app-veterinario-card [veterinario]="veterinario" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">
     </app-veterinario-card>

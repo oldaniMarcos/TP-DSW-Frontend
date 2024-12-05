@@ -4,11 +4,12 @@ import { Veterinario } from '../../../../types';
 import { FormsModule } from '@angular/forms';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-veterinario-card',
   standalone: true,
-  imports: [FormsModule, ConfirmPopupModule, ToastModule],
+  imports: [FormsModule, ConfirmPopupModule, ToastModule, ButtonModule],
   templateUrl: './veterinario-card.component.html',
   styleUrl: './veterinario-card.component.scss'
 })

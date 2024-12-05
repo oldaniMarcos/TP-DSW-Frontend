@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-page-not-found',
+  selector: 'app-not-authorized',
   standalone: true,
-  imports: [RouterModule],
-  templateUrl: './page-not-found.component.html',
-  styleUrl: './page-not-found.component.scss',
+  imports: [],
+  templateUrl: './not-authorized.component.html',
+  styleUrl: './not-authorized.component.scss'
 })
-export class PageNotFoundComponent {
+export class NotAuthorizedComponent {
 
   constructor(private router: Router) {}
 

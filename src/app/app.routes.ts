@@ -15,43 +15,52 @@ import { EspeciesComponent } from './components/especies/especies.component.js';
 import { InsumosComponent } from './components/insumos/insumos.component.js';
 import { VeterinariosComponent } from './components/veterinarios/veterinarios.component.js';
 import { RazasComponent } from './components/razas/razas.component.js';
+import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component.js';
+import { RolGuard } from './guards/rol.guard.js';
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent },
 
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-
-  { path: 'profile', component: ProfileComponent },
-
-  { path: 'mascotas', component: MascotasComponent },
-
-  { path: 'atenciones', component: AtencionesComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 
   { path: 'login', component: LoginComponent },
 
+  { path: 'profile', component: ProfileComponent }, //no esta en uso, se usa la sidebar
+
+  // RUTAS DE CLIENTE
+
+  { path: 'home', component: HomeComponent, canActivate: [RolGuard], data: {rol: 'cliente'} },
+
+  { path: 'mascotas', component: MascotasComponent, canActivate: [RolGuard], data: {rol: 'cliente'} },
+
+  { path: 'atenciones', component: AtencionesComponent, canActivate: [RolGuard], data: {rol: 'cliente'} },
+
   // RUTAS DE ADMIN
 
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
-  { path: 'registrar-atencion', component: RegistrarAtencionComponent },
+  { path: 'registrar-atencion', component: RegistrarAtencionComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
-  { path: 'gestion', component: GestionComponent },
+  { path: 'gestion', component: GestionComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
-  { path: 'atenciones-admin', component: AtencionesAdminComponent },
+  { path: 'atenciones-admin', component: AtencionesAdminComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
-  { path: 'clientes', component: ClientesComponent },
+  { path: 'clientes', component: ClientesComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
-  { path: 'especies', component: EspeciesComponent },
+  { path: 'especies', component: EspeciesComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
-  { path: 'razas', component: RazasComponent },
+  { path: 'razas', component: RazasComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
-  { path: 'insumos', component: InsumosComponent },
+  { path: 'insumos', component: InsumosComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
-  { path: 'veterinarios', component: VeterinariosComponent },
+  { path: 'veterinarios', component: VeterinariosComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
-  { path: 'listados', component: ListadosComponent },
+  { path: 'listados', component: ListadosComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
+
+  // Errores
 
   { path: 'page-not-found', component: PageNotFoundComponent },
+
+  { path: 'not-authorized', component: NotAuthorizedComponent },
 
   // Wildcard route, selecciona esta ruta si el URL no coincide con ningun path
   { path: '**', redirectTo: '/page-not-found', pathMatch: 'full' },

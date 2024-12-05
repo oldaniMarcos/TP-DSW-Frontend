@@ -1,7 +1,7 @@
 <h2>Clientes</h2>
 
 <div class="clientes">
-    <button class="btn" (click)="toggleCreatePopup()">Agregar</button>
+    <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
     <div>
       <input
@@ -15,7 +15,7 @@
     
   
     <div *ngFor="let cliente of clientes">
-      <app-cliente-card [cliente]="cliente" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">
+      <app-cliente-card [cliente]="cliente" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)" (select)="toggleSelectPopup($event)">
       </app-cliente-card>
     </div>
   
@@ -33,4 +33,4 @@
 <!--update-->
 <app-cliente-popup [cliente]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar cliente"></app-cliente-popup>
 
-  
+<app-cliente-ver-popup [cliente]="selected" [(display)]="displaySelectPopup"></app-cliente-ver-popup>

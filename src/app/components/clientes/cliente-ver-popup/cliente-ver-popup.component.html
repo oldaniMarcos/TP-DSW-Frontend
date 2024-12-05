@@ -1,0 +1,12 @@
+<p-dialog [header]="cliente.nombreYApellido" [(visible)]="display" [modal]="true" [closable]="false">
+
+<p><strong>DNI:</strong> {{ cliente.dni }}</p>
+<p><strong>Telefono:</strong> {{ cliente.telefono }}</p>
+<p><strong>Direccion:</strong> {{ cliente.direccion }}</p>
+<p><strong>Email:</strong> {{ cliente.email }}</p>
+
+<p-footer>
+  <button type="button" class="cancel" (click)="onClose()">Cerrar</button>
+</p-footer>
+
+</p-dialog>

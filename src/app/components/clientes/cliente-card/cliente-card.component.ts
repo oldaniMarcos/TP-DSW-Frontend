@@ -22,6 +22,7 @@ export class ClienteCardComponent {
 
   @Output() edit: EventEmitter<Cliente> = new EventEmitter<Cliente>()
   @Output() delete: EventEmitter<Cliente> = new EventEmitter<Cliente>()
+  @Output() select: EventEmitter<Cliente> = new EventEmitter<Cliente>()
 
   editCliente() {
     this.edit.emit(this.cliente)
@@ -39,6 +40,10 @@ export class ClienteCardComponent {
 
   deleteCliente() {
     this.delete.emit(this.cliente)
+  }
+
+  selectCliente() {
+    this.select.emit(this.cliente)
   }
 
 }

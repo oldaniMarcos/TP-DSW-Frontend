@@ -1,8 +1,19 @@
-<header class="wrapper row align-center space-between" [ngStyle]="changeStyle()">
-  @if(isHomeRoute && isAdminRoute) {
-    <img src="back.svg" alt="Back" class="img" (click)="goBack()">
-  }
-  @if(isProfileRoute) {
-    <img src="profile.svg" alt="Profile" class="img" routerLink="/profile">
-  }
-</header>
+@if(is404Route && isNotAuthorizedRoute) {
+  <header class="wrapper row align-center space-between" [ngStyle]="changeStyle()">
+    @if(isHomeRoute && isAdminRoute) {
+      <img src="back.svg" alt="Back" class="img" (click)="goBack()">
+    }
+    @if(isProfileRoute) {
+      <p-button (onClick)="sidebarVisible = true" styleClass="p-button-profile"> 
+      <img src="profile.svg" alt="Profile" class="img" >
+      </p-button>
+    }
+  </header>
+}
+
+<p-sidebar [(visible)]="sidebarVisible" position="right">
+  <h3>Sidebar</h3>
+  <p>
+    profile del cliente aca
+  </p>
+</p-sidebar>

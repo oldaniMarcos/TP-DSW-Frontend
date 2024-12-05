@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import {Location, NgStyle} from '@angular/common';
+import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, RouterLink, NgStyle],
+  imports: [NgStyle, SidebarModule, ButtonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -16,6 +18,9 @@ export class HeaderComponent {
   isHomeRoute = false
   isAdminRoute = false
   isProfileRoute = false
+  is404Route = false
+  isNotAuthorizedRoute = false
+  sidebarVisible = false
 
   goBack() {
     this.location.back()
@@ -35,6 +40,10 @@ export class HeaderComponent {
       this.isHomeRoute = currentRoute !== '/home';
       this.isAdminRoute = currentRoute !== '/admin';
       this.isProfileRoute = currentRoute !== '/profile';
+      this.is404Route = currentRoute !== '/page-not-found';
+      this.isNotAuthorizedRoute = currentRoute !== '/not-authorized';
     });
   }
 }
+
+//lo relacionado con el profile no esta en uso
