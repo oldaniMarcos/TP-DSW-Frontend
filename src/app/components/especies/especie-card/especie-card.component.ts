@@ -24,7 +24,7 @@ export class EspecieCardComponent {
   confirmDelete() {
     this.confirmationService.confirm({
       target: this.deleteButton.nativeElement,
-      message: '¿Eliminar este especie?',
+      message: '¿Eliminar esta especie?',
       accept: () => {
         this.deleteEspecie()
       },

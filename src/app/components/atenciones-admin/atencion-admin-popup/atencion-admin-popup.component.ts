@@ -33,15 +33,23 @@ export class AtencionAdminPopupComponent {
     fechaHora: '',
     resultado: '',
     observaciones: '',
+    idAnimal: 0,
+    idPrecio: 0,
+    idVeterinario: 0,
+    idsInsumos: []
   }
 
   onConfirm() {
-    const { fechaHora, resultado, observaciones} = this.atencionForm.value
+    const { fechaHora, resultado, observaciones, idAnimal, idPrecio, idVeterinario} = this.atencionForm.value
 
     this.confirm.emit({
       fechaHora: fechaHora || '',
       resultado: resultado || '',
       observaciones: observaciones || '',
+      idAnimal: idAnimal || 0,
+      idPrecio: idPrecio || 0,
+      idVeterinario: idVeterinario || 0,
+      idsInsumos: [] //falta esto
     })
 
     this.display = false

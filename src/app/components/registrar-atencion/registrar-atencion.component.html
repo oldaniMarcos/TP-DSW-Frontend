@@ -1,3 +1,44 @@
-<h1>formulario de atencion, que pida nro de hist clinica de animal y resalte el cliente?, 
-  droplists para veterinarios y para insumos (con cantidades), 
-  precio que se use el mas reciente automaticamente, deberia decrementarse el stock del insumo usado y que no aparezca si tiene stock cero</h1>
+<p-dialog [header]="title" [(visible)]="display" [modal]="true" [closable]="false">
+
+  <div class="column gap-1 form-wrapper" [formGroup]="atencionForm">
+
+    <div class="row gap-05">
+      <span class="label">Nro. Hist. Clinica:</span>
+      <input type="text" formControlName="idAnimal">
+    </div>
+
+    <!--
+    <div class="row gap-05">
+      <span class="label">Fecha y hora:</span>
+      <input type="datetime-local" formControlName="fechaHora">
+    </div>
+    -->
+
+    <div class="row gap-05">
+      <span class="label">Resultado:</span>
+      <input type="text" formControlName="resultado">
+    </div>
+
+    <div class="row gap-05">
+      <span class="label">Observaciones:</span>
+      <input type="text" formControlName="observaciones">
+    </div>
+
+    <div class="row gap-05">
+      <label for="idVeterinario">Veterinario:</label>
+      <select id="idVeterinario" formControlName="idVeterinario">
+        <option *ngFor="let veterinario of veterinarios" [value]="veterinario.idVeterinario">
+          {{ veterinario.nombreYApellido }}
+        </option>
+      </select>
+    </div>
+
+  </div>
+
+  <p-footer>
+    <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!atencionForm.valid">Confirmar</button>
+
+    <button type="button" class="cancel" (click)="onCancel()">Cancelar</button>
+  </p-footer>
+
+</p-dialog>

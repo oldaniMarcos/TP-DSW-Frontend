@@ -20,7 +20,11 @@ export class AtencionesAdminComponent {
     idAtencion: 0,
     fechaHora: '',
     resultado: '',
-    observaciones: ''
+    observaciones: '',
+    idAnimal: 0,
+    idPrecio: 0,
+    idVeterinario: 0,
+    idsInsumos: []
   }
 
   constructor(

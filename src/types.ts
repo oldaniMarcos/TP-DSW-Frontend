@@ -30,6 +30,15 @@ export interface Cliente {
   password: string,
 }
 
+export interface Animal {
+  nroHistClinica?: number,
+  nombre: string,
+  fechaNac: string,
+  edad: number,
+  idCliente: number,
+  idRaza: number,
+}
+
 export interface Veterinario {
   idVeterinario?: number,
   nroMatricula: string,
@@ -45,6 +54,16 @@ export interface Atencion {
   fechaHora: string,
   resultado: string,
   observaciones: string,
+  idAnimal: number,
+  idPrecio: number,
+  idVeterinario: number,
+  idsInsumos: number[],
+}
+
+export interface PrecioAtencion {
+  idPrecioAtencion?: number,
+  fechaDesde: string,
+  valor: number,
 }
 
 export interface Insumo {

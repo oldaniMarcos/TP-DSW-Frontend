@@ -5,13 +5,19 @@
       <h2>Menu de administrador</h2>
   
       <div class="button-group">
-        <button class="btn" routerLink="/registrar-atencion">ATENCION</button>
+        <button class="btn" (click)="toggleCreatePopup()">ATENCION</button>
         <button class="btn" routerLink="/gestion">GESTION</button>
         <button class="btn" routerLink="/listados">LISTADOS</button>
         <button class="btn salir" (click)="logout()">SALIR</button>
       </div>
   
-      
     </div>
   </div>
-  
+
+  <app-registrar-atencion [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)"
+    title="Registrar atencion"></app-registrar-atencion>
+
+
+  <h1>formulario de atencion, que pida nro de hist clinica de animal y resalte el cliente?, droplists para veterinarios y para
+  insumos (con cantidades), precio que se use el mas reciente automaticamente, deberia decrementarse el stock del insumo
+  usado y que no aparezca si tiene stock cero</h1>
