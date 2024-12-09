@@ -5,13 +5,27 @@
 
 .tarjetas {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
+  flex-direction: column; // Cambia a columna para móviles
+  align-items: center; // Centra las tarjetas horizontalmente
+  gap: 16px; // Espacio entre las tarjetas
+
+  app-mascota-card {
+    width: 100%; // Asegura que las tarjetas ocupen el ancho completo
+    max-width: 400px; // Limita el ancho máximo de las tarjetas
+  }
 }
 
-app-mascota-card {
-  flex: 0 0 calc(50% - 16px);
+// Estilos para pantallas más grandes
+@media (min-width: 768px) {
+  .tarjetas {
+    flex-direction: row; // Cambia a fila en pantallas más grandes
+    flex-wrap: wrap; // Permite que las tarjetas se envuelvan
+    justify-content: center; // Centra las tarjetas en la fila
+  }
+
+  app-mascota-card {
+    flex: 0 0 calc(50% - 16px); // Dos tarjetas por fila en pantallas más grandes
+  }
 }
 
 .modal-overlay {
@@ -49,4 +63,24 @@ app-mascota-card {
   margin: 0 0.5rem;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.buscador {
+  margin-bottom: 1rem;
+
+  .search-input {
+    width: 80%;
+    max-width: 300px;
+    padding: 8px;
+    margin: 10px 0;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+
+    &:focus {
+      outline: none;
+      border-color: #66afe9;
+      box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+    }
+  }
 }

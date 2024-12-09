@@ -7,15 +7,26 @@
   <div class="modal-overlay" *ngIf="mostrarModal">
     <div class="modal-content">
       <app-registrar-mascota
+        (registrarMascota)="onConfirmRegistrarMascota($event)"
         (cerrarModal)="toggleModal()"
       ></app-registrar-mascota>
     </div>
   </div>
 
+  <div class="buscador">
+    <input
+      type="text"
+      [(ngModel)]="nroHistFiltro"
+      (input)="findAnimales()"
+      placeholder="Buscar por historia clínica"
+      class="search-input"
+    />
+  </div>
+
   <div class="tarjetas">
     <app-mascota-card
-      *ngFor="let mascota of mascotas"
-      [mascota]="mascota"
+      *ngFor="let animal of animales"
+      [animal]="animal"
     ></app-mascota-card>
   </div>
 
