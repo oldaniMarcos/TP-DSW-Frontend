@@ -5,6 +5,7 @@ import { AtencionService } from '../../services/atencion.service';
 import { ButtonModule } from 'primeng/button';
 import { AtencionAdminCardComponent } from './atencion-admin-card/atencion-admin-card.component';
 import { AtencionAdminPopupComponent } from './atencion-admin-popup/atencion-admin-popup.component';
+import { Subject, take } from 'rxjs';
 
 @Component({
   selector: 'app-atenciones-admin',
@@ -14,6 +15,8 @@ import { AtencionAdminPopupComponent } from './atencion-admin-popup/atencion-adm
   styleUrls: ['./atenciones-admin.component.scss'],
 })
 export class AtencionesAdminComponent {
+
+  //private destroy$ = new Subject<void>() //para manejar los unsuscribes, sino interfiere con el componente registrar-atencion
 
   atenciones: Atencion[] = []
   selected: Atencion = {
@@ -81,7 +84,7 @@ export class AtencionesAdminComponent {
   }
 
   deleteAtencion(idAtencion: number): void {
-    this.atencionService.delete(idAtencion).subscribe(
+    this.atencionService.delete(idAtencion).pipe(take(1)).subscribe(
       () => {
         this.atenciones = this.atenciones.filter(c => c.idAtencion !== idAtencion);
       },
@@ -124,5 +127,10 @@ export class AtencionesAdminComponent {
     this.updateAtencion(this.selected.idAtencion, atencion)
     this.displayUpdatePopup = false
   }
+
+  // ngOnDestroy(): void {
+  //   this.destroy$.next();
+  //   this.destroy$.complete();
+  // }
 
 }

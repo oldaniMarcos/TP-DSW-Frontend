@@ -1,9 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Animal, Atencion, PrecioAtencion, Veterinario } from '../../../types.js';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { VeterinarioService } from '../../services/veterinario.service.js';
+import { PrecioAtencionService } from '../../services/precio-atencion.service.js';
+import { InsumoService } from '../../services/insumo.service.js';
+import { AnimalService } from '../../services/animal.service.js';
+import { catchError, map, Observable, of, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-registrar-atencion',
@@ -14,8 +18,9 @@ import { VeterinarioService } from '../../services/veterinario.service.js';
 })
 export class RegistrarAtencionComponent {
 
-  //la fecha y hora se registra automaticamente
   // falta todavia
+
+  //private destroy$ = new Subject<void>()
 
   atencionForm: FormGroup
   animal: Animal = {
@@ -29,13 +34,17 @@ export class RegistrarAtencionComponent {
     fechaDesde: '',
     valor: 0,
   }
+
   veterinarios: Veterinario[] = []
 
   constructor( private formBuilder: FormBuilder
     , private veterinarioService: VeterinarioService
+    , private precioAtencionService: PrecioAtencionService
+    , private insumoService: InsumoService
+    , private animalService: AnimalService
   ) {
     this.atencionForm = this.formBuilder.group({
-      idAnimal: [0, [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
+      idAnimal: [0, [Validators.required, Validators.pattern('^[1-9][0-9]*$')], [this.animalValidator()]], // <-- funcion async
       idVeterinario: [0, [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
       resultado: ['', [Validators.required]],
       observaciones: ['', [Validators.required]],
@@ -58,15 +67,35 @@ export class RegistrarAtencionComponent {
     idsInsumos: []
   }
 
+  animalValidator(): AsyncValidatorFn { //tiene que ser async porque el findOne es async
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const value = control.value;
+
+      if (!value) {
+        return of(null);
+      }
+
+      return this.animalService.findOne(Number(value)).pipe(
+      map((data) => {
+        return data ? null : { notFound: true };
+      }),
+      catchError((error) => {
+        console.error('Error en animalValidator:', error);
+        return of({ notFound: true });
+      }))
+      
+    };
+  }
+
   onConfirm() {
-    const { fechaHora, resultado, observaciones, idAnimal, idPrecio, idVeterinario} = this.atencionForm.value
+    const {resultado, observaciones, idAnimal, idVeterinario} = this.atencionForm.value
 
     this.confirm.emit({
       fechaHora: new Date().toISOString() || '',
       resultado: resultado || '',
       observaciones: observaciones || '',
-      idAnimal: 8, //Number(idAnimal) || 0,
-      idPrecio: 1, //Number(idPrecio) || 0,
+      idAnimal: Number(idAnimal) || 0,
+      idPrecio: Number(this.precio.idPrecioAtencion) || 0,
       idVeterinario: Number(idVeterinario) || 0,
       idsInsumos: []  //por ahora vacio
     })
@@ -82,13 +111,23 @@ export class RegistrarAtencionComponent {
 
   ngOnChanges() {
     this.atencionForm.patchValue(this.atencion)
+    //this.atencionForm.reset()
   }
 
   ngOnInit(): void {
     this.veterinarioService.findAll().subscribe((data: Veterinario[]) => {
       this.veterinarios = data;
     });
+
+    this.precioAtencionService.findMostRecent().subscribe((data: PrecioAtencion) => {
+      this.precio = data
+    })   
+    
   }
 
+  // ngOnDestroy(): void {
+  //   this.destroy$.next();
+  //   this.destroy$.complete();
+  // }
 
 }

@@ -61,7 +61,7 @@ export class EspeciesComponent {
     (error) => {
       console.error('Error al crear una especie:', error);
     }
-  );
+  );      
   }
 
   updateEspecie(codEspecie: number, especie: Especie): void {

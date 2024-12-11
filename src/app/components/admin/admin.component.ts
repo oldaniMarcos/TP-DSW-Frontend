@@ -5,6 +5,7 @@ import { AtencionService } from '../../services/atencion.service.js';
 import { Atencion } from '../../../types.js';
 import { RegistrarAtencionComponent } from "../registrar-atencion/registrar-atencion.component";
 import { CommonModule } from '@angular/common';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -20,7 +21,7 @@ export class AdminComponent {
     , private atencionService: AtencionService
   ) {}
 
-  atenciones: Atencion[] = []
+  // atenciones: Atencion[] = []
   displayCreatePopup: boolean = false
 
 
@@ -30,7 +31,9 @@ export class AdminComponent {
   }
 
   createAtencion(atencion: Atencion): void {
-    this.atencionService.post(atencion).subscribe(
+    this.atencionService.post(atencion).subscribe()
+    /*
+    .subscribe(
       (newAtencion: Atencion) => {
         this.atenciones.push(newAtencion); 
       },
@@ -38,6 +41,7 @@ export class AdminComponent {
         console.error('Error al crear una atencion:', error);
       }
     );
+    */
   }
 
   toggleCreatePopup() {
