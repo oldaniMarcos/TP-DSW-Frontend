@@ -34,4 +34,8 @@ export class AtencionService {
   delete(idAtencion: number): Observable<void> {
     return this.apiService.delete<void>(`${this.URL}/${idAtencion}`, {})
   }
+
+  findByClienteId(clienteId: number): Observable<Atencion[]> {
+    return this.apiService.get<Atencion[]>(`${this.URL}/cliente/${clienteId}`, {});
+  }
 }

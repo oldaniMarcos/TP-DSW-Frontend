@@ -10,5 +10,5 @@ export class AtencionCardComponent {
   @Input() mascota!: string;
   @Input() fecha!: string;
   @Input() observaciones!: string;
-  @Input() precio!: number;
+  @Input() precioAtencion!: number;
 }

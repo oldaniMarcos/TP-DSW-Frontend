@@ -27,6 +27,7 @@
     <app-mascota-card
       *ngFor="let animal of animales"
       [animal]="animal"
+      (delete)="toggleDeletePopup($event)"
     ></app-mascota-card>
   </div>
 

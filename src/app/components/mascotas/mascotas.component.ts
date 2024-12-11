@@ -86,4 +86,25 @@ export class MascotasComponent {
       }
     );
   }
+
+  deleteMascota(nroHistClinica: number): void {
+    console.log('borrandoooo');
+    this.animalService.delete(nroHistClinica).subscribe(
+      () => {
+        this.animales = this.animales.filter(c => c.nroHistClinica !== nroHistClinica);
+      },
+      (error) => {
+        console.error(`Error al eliminar mascota con número ${nroHistClinica}:`, error);
+      }
+    );
+  }
+
+  toggleDeletePopup(animal: Animal) {
+    if (animal.nroHistClinica !== undefined) {
+      this.deleteMascota(animal.nroHistClinica);
+    } else {
+      console.error('No se puede eliminar: Número de historia clínica indefinido.');
+    }
+  }
+  
 }

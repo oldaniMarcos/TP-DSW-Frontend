@@ -3,13 +3,15 @@
 
   <div *ngFor="let atencion of atenciones">
     <app-atencion-card
-      [mascota]="atencion.mascota"
-      [fecha]="atencion.fecha"
+      [mascota]="atencion.animal?.nombre || 'Sin nombre'"
+      [fecha]="atencion.fechaHora"
       [observaciones]="atencion.observaciones"
-      [precio]="atencion.precio"
+      [precioAtencion]="atencion.precioAtencion?.valor ?? 0"
     >
     </app-atencion-card>
   </div>
+  
+  
 
   <div class="pagination">
     <button>&lt;</button>
