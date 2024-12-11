@@ -8,19 +8,29 @@ export class LocalStorageService {
   constructor() { }
 
   setItem(key: string, value: string): void {
-    localStorage.setItem(key, value);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(key, value);
+    }
   }
 
   getItem(key: string): string | null {
-    return localStorage.getItem(key);
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem(key);
+    } else {
+      //console.warn('localStorage no esta disponible')
+      return null
+    }
   }
 
   removeItem(key: string): void {
-    localStorage.removeItem(key);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(key);
+    }
   }
 
   clear(): void {
-    localStorage.clear();
+    if (typeof localStorage !== 'undefined') {
+      localStorage.clear();
+    }
   }
-  
 }
