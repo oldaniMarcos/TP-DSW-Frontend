@@ -1,0 +1,24 @@
+.warning {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.img {
+  height: 25px;
+}
+
+.options {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: white;
+}
+
+button:disabled {
+  opacity: 50%;
+}
+
+.cantidad {
+  width: 30px;
+}

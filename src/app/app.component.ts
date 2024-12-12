@@ -21,9 +21,9 @@ export class AppComponent {
 
   ngOnInit() {
 
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      this.localStorage.clear();
-    }
+    // if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    //   this.localStorage.clear();
+    // }
 
     //esconder el header en la pagina de login
     this.router.events.subscribe(() => {

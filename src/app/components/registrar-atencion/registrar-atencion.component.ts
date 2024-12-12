@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Animal, Atencion, PrecioAtencion, Veterinario } from '../../../types.js';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Animal, Atencion, Insumo, PrecioAtencion, Veterinario } from '../../../types.js';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { VeterinarioService } from '../../services/veterinario.service.js';
@@ -18,11 +18,8 @@ import { catchError, map, Observable, of, Subject } from 'rxjs';
 })
 export class RegistrarAtencionComponent {
 
-  // falta todavia
-
-  //private destroy$ = new Subject<void>()
-
   atencionForm: FormGroup
+  insumoSelections: FormArray
   animal: Animal = {
     nombre: '',
     fechaNac: '',
@@ -36,6 +33,8 @@ export class RegistrarAtencionComponent {
   }
 
   veterinarios: Veterinario[] = []
+  insumos: Insumo[] = []
+  selectedInsumos: { idInsumo: number, cantidad: number}[] = []
 
   constructor( private formBuilder: FormBuilder
     , private veterinarioService: VeterinarioService
@@ -43,12 +42,16 @@ export class RegistrarAtencionComponent {
     , private insumoService: InsumoService
     , private animalService: AnimalService
   ) {
+    this.insumoSelections = this.formBuilder.array([])  // <--------------------
+
     this.atencionForm = this.formBuilder.group({
       idAnimal: [0, [Validators.required, Validators.pattern('^[1-9][0-9]*$')], [this.animalValidator()]], // <-- funcion async
       idVeterinario: [0, [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
       resultado: ['', [Validators.required]],
       observaciones: ['', [Validators.required]],
+      idsInsumos: this.insumoSelections,
     })
+    
   }
 
   @Input() display: boolean = false
@@ -76,19 +79,20 @@ export class RegistrarAtencionComponent {
       }
 
       return this.animalService.findOne(Number(value)).pipe(
-      map((data) => {
-        return data ? null : { notFound: true };
-      }),
-      catchError((error) => {
-        console.error('Error en animalValidator:', error);
-        return of({ notFound: true });
+        map((data) => {
+          return data ? null : { notFound: true };
+        }),
+        catchError((error) => {
+          console.error('Error en animalValidator:', error);
+          return of({ notFound: true });
       }))
       
     };
   }
 
-  onConfirm() {
-    const {resultado, observaciones, idAnimal, idVeterinario} = this.atencionForm.value
+  onConfirm(): void {
+    
+    const {resultado, observaciones, idAnimal, idVeterinario, idsInsumos} = this.atencionForm.value
 
     this.confirm.emit({
       fechaHora: new Date().toISOString() || '',
@@ -97,7 +101,7 @@ export class RegistrarAtencionComponent {
       idAnimal: Number(idAnimal) || 0,
       idPrecio: Number(this.precio.idPrecioAtencion) || 0,
       idVeterinario: Number(idVeterinario) || 0,
-      idsInsumos: []  //por ahora vacio
+      idsInsumos: this.insumoSelections.value.map((i: {idInsumo: number}) => i.idInsumo),
     })
 
     this.display = false
@@ -111,7 +115,6 @@ export class RegistrarAtencionComponent {
 
   ngOnChanges() {
     this.atencionForm.patchValue(this.atencion)
-    //this.atencionForm.reset()
   }
 
   ngOnInit(): void {
@@ -121,13 +124,73 @@ export class RegistrarAtencionComponent {
 
     this.precioAtencionService.findMostRecent().subscribe((data: PrecioAtencion) => {
       this.precio = data
-    })   
+    })
+
+    this.insumoService.findAll().subscribe((data: Insumo[]) => {
+      this.insumos = data.filter((insumo) => insumo.stock > 0)
+    })
+
+    this.addInsumoSelection() // <--------------------
     
   }
 
-  // ngOnDestroy(): void {
-  //   this.destroy$.next();
-  //   this.destroy$.complete();
-  // }
+  //-----------------------------------------------------------------------------------
+
+  addInsumoSelection(): void {
+    this.insumoSelections.push(
+      this.formBuilder.group({
+        idInsumo: [null, Validators.required],
+        cantidad: ['', [Validators.required, Validators.min(1)]],
+      })
+    );
+  }
+
+  removeInsumoSelection(index: number): void {
+    if (this.insumoSelections.length > 1) {
+      this.insumoSelections.removeAt(index);
+    }
+  }
+
+  onInsumoChange(index: number, event: Event) {
+
+    const target = event.target as HTMLSelectElement
+    const idInsumo = Number(target?.value)
+
+    const control = this.insumoSelections.at(index) as FormGroup
+    control.patchValue({ idInsumo })
+  }
+
+  onCantidadChange(index: number, cantidad: number) {
+    const control = this.insumoSelections.at(index) as FormGroup
+    control.patchValue({ cantidad })
+  }
+
+  getStockLimit(idInsumo: number | null ): number {
+
+    if (!idInsumo) return 1
+
+    const insumo = this.insumos.find((item) => item.codInsumo === idInsumo);
+    return insumo ? insumo.stock : 1;
+  }
+
+  validateQuantity(index: number): string | null {
+
+    const control = this.insumoSelections.at(index) as FormGroup
+
+    const idInsumo = control.get('idInsumo')?.value
+    const cantidad = control.get('cantidad')?.value
+
+    const insumo = this.insumos.find((item) => item.codInsumo === idInsumo);
+
+    if (insumo && cantidad > insumo.stock) {
+      return `Excede cantidad (${insumo.stock}).`;
+    }
+    return null;
+
+  }
+
+  get insumoSelectionsControls(): FormGroup[] {
+    return this.insumoSelections.controls as FormGroup[];
+  }
 
 }
