@@ -1,9 +1,3 @@
-.warning {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 0.2rem;
-}
-
 .img {
   height: 25px;
 }
@@ -21,4 +15,10 @@ button:disabled {
 
 .cantidad {
   width: 30px;
+}
+
+.invalid {
+  border: 2px solid #ff6666;
+  border-radius: 3px;
+  outline: none;
 }

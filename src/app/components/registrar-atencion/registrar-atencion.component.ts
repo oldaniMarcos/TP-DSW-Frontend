@@ -94,18 +94,34 @@ export class RegistrarAtencionComponent {
     
     const {resultado, observaciones, idAnimal, idVeterinario, idsInsumos} = this.atencionForm.value
 
-    this.confirm.emit({
-      fechaHora: new Date().toISOString() || '',
-      resultado: resultado || '',
-      observaciones: observaciones || '',
-      idAnimal: Number(idAnimal) || 0,
-      idPrecio: Number(this.precio.idPrecioAtencion) || 0,
-      idVeterinario: Number(idVeterinario) || 0,
-      idsInsumos: this.insumoSelections.value.map((i: {idInsumo: number}) => i.idInsumo),
-    })
+    const insumoUpdates = this.insumoSelections.value.map((insumo: { idInsumo: number; cantidad: number }) =>
+      this.insumoService.decreaseStock(insumo.idInsumo, insumo.cantidad).toPromise()
+    );
 
-    this.display = false
-    this.displayChange.emit(this.display)
+    Promise.all(insumoUpdates)
+    .then(() => {
+      this.confirm.emit({
+        fechaHora: new Date().toISOString(),
+        resultado: resultado || '',
+        observaciones: observaciones || '',
+        idAnimal: Number(idAnimal) || 0,
+        idPrecio: Number(this.precio.idPrecioAtencion) || 0,
+        idVeterinario: Number(idVeterinario) || 0,
+        idsInsumos: this.insumoSelections.value.map((i: { idInsumo: number }) => i.idInsumo),
+      });
+
+      this.display = false;
+      this.displayChange.emit(this.display);
+
+      this.insumoService.findAll().subscribe((data: Insumo[]) => {
+        this.insumos = data.filter((insumo) => insumo.stock > 0)
+      })
+
+    })
+    .catch((error) => {
+      console.error('Error al actualizar stock', error);
+      alert('No se pudo actualizar el stock de algunos insumos.');
+    });
   }
   
   onCancel() {
@@ -165,6 +181,14 @@ export class RegistrarAtencionComponent {
     control.patchValue({ cantidad })
   }
 
+  getAvailableInsumos(index: number): Insumo[] {
+    const selectedIds = this.insumoSelectionsControls
+      .map((control, i) => (i !== index ? control.get('idInsumo')?.value : null))
+      .filter((id) => id !== null);
+
+    return this.insumos.filter((insumo) => !selectedIds.includes(insumo.codInsumo));
+  }
+
   getStockLimit(idInsumo: number | null ): number {
 
     if (!idInsumo) return 1
@@ -173,7 +197,7 @@ export class RegistrarAtencionComponent {
     return insumo ? insumo.stock : 1;
   }
 
-  validateQuantity(index: number): string | null {
+  validateQuantity(index: number): boolean | null {
 
     const control = this.insumoSelections.at(index) as FormGroup
 
@@ -183,10 +207,18 @@ export class RegistrarAtencionComponent {
     const insumo = this.insumos.find((item) => item.codInsumo === idInsumo);
 
     if (insumo && cantidad > insumo.stock) {
-      return `Excede cantidad (${insumo.stock}).`;
+      return true
     }
     return null;
 
+  }
+
+  canAddNewSelection(): boolean {
+    return this.insumoSelectionsControls.every((control: FormGroup) => {
+      const idInsumo = control.get('idInsumo')?.value;
+      const cantidad = control.get('cantidad')?.value;
+      return idInsumo && cantidad && cantidad > 0;
+    });
   }
 
   get insumoSelectionsControls(): FormGroup[] {

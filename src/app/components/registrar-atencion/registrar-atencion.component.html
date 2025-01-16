@@ -26,32 +26,21 @@
       </select>
     </div>
 
-    <!-- <div class="row gap-05">
-      <label>Insumos:</label>
-      <div *ngFor="let insumo of insumos" class="insumo-selection">
-        <div>
-          <span>{{ insumo.descripcion }} (Stock: {{ insumo.stock }})</span>
-          <input type="number" min="1" max="{{ insumo.stock }}" [placeholder]="'Cantidad'"
-            (change)="addInsumoFromEvent(insumo.codInsumo ?? 0, $event)" />
-          <button type="button" (click)="removeInsumo(insumo.codInsumo ?? 0)">Remove</button>
-        </div>
-      </div>
-    </div> -->
-
   <div *ngFor="let control of insumoSelectionsControls; let i = index" [formGroup]="control" class="row gap-1">
-    <!-- Dropdown to select insumo -->
-    <select formControlName="idInsumo"
-      (change)="onInsumoChange(i, $event)"
-    >
+    
+    <select formControlName="idInsumo" (change)="onInsumoChange(i, $event)">
 
       <option value="0" disabled >Insumo</option>
-      <option *ngFor="let insumo of insumos" [value]="insumo.codInsumo">
+      <option 
+        *ngFor="let insumo of getAvailableInsumos(i)" 
+        [value]="insumo.codInsumo"
+      >
         {{ insumo.descripcion }} ({{ insumo.stock }}u.)
       </option>
 
     </select>
 
-    <!-- Input for quantity -->
+    <!-- Cantidad -->
     <input 
       class="cantidad"
       type="number" 
@@ -59,27 +48,22 @@
       [max]="getStockLimit(control.get('idInsumo')?.value)"
       formControlName="cantidad" 
       placeholder="..." 
+      [class.invalid]="validateQuantity(i)"
     />
 
-    <div class="warning" *ngIf="validateQuantity(i)">
-      {{ validateQuantity(i) }}
-    </div>
-
-
-    <!-- Button to remove a selection -->
+    <!-- Remover insumo -->
     <button type="button" class="options" (click)="removeInsumoSelection(i)" [disabled]="insumoSelections.length === 1">
       <img class="img" src="remove.svg" alt="Borrar">
     </button>
 
-    <!-- Button to add a new insumo selection -->
-    <button type="button" class="options" (click)="addInsumoSelection()">
+    <!-- Agregar insumo -->
+    <button type="button" class="options" (click)="addInsumoSelection()" [disabled]="!canAddNewSelection() || getAvailableInsumos(-1).length === 0"> 
       <img class="img" src="add.svg" alt="Agregar">
     </button>
 
   </div>
 
   </div>
-
 
   <p-footer>
     <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!atencionForm.valid">Confirmar</button>

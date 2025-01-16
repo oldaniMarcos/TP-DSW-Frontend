@@ -40,4 +40,12 @@ export class InsumoService {
   findAllTipos(): Observable<TipoInsumo[]> {
     return this.apiService.get<TipoInsumo[]>(this.tipoURL, {});
   }
+
+  decreaseStock(codInsumo: number, cantidad: number): Observable<Insumo> {
+    return this.apiService.patch<Insumo, { cantidad: number }>(
+      `${this.URL}/${codInsumo}/decrease-stock`,
+      { cantidad },
+      {}
+    );
+  }
 }

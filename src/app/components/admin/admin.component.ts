@@ -5,7 +5,6 @@ import { AtencionService } from '../../services/atencion.service.js';
 import { Atencion } from '../../../types.js';
 import { RegistrarAtencionComponent } from "../registrar-atencion/registrar-atencion.component";
 import { CommonModule } from '@angular/common';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
