@@ -41,6 +41,7 @@ export class ClientePopupComponent {
     email: '',
     usuario: '',
     password: '',
+    rol: ''
   }
 
   onConfirm() {
@@ -54,6 +55,7 @@ export class ClientePopupComponent {
       email: email || '',
       usuario: usuario || '',
       password: password || '',
+      rol: 'cliente'
     })
 
     this.display = false

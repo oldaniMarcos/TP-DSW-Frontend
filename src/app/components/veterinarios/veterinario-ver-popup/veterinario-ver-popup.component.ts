@@ -1,27 +1,25 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Cliente } from '../../../../types.js';
+import { Veterinario } from '../../../../types.js';
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
-  selector: 'app-cliente-ver-popup',
+  selector: 'app-veterinario-ver-popup',
   standalone: true,
   imports: [DialogModule],
-  templateUrl: './cliente-ver-popup.component.html',
-  styleUrl: './cliente-ver-popup.component.scss'
+  templateUrl: './veterinario-ver-popup.component.html',
+  styleUrl: './veterinario-ver-popup.component.scss'
 })
-export class ClienteVerPopupComponent {
+export class VeterinarioVerPopupComponent {
 
   @Input() display: boolean = false
 
-  @Input() cliente: Cliente = {
+  @Input() veterinario: Veterinario = {
+    nroMatricula: '',
     dni: '',
     nombreYApellido: '',
-    telefono: '',
     direccion: '',
+    telefono: '',
     email: '',
-    usuario: '',
-    password: '',
-    rol: ''
   }
 
   @Output() displayChange = new EventEmitter<boolean>()
@@ -30,4 +28,5 @@ export class ClienteVerPopupComponent {
     this.display = false
     this.displayChange.emit(this.display)
   }
+
 }

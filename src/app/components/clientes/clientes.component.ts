@@ -25,7 +25,8 @@ export class ClientesComponent {
     direccion: '',
     email: '',
     usuario: '',
-    password: ''
+    password: '',
+    rol: ''
   };
 
   clientesFiltrados: Cliente[] = []
@@ -37,7 +38,8 @@ export class ClientesComponent {
     direccion: '',
     email: '',
     usuario: '',
-    password: ''
+    password: '',
+    rol: ''
   };
 
   dniFiltro: string = '';
@@ -53,12 +55,14 @@ export class ClientesComponent {
   findClientes(): void {
     this.clienteService.findAll().subscribe(
       (data: Cliente[]) => {
+
         if (this.dniFiltro) {
           // Filtra los clientes por DNI si se ingresó un filtro
-          this.clientes = data.filter(cliente => cliente.dni.includes(this.dniFiltro));
+          this.clientes = data.filter(cliente => cliente.dni.includes(this.dniFiltro) && cliente.rol === 'cliente');
         } else {
           // Si no hay filtro, muestra todos los clientes
-          this.clientes = data;
+          // this.clientes = data;
+          this.clientes = data.filter(cliente => cliente.rol === 'cliente');
         }
       },
       (error) => {
@@ -67,16 +71,18 @@ export class ClientesComponent {
     );
   }
 
-  findCliente(id: number): void {
-    this.clienteService.findOne(id).subscribe(
-      (data: Cliente) => {
-        this.selected = data
-      },
-      (error) => {
-        console.error(`Error al buscar cliente con id ${id}:`, error)
-      }
-    )
-  }
+  //esto no se usa???
+
+  // findCliente(id: number): void {
+  //   this.clienteService.findOne(id).subscribe(
+  //     (data: Cliente) => {
+  //       this.selected = data
+  //     },
+  //     (error) => {
+  //       console.error(`Error al buscar cliente con id ${id}:`, error)
+  //     }
+  //   )
+  // }
 
   /*
   filtrarPorDni() {

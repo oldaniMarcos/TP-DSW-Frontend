@@ -11,7 +11,7 @@
   </div>
 
   <div *ngFor="let veterinario of veterinarios">
-    <app-veterinario-card [veterinario]="veterinario" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">
+    <app-veterinario-card [veterinario]="veterinario" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)" (select)="toggleSelectPopup($event)">
     </app-veterinario-card>
   </div>
 
@@ -27,3 +27,5 @@
 
 <!--update-->
 <app-veterinario-popup [veterinario]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar veterinario"></app-veterinario-popup>
+
+<app-veterinario-ver-popup [veterinario]="selected" [(display)]="displaySelectPopup"></app-veterinario-ver-popup>

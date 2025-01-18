@@ -6,11 +6,12 @@ import { VeterinarioService } from '../../services/veterinario.service.js';
 import { VeterinarioPopupComponent } from './veterinario-popup/veterinario-popup.component.js';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import { VeterinarioVerPopupComponent } from './veterinario-ver-popup/veterinario-ver-popup.component.js';
 
 @Component({
   selector: 'app-veterinarios',
   standalone: true,
-  imports: [CommonModule, VeterinarioCardComponent, VeterinarioPopupComponent, ButtonModule, FormsModule],
+  imports: [CommonModule, VeterinarioCardComponent, VeterinarioPopupComponent, VeterinarioVerPopupComponent, ButtonModule, FormsModule],
   templateUrl: './veterinarios.component.html',
   styleUrl: './veterinarios.component.scss'
 })
@@ -110,6 +111,8 @@ export class VeterinariosComponent {
 
   displayCreatePopup: boolean = false
   displayUpdatePopup: boolean = false
+  displaySelectPopup: boolean = false
+
 
   //toggle popups
 
@@ -120,6 +123,11 @@ export class VeterinariosComponent {
   toggleUpdatePopup(veterinario: Veterinario) {
     this.selected = veterinario
     this.displayUpdatePopup = true
+  }
+
+  toggleSelectPopup(veterinario: Veterinario) {
+    this.selected = veterinario
+    this.displaySelectPopup = true
   }
 
   toggleDeletePopup(veterinario: Veterinario) {

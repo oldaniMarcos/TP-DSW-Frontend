@@ -1,0 +1,13 @@
+<p-dialog [header]="veterinario.nombreYApellido" [(visible)]="display" [modal]="true" [closable]="false">
+
+    <p><strong>Nro. Matrícula:</strong> {{ veterinario.nroMatricula }}</p>
+    <p><strong>DNI:</strong> {{ veterinario.dni }}</p>
+    <p><strong>Telefono:</strong> {{ veterinario.telefono }}</p>
+    <p><strong>Direccion:</strong> {{ veterinario.direccion }}</p>
+    <p><strong>Email:</strong> {{ veterinario.email }}</p>
+    
+    <p-footer>
+      <button type="button" class="cancel" (click)="onClose()">Cerrar</button>
+    </p-footer>
+    
+    </p-dialog>

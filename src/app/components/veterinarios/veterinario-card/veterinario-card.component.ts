@@ -23,6 +23,8 @@ export class VeterinarioCardComponent {
 
   @Output() edit: EventEmitter<Veterinario> = new EventEmitter<Veterinario>()
   @Output() delete: EventEmitter<Veterinario> = new EventEmitter<Veterinario>()
+  @Output() select: EventEmitter<Veterinario> = new EventEmitter<Veterinario>()
+
 
   editVeterinario() {
     this.edit.emit(this.veterinario)
@@ -40,6 +42,10 @@ export class VeterinarioCardComponent {
 
   deleteVeterinario() {
     this.delete.emit(this.veterinario)
+  }
+
+  selectVeterinario() {
+    this.select.emit(this.veterinario)
   }
 
   ngOnInit() {

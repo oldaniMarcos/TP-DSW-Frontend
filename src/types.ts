@@ -28,6 +28,8 @@ export interface Cliente {
   email: string,
   usuario: string,
   password: string,
+
+  rol: string
 }
 
 export interface Animal {
