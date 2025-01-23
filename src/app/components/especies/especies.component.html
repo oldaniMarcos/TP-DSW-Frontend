@@ -5,6 +5,16 @@
   <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
   <button class="btn" routerLink="/razas">Razas</button>
 
+  <div>
+    <input
+      type="text"
+      [(ngModel)]="especieFiltro"
+      (input)="findEspecies()"
+      placeholder="Buscar por descripción"
+      class="search-input"
+    />
+  </div>
+
   <div *ngFor="let especie of especies">
     <app-especie-card [especie]="especie"
     (delete)="toggleDeletePopup($event)">

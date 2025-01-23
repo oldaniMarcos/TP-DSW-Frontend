@@ -6,11 +6,12 @@ import { EspecieService } from '../../services/especie.service.js';
 import { EspeciePopupComponent } from './especie-popup/especie-popup.component.js';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-especies',
   standalone: true,
-  imports: [CommonModule, EspecieCardComponent, EspeciePopupComponent, ButtonModule, RouterLink],
+  imports: [CommonModule, EspecieCardComponent, EspeciePopupComponent, ButtonModule, RouterLink, FormsModule],
   templateUrl: './especies.component.html',
   styleUrl: './especies.component.scss'
 })
@@ -23,6 +24,8 @@ export class EspeciesComponent {
     descripcion: '',
   }
 
+  especieFiltro: string = '';
+
   constructor(
     private especieService: EspecieService
   ) { }
@@ -34,12 +37,19 @@ export class EspeciesComponent {
   findEspecies(): void {
     this.especieService.findAll().subscribe(
       (data: Especie[]) => {
-        this.especies = data
+        if (this.especieFiltro) {
+          const filtroLowerCase = this.especieFiltro.toLowerCase();
+          this.especies = data.filter(especie =>
+            especie.descripcion.toLowerCase().includes(filtroLowerCase)
+          );
+        } else {
+          this.especies = data;
+        }
       },
       (error) => {
-        console.error('Error al buscar especies:', error)
+        console.error('Error al buscar especies:', error);
       }
-    )
+    );
   }
 
   findEspecie(codEspecie: number): void {

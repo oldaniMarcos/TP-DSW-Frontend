@@ -5,6 +5,16 @@
   <!--Crear vet-->
   <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
+  <div>
+    <input
+      type="text"
+      [(ngModel)]="insumoFiltro"
+      (input)="findInsumos()"
+      placeholder="Buscar por descripción"
+      class="search-input"
+    />
+  </div>
+
   <div *ngFor="let insumo of insumos">
     <app-insumo-card [insumo]="insumo" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">
     </app-insumo-card>

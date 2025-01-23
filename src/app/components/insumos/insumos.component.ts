@@ -5,11 +5,12 @@ import { Insumo } from '../../../types.js';
 import { InsumoService } from '../../services/insumo.service.js';
 import { InsumoPopupComponent } from './insumo-popup/insumo-popup.component.js';
 import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-insumos',
   standalone: true,
-  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, ButtonModule],
+  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, ButtonModule, FormsModule],
   templateUrl: './insumos.component.html',
   styleUrl: './insumos.component.scss'
 })
@@ -24,6 +25,8 @@ export class InsumosComponent {
     idTipoInsumo: 0,
   }
 
+  insumoFiltro: string = '';
+
   constructor(
     private insumoService: InsumoService
   ) { }
@@ -33,15 +36,22 @@ export class InsumosComponent {
   }
 
   findInsumos(): void {
-    this.insumoService.findAll().subscribe(
-      (data: Insumo[]) => {
-        this.insumos = data
-      },
-      (error) => {
-        console.error('Error al buscar insumos:', error)
-      }
-    )
-  }
+      this.insumoService.findAll().subscribe(
+        (data: Insumo[]) => {
+          if (this.insumoFiltro) {
+            const filtroLowerCase = this.insumoFiltro.toLowerCase();
+            this.insumos = data.filter(insumo =>
+              insumo.descripcion.toLowerCase().includes(filtroLowerCase)
+            );
+          } else {
+            this.insumos = data;
+          }
+        },
+        (error) => {
+          console.error('Error al buscar insumos:', error);
+        }
+      );
+    }
 
   findInsumo(codInsumo: number): void {
     this.insumoService.findOne(codInsumo).subscribe(
