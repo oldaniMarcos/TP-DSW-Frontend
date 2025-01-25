@@ -4,11 +4,12 @@ import { Atencion } from '../../../../types';
 import { FormsModule } from '@angular/forms';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-atencion-admin-card',
   standalone: true,
-  imports: [FormsModule, ConfirmPopupModule, ToastModule],
+  imports: [FormsModule, ConfirmPopupModule, ToastModule, CommonModule],
   templateUrl: './atencion-admin-card.component.html',
   styleUrls: ['./atencion-admin-card.component.scss'],
 })
@@ -19,6 +20,11 @@ export class AtencionAdminCardComponent {
   @ViewChild('deleteButton') deleteButton: any
 
   @Input() atencion!: Atencion
+  @Input() mascota!: string;
+  @Input() fecha!: string;
+  @Input() resultado!: string;
+  @Input() observaciones!: string;
+  @Input() precioAtencion!: number;
 
   @Output() edit: EventEmitter<Atencion> = new EventEmitter<Atencion>()
   @Output() delete: EventEmitter<Atencion> = new EventEmitter<Atencion>()

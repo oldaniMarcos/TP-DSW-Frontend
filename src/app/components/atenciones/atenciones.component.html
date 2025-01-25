@@ -1,23 +1,30 @@
 <div class="atenciones">
   <h2>Atenciones</h2>
 
-  <div *ngFor="let atencion of atenciones">
-    <app-atencion-card
+  <div class="filter">
+    <label for="filter-date">Filtrar por fecha: </label>
+    <input
+      type="date"
+      id="filter-date"
+      [(ngModel)]="selectedDate"
+      (change)="filterAtencionesByDate()"
+    />
+  </div>
+
+  <div *ngIf="filteredAtenciones.length > 0; else noAtenciones">
+    <div *ngFor="let atencion of filteredAtenciones">
+      <app-atencion-card
       [mascota]="atencion.animal?.nombre || 'Sin nombre'"
       [fecha]="atencion.fechaHora"
+      [resultado]="atencion.resultado"
       [observaciones]="atencion.observaciones"
       [precioAtencion]="atencion.precioAtencion?.valor ?? 0"
     >
     </app-atencion-card>
+    </div>
   </div>
-  
-  
 
-  <div class="pagination">
-    <button>&lt;</button>
-    <span>1 / 1</span>
-    <button>&gt;</button>
-  </div>
-</div>
-
-<h1>Integrar con backend</h1>
+  <ng-template #noAtenciones>
+    <br>
+    <p>No hay atenciones para la fecha seleccionada.</p>
+  </ng-template>

@@ -5,11 +5,12 @@ import { AtencionService } from '../../services/atencion.service';
 import { Atencion } from '../../../types';
 import { Animal } from '../../../types';
 import { PrecioAtencion } from '../../../types';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-atenciones',
   standalone: true,
-  imports: [CommonModule, AtencionCardComponent],
+  imports: [CommonModule, FormsModule, AtencionCardComponent],
   templateUrl: './atenciones.component.html',
   styleUrls: ['./atenciones.component.scss'],
 })
@@ -21,27 +22,36 @@ export class AtencionesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchAtenciones();
+    this.findAtenciones();
   }
 
-  fetchAtenciones(): void {
-    const idCliente = localStorage.getItem('id');
-    if (!idCliente) {
-      console.error('No se encontró el ID del cliente logueado en localStorage.');
-      return;
-    }
+  selectedDate: string = '';
+  filteredAtenciones = [...this.atenciones];
 
-    const idClienteNumber = parseInt(idCliente, 10);
-    if (isNaN(idClienteNumber)) {
-      console.error('El ID del cliente en localStorage no es un número válido.');
-      return;
+  findAtenciones(): void {
+    const id = localStorage.getItem('id');
+    if (id) {
+      this.atencionService.findByClienteId(+id).subscribe(
+        (data: Atencion[]) => {
+          this.atenciones = data;
+        },
+        (error) => {
+          console.error('Error al buscar atenciones:', error);
+        }
+      );
+    } else {
+      console.error('No se encontró el ID del cliente en el localStorage.');
     }
-
-    this.atencionService.findByClienteId(idClienteNumber).subscribe(
-      (data: Atencion[]) => {
-        this.atenciones = data;
-        console.log(this.atenciones);
-      }, 
-    );
   }
+  
+  filterAtencionesByDate(): void {
+      if (this.selectedDate) {
+        this.filteredAtenciones = this.atenciones.filter((atencion) => {
+          const atencionFecha = new Date(atencion.fechaHora).toLocaleDateString('en-CA');
+          return atencionFecha === this.selectedDate;
+        });
+      } else {
+        this.filteredAtenciones = [...this.atenciones];
+      }
+    }
 }

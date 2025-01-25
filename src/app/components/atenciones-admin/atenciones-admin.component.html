@@ -3,19 +3,34 @@
 
   <!--falta boton para crear nueva entidad precioAtencion-->
 
-  <div *ngFor="let atencion of atenciones">
-    <app-atencion-admin-card
-      [atencion]="atencion" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)"
-    >
-    </app-atencion-admin-card>
+  <div class="filter">
+    <label for="filter-date">Filtrar por fecha: </label>
+    <input
+      type="date"
+      id="filter-date"
+      [(ngModel)]="selectedDate"
+      (change)="filterAtencionesByDate()"
+    />
   </div>
 
-  <div class="pagination">
-    <button>&lt;</button>
-    <span>1 / 1</span>
-    <button>&gt;</button>
+  <div *ngIf="filteredAtenciones.length > 0; else noAtenciones">
+    <div *ngFor="let atencion of filteredAtenciones">
+      <app-atencion-admin-card
+        [atencion]="atencion"
+        [mascota]="atencion.animal?.nombre || 'Sin nombre'"
+        [fecha]="atencion.fechaHora"
+        [resultado]="atencion.resultado"
+        [observaciones]="atencion.observaciones"
+        [precioAtencion]="atencion.precioAtencion?.valor ?? 0"
+        (edit)="toggleUpdatePopup($event)"
+        (delete)="toggleDeletePopup($event)"
+      ></app-atencion-admin-card>
+    </div>
   </div>
-</div>
+
+  <ng-template #noAtenciones>
+    <p>No hay atenciones para la fecha seleccionada.</p>
+  </ng-template>
 
 <!--create, no esta siendo usado-->
 <app-atencion-admin-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear atencion"></app-atencion-admin-popup>

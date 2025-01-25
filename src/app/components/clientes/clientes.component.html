@@ -18,14 +18,6 @@
       <app-cliente-card [cliente]="cliente" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)" (select)="toggleSelectPopup($event)">
       </app-cliente-card>
     </div>
-  
-    <div class="pagination">
-      <button>&lt;</button>
-      <span>1 / 1</span>
-      <button>&gt;</button>
-    </div>
-  </div>
-
 
 <!--create-->
 <app-cliente-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear cliente"></app-cliente-popup>

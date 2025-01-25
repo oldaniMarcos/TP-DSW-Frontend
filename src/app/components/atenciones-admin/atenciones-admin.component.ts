@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Atencion } from '../../../types';
+import { Animal, Atencion, PrecioAtencion } from '../../../types';
 import { AtencionService } from '../../services/atencion.service';
 import { ButtonModule } from 'primeng/button';
 import { AtencionAdminCardComponent } from './atencion-admin-card/atencion-admin-card.component';
 import { AtencionAdminPopupComponent } from './atencion-admin-popup/atencion-admin-popup.component';
 import { Subject, take } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-atenciones-admin',
   standalone: true,
-  imports: [CommonModule, AtencionAdminCardComponent, AtencionAdminPopupComponent, ButtonModule],
+  imports: [CommonModule, AtencionAdminCardComponent, AtencionAdminPopupComponent, ButtonModule, FormsModule],
   templateUrl: './atenciones-admin.component.html',
   styleUrls: ['./atenciones-admin.component.scss'],
 })
@@ -18,7 +19,7 @@ export class AtencionesAdminComponent {
 
   //private destroy$ = new Subject<void>() //para manejar los unsuscribes, sino interfiere con el componente registrar-atencion
 
-  atenciones: Atencion[] = []
+  atenciones: (Atencion & { animal?: Animal, precioAtencion?: PrecioAtencion })[] = [];
   selected: Atencion = {
     idAtencion: 0,
     fechaHora: '',
@@ -38,6 +39,9 @@ export class AtencionesAdminComponent {
     this.findAtenciones()
   }
 
+  selectedDate: string = '';
+  filteredAtenciones = [...this.atenciones];
+
   findAtenciones(): void {
     this.atencionService.findAll().subscribe(
       (data: Atencion[]) => {
@@ -48,6 +52,18 @@ export class AtencionesAdminComponent {
       }
     )
   }
+
+  filterAtencionesByDate(): void {
+    if (this.selectedDate) {
+      this.filteredAtenciones = this.atenciones.filter((atencion) => {
+        const atencionFecha = new Date(atencion.fechaHora).toLocaleDateString('en-CA');
+        return atencionFecha === this.selectedDate;
+      });
+    } else {
+      this.filteredAtenciones = [...this.atenciones]; // Mostrar todas las atenciones
+    }
+  }
+  
 
   findAtencion(idAtencion: number): void {
     this.atencionService.findOne(idAtencion).subscribe(
