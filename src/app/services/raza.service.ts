@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environment.js';
 import { ApiService } from './api.service.js';
 import { Observable } from 'rxjs';
-import { Raza } from '../../types.js';
+import { Especie, Raza } from '../../types.js';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,10 @@ export class RazaService {
 
   patch(codRaza: number, raza: Raza): Observable<Raza> {
     return this.apiService.patch<Raza, Raza>(`${this.URL}/${codRaza}`, raza, {});
+  }
+
+  findEspecie(codRaza: number): Observable<Especie> {
+    return this.apiService.get<Especie>(`${this.URL}/${codRaza}/especie`, {});
   }
 
   delete(codRaza: number): Observable<void> {

@@ -5,35 +5,27 @@ import { RazaCardComponent } from './raza-card/raza-card.component.js';
 import { Especie, Raza } from '../../../types.js';
 import { RazaService } from '../../services/raza.service.js';
 import { EspecieService } from '../../services/especie.service.js';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-razas',
   standalone: true,
-  imports: [CommonModule, RazaPopupComponent, RazaCardComponent],
+  imports: [CommonModule, RazaPopupComponent, RazaCardComponent, FormsModule],
   templateUrl: './razas.component.html',
   styleUrl: './razas.component.scss'
 })
 export class RazasComponent {
 
-
   razas: Raza[] = []
+  razasFiltro: string = ''
+
   selected: Raza = {
     codRaza: 0,
     descripcion: '',
     idEspecie: 0,
   }
 
-  /*
-  razasFiltro: Raza[] = []
-  selectedFiltro: Raza = {
-    codRaza: 0,
-    descripcion: '',
-    idEspecie: 0
-  }
-
   especies: Especie[] = []
-  espFiltro: string = ''
-  */
 
   constructor (
     private razaService: RazaService, private especieService: EspecieService
@@ -41,14 +33,20 @@ export class RazasComponent {
 
   ngOnInit() {
     this.findRazas()
-    //this.findEspecies()
+    this.findEspecies() 
   }
-
   
   findRazas(): void {
     this.razaService.findAll().subscribe(
       (data: Raza[]) => {
-        this.razas = data
+        if (this.razasFiltro) {
+          const filtroLowerCase = this.razasFiltro.toLowerCase();
+          this.razas = data.filter(raza =>
+            raza.descripcion.toLowerCase().includes(filtroLowerCase)
+          );
+        } else {
+          this.razas = data;
+        }
       },
       (error) => {
         console.error('Error al buscar razas:', error)
@@ -56,8 +54,6 @@ export class RazasComponent {
     )
   }
 
-  // no usado por el momento
-  /*
   findEspecies(): void {
     this.especieService.findAll().subscribe(
       (data: Especie[]) => {
@@ -68,7 +64,6 @@ export class RazasComponent {
       }
     )
   }
-  */
 
   findRaza(codRaza: number): void {
     this.razaService.findOne(codRaza).subscribe(

@@ -4,16 +4,15 @@
 
   <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
-  <!--no se usa por el momento
-  <div class="row gap-05">
-    <label for="idEspecie">Especie:</label>
-    <select id="idEspecie" formControlName="idEspecie" >
-      <option *ngFor="let especie of especies" [value]="especie.codEspecie">
-        {{ especie.descripcion }}
-      </option>
-    </select>
+  <div>
+    <input
+      type="text"
+      [(ngModel)]="razasFiltro"
+      (input)="findRazas()"
+      placeholder="Buscar por descripción"
+      class="search-input"
+    />
   </div>
-  -->
 
   <div *ngFor="let raza of razas">
     <app-raza-card [raza]="raza"
@@ -27,6 +26,3 @@
 
 <!--update-->
 <app-raza-popup [raza]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar raza"></app-raza-popup>
-
-<p>Mostrar la especie, buscar por especie</p>
-

@@ -3,7 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
-import { Raza } from '../../../../types.js';
+import { Especie, Raza } from '../../../../types.js';
+import { RazaService } from '../../../services/raza.service.js';
 
 @Component({
   selector: 'app-raza-card',
@@ -14,7 +15,8 @@ import { Raza } from '../../../../types.js';
 })
 export class RazaCardComponent {
 
-  constructor(private confirmationService: ConfirmationService) { }
+  constructor(private confirmationService: ConfirmationService
+    , private razaService: RazaService) { }
 
   @ViewChild('deleteButton') deleteButton: any
 
@@ -22,6 +24,11 @@ export class RazaCardComponent {
 
   @Output() edit: EventEmitter<Raza> = new EventEmitter<Raza>()
   @Output() delete: EventEmitter<Raza> = new EventEmitter<Raza>()
+
+  especie: Especie = {
+    codEspecie: 0,
+    descripcion: '',
+  }
 
   editRaza() {
     this.edit.emit(this.raza)
@@ -37,13 +44,23 @@ export class RazaCardComponent {
     })
   }
 
+  findEspecie(codRaza: number): void {
+    this.razaService.findEspecie(codRaza).subscribe(
+      (data: Especie) => {
+        this.especie = data
+      },
+      (error) => {
+        console.error(`Error al buscar especie de la raza con ID ${codRaza}:`, error)
+      }
+    )
+  }
+
   deleteRaza() {
     this.delete.emit(this.raza)
   }
 
   ngOnInit() {
-
+    this.findEspecie(this.raza.codRaza!)
   }
-
 
 }
