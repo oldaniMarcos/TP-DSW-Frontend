@@ -1,7 +1,7 @@
-.insumos {
+.tipos-insumos {
   text-align: center;
 
-  .insumos-card {
+  .tipos-insumos-card {
     margin: 0.5rem auto;
     width: 90%;
   }
@@ -44,7 +44,7 @@
   }
 
   @media (min-width: 768px) {
-    .insumos-card {
+    .tipos-insumos-card {
       width: 60%;
     }
   }

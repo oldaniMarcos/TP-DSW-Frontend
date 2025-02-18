@@ -1,0 +1,23 @@
+<h2>Tipos de Insumos</h2>
+
+<div class="tipos-insumos">
+
+  <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
+
+  <div>
+    <input type="text" [(ngModel)]="tipoInsumoFiltro" (input)="findTiposInsumos()" placeholder="Buscar por nombre"
+      class="search-input" />
+  </div>
+
+  <div *ngFor="let tipoInsumo of tiposInsumos">
+    <app-tipo-insumo-card [tipoInsumo]="tipoInsumo" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">
+    </app-tipo-insumo-card>
+  </div>
+
+  <!--create-->
+  <app-tipo-insumo-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)"
+    title="Crear tipo de insumo"></app-tipo-insumo-popup>
+
+  <!--update-->
+  <app-tipo-insumo-popup [tipoInsumo]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)"
+    title="Editar tipo de insumo"></app-tipo-insumo-popup>

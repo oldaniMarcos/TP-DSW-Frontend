@@ -1,4 +1,4 @@
-.insumo-card {
+.tipo-insumo-card {
   background: #f0f4f8;
   padding: 10px;
   border-radius: 5px;
@@ -14,17 +14,5 @@
     gap: 10px;
     margin-top: 10px;
     justify-content: center;
-  }
-
-  button {
-    padding: 8px;
-    font-size: 15px;
-  }
-
-  @media (min-width: 768px) {
-    button {
-      padding: 10px;
-      font-size: 1rem;
-    }
   }
 }

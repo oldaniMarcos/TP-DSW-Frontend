@@ -1,0 +1,11 @@
+<div class="tipo-insumo-card">
+  <h3>{{ tipoInsumo.descripcion }}</h3>
+
+  <div class="actions">
+    <button type="button" (click)="editTipoInsumo()" class="edit">Editar</button>
+
+    <button type="button" (click)="confirmDelete()" #deleteButton class="delete">Eliminar</button>
+  </div>
+</div>
+
+<p-confirmPopup defaultFocus="none" styleClass="p-confirmPopup"></p-confirmPopup>

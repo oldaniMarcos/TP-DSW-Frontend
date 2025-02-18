@@ -8,11 +8,12 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { InsumoVerPopupComponent } from './insumo-ver-popup/insumo-ver-popup.component.js';
 import { Observable } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-insumos',
   standalone: true,
-  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, InsumoVerPopupComponent, ButtonModule, FormsModule],
+  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, InsumoVerPopupComponent, ButtonModule, FormsModule, RouterLink],
   templateUrl: './insumos.component.html',
   styleUrl: './insumos.component.scss'
 })
@@ -84,7 +85,6 @@ export class InsumosComponent {
 
   updateInsumo(codInsumo: number, insumo: Insumo): void {
 
-    console.log('Datos a enviar:', insumo);
     this.insumoService.patch(codInsumo, insumo).subscribe(
       (updatedInsumo: Insumo) => {
         const index = this.insumos.findIndex(c => c.codInsumo === codInsumo);

@@ -16,6 +16,7 @@ import { VeterinariosComponent } from './components/veterinarios/veterinarios.co
 import { RazasComponent } from './components/razas/razas.component.js';
 import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component.js';
 import { RolGuard } from './guards/rol.guard.js';
+import { TiposInsumosComponent } from './components/tipos-insumos/tipos-insumos.component.js';
 
 export const routes: Routes = [
 
@@ -48,6 +49,8 @@ export const routes: Routes = [
   { path: 'razas', component: RazasComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
   { path: 'insumos', component: InsumosComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
+
+  { path: 'tipos-insumos', component: TiposInsumosComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
   { path: 'veterinarios', component: VeterinariosComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
