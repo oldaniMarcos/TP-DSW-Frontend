@@ -10,13 +10,13 @@
       type="text"
       [(ngModel)]="insumoFiltro"
       (input)="findInsumos()"
-      placeholder="Buscar por descripción"
+      placeholder="Buscar por nombre"
       class="search-input"
     />
   </div>
 
   <div *ngFor="let insumo of insumos">
-    <app-insumo-card [insumo]="insumo" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">
+    <app-insumo-card [insumo]="insumo" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)" (select)="toggleSelectPopup($event)">
     </app-insumo-card>
   </div>
 
@@ -25,3 +25,5 @@
 
 <!--update-->
 <app-insumo-popup [insumo]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar insumo"></app-insumo-popup>
+
+<app-insumo-ver-popup [insumo]="selected" [tipoInsumo]="tipoInsumo" [(display)]="displaySelectPopup"></app-insumo-ver-popup>

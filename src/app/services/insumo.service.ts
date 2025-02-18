@@ -48,4 +48,8 @@ export class InsumoService {
       {}
     );
   }
+
+  findTipoInsumo(codInsumo: number): Observable<TipoInsumo> {
+    return this.apiService.get<TipoInsumo>(`${this.URL}/${codInsumo}/tipo-insumo`, {});
+  }
 }

@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { InsumoCardComponent } from './insumo-card/insumo-card.component.js';
-import { Insumo } from '../../../types.js';
+import { Insumo, TipoInsumo } from '../../../types.js';
 import { InsumoService } from '../../services/insumo.service.js';
 import { InsumoPopupComponent } from './insumo-popup/insumo-popup.component.js';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import { InsumoVerPopupComponent } from './insumo-ver-popup/insumo-ver-popup.component.js';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-insumos',
   standalone: true,
-  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, ButtonModule, FormsModule],
+  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, InsumoVerPopupComponent, ButtonModule, FormsModule],
   templateUrl: './insumos.component.html',
   styleUrl: './insumos.component.scss'
 })
@@ -27,6 +29,11 @@ export class InsumosComponent {
 
   insumoFiltro: string = '';
 
+  tipoInsumo: TipoInsumo = {
+    codTipoInsumo: 0,
+    descripcion: '',
+  }
+
   constructor(
     private insumoService: InsumoService
   ) { }
@@ -36,22 +43,22 @@ export class InsumosComponent {
   }
 
   findInsumos(): void {
-      this.insumoService.findAll().subscribe(
-        (data: Insumo[]) => {
-          if (this.insumoFiltro) {
-            const filtroLowerCase = this.insumoFiltro.toLowerCase();
-            this.insumos = data.filter(insumo =>
-              insumo.descripcion.toLowerCase().includes(filtroLowerCase)
-            );
-          } else {
-            this.insumos = data;
-          }
-        },
-        (error) => {
-          console.error('Error al buscar insumos:', error);
+    this.insumoService.findAll().subscribe(
+      (data: Insumo[]) => {
+        if (this.insumoFiltro) {
+          const filtroLowerCase = this.insumoFiltro.toLowerCase();
+          this.insumos = data.filter(insumo =>
+            insumo.descripcion.toLowerCase().includes(filtroLowerCase)
+          );
+        } else {
+          this.insumos = data;
         }
-      );
-    }
+      },
+      (error) => {
+        console.error('Error al buscar insumos:', error);
+      }
+    );
+  }
 
   findInsumo(codInsumo: number): void {
     this.insumoService.findOne(codInsumo).subscribe(
@@ -100,8 +107,20 @@ export class InsumosComponent {
     );
   }
 
+  findTipoInsumo(codInsumo: number): void {
+    this.insumoService.findTipoInsumo(codInsumo).subscribe(
+      (data: TipoInsumo | null) => {
+        this.tipoInsumo = data ?? { codTipoInsumo: 0, descripcion: '' };
+      },
+      (error) => {
+        console.error(`Error al buscar tipo de insumo del insumo con ID ${codInsumo}:`, error);
+      }
+    );
+  }
+
   displayCreatePopup: boolean = false
   displayUpdatePopup: boolean = false
+  displaySelectPopup: boolean = false
 
   //toggle popups
 
@@ -112,6 +131,12 @@ export class InsumosComponent {
   toggleUpdatePopup(insumo: Insumo) {
     this.selected = insumo
     this.displayUpdatePopup = true
+  }
+
+  toggleSelectPopup(insumo: Insumo) {
+    this.selected = insumo
+    this.findTipoInsumo(insumo.codInsumo!)
+    this.displaySelectPopup = true
   }
 
   toggleDeletePopup(insumo: Insumo) {

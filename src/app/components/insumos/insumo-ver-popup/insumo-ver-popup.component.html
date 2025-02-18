@@ -1,0 +1,12 @@
+<p-dialog [header]="insumo.descripcion" [(visible)]="display" [modal]="true" [closable]="false">
+
+  <p><strong>Stock:</strong> {{ insumo.stock }}</p>
+  <p><strong>Fecha de vencimiento:</strong> {{ insumo.fechaVencimiento }}</p>
+  <p><strong>Tipo de insumo:</strong> {{ tipoInsumo.descripcion }}</p>
+
+
+  <p-footer>
+    <button type="button" class="cancel" (click)="onClose()">Cerrar</button>
+  </p-footer>
+
+</p-dialog>
