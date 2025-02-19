@@ -1,7 +1,11 @@
 <div class="atenciones">
   <h2>Atenciones</h2>
 
-  <!--falta boton para crear nueva entidad precioAtencion-->
+  <aside>
+    <h3>El precio de atención actual es: $<strong>{{ precioAtencionActual?.valor || 'No disponible' }}</strong></h3><br>
+    <button class="btn" (click)="toggleActualizarAtencionPopup()">Actualizar el precio de la atención</button>
+  </aside>
+  
 
   <div class="filter">
     <label for="filter-date">Filtrar por fecha: </label>
@@ -37,3 +41,6 @@
 
 <!--update-->
 <app-atencion-admin-popup [atencion]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar atencion"></app-atencion-admin-popup>
+
+
+<app-precio-atencion-popup [(display)]="displayActualizarAtencionPopup" (confirm)="onConfirmActualizarPrecioAtencion($event)" title="Crear atencion"></app-precio-atencion-popup>

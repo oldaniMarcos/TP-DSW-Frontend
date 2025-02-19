@@ -1,0 +1,18 @@
+<p-dialog [header]="title" [(visible)]="display" [modal]="true" [closable]="false">
+
+    <div class="column gap-1 form-wrapper" [formGroup]="precioAtencionForm">
+
+        <div class="row gap-05">
+            <span class="label">Nuevo valor:</span>
+            <input type="text" formControlName="valor">
+        </div>
+
+    </div>
+
+    <p-footer>
+        <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!precioAtencionForm.valid">Confirmar</button>
+
+        <button type="button" class="cancel" (click)="onCancel()">Cancelar</button>
+    </p-footer>
+
+</p-dialog>

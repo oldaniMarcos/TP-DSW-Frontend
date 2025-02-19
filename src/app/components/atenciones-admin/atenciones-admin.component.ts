@@ -2,16 +2,18 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Animal, Atencion, PrecioAtencion } from '../../../types';
 import { AtencionService } from '../../services/atencion.service';
+import { PrecioAtencionService } from '../../services/precio-atencion.service';
 import { ButtonModule } from 'primeng/button';
 import { AtencionAdminCardComponent } from './atencion-admin-card/atencion-admin-card.component';
 import { AtencionAdminPopupComponent } from './atencion-admin-popup/atencion-admin-popup.component';
 import { Subject, take } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { PrecioAtencionPopupComponent } from './precio-atencion-popup/precio-atencion-popup.component';
 
 @Component({
   selector: 'app-atenciones-admin',
   standalone: true,
-  imports: [CommonModule, AtencionAdminCardComponent, AtencionAdminPopupComponent, ButtonModule, FormsModule],
+  imports: [CommonModule, AtencionAdminCardComponent, AtencionAdminPopupComponent, ButtonModule, FormsModule, PrecioAtencionPopupComponent],
   templateUrl: './atenciones-admin.component.html',
   styleUrls: ['./atenciones-admin.component.scss'],
 })
@@ -31,12 +33,22 @@ export class AtencionesAdminComponent {
     idsInsumos: []
   }
 
+  precioAtencion: PrecioAtencion = {
+    idPrecioAtencion: 0,
+    fechaDesde: '',
+    valor: 0
+  }
+
   constructor(
-    private atencionService: AtencionService
+    private atencionService: AtencionService,
+    private precioAtencionService: PrecioAtencionService
   ) { }
 
+  precioAtencionActual: PrecioAtencion | null = null;
+
   ngOnInit() {
-    this.findAtenciones()
+    this.findAtenciones();
+    this.findPrecioAtencionActual();
   }
 
   selectedDate: string = '';
@@ -110,13 +122,46 @@ export class AtencionesAdminComponent {
     );
   }
 
+  findPrecioAtencionActual(): void {
+    this.precioAtencionService.findAll().subscribe(
+      (precios: PrecioAtencion[]) => {
+        if (precios.length > 0) {
+          this.precioAtencionActual = precios.reduce(
+            (max, p) => (p.idPrecioAtencion !== undefined && max.idPrecioAtencion !== undefined && p.idPrecioAtencion > max.idPrecioAtencion) ? p : max, 
+            precios[0]
+          );
+        }
+      },
+      (error) => {
+        console.error('Error al obtener precio de atención:', error);
+      }
+    );
+  }
+
+  actualizarPrecioAtencion(precioAtencion: PrecioAtencion): void {
+    this.precioAtencionService.post(precioAtencion).subscribe(
+      (newPrecioAtencion: PrecioAtencion) => {
+        this.precioAtencion = newPrecioAtencion;
+        this.displayActualizarAtencionPopup = false;
+      },
+      (error) => {
+        console.error('Error al actualizar el precio de la atención:', error);
+      }
+    );
+  }
+
   displayCreatePopup: boolean = false
   displayUpdatePopup: boolean = false
+  displayActualizarAtencionPopup: boolean = false
 
   //toggle popups
 
   toggleCreatePopup() {
     this.displayCreatePopup = true
+  }
+
+  toggleActualizarAtencionPopup() {
+    this.displayActualizarAtencionPopup = true
   }
 
   toggleUpdatePopup(atencion: Atencion) {
@@ -142,6 +187,18 @@ export class AtencionesAdminComponent {
 
     this.updateAtencion(this.selected.idAtencion, atencion)
     this.displayUpdatePopup = false
+  }
+
+  onConfirmActualizarPrecioAtencion(precioAtencion: PrecioAtencion): void {
+    this.precioAtencionService.post(precioAtencion).subscribe(
+      (newPrecioAtencion: PrecioAtencion) => {
+        this.precioAtencionActual = newPrecioAtencion;
+        this.displayActualizarAtencionPopup = false;
+      },
+      (error) => {
+        console.error('Error al actualizar el precio de atención:', error);
+      }
+    );
   }
 
   // ngOnDestroy(): void {
