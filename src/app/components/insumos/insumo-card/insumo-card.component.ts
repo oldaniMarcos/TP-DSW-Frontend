@@ -23,6 +23,7 @@ export class InsumoCardComponent {
   @Output() edit: EventEmitter<Insumo> = new EventEmitter<Insumo>()
   @Output() delete: EventEmitter<Insumo> = new EventEmitter<Insumo>()
   @Output() select: EventEmitter<Insumo> = new EventEmitter<Insumo>()
+  @Output() price: EventEmitter<Insumo> = new EventEmitter<Insumo>()
 
   editInsumo() {
     this.edit.emit(this.insumo)
@@ -44,6 +45,10 @@ export class InsumoCardComponent {
 
   selectInsumo() {
     this.select.emit(this.insumo)
+  }
+
+  newPrice() {
+    this.price.emit(this.insumo)
   }
 
   ngOnInit() {

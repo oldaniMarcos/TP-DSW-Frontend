@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { InsumoCardComponent } from './insumo-card/insumo-card.component.js';
-import { Insumo, TipoInsumo } from '../../../types.js';
+import { Insumo, PrecioInsumo, TipoInsumo } from '../../../types.js';
 import { InsumoService } from '../../services/insumo.service.js';
 import { InsumoPopupComponent } from './insumo-popup/insumo-popup.component.js';
 import { ButtonModule } from 'primeng/button';
@@ -9,11 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { InsumoVerPopupComponent } from './insumo-ver-popup/insumo-ver-popup.component.js';
 import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
+import { InsumoPrecioComponent } from './insumo-precio/insumo-precio.component.js';
+import { PrecioInsumoService } from '../../services/precio-insumo.service.js';
 
 @Component({
   selector: 'app-insumos',
   standalone: true,
-  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, InsumoVerPopupComponent, ButtonModule, FormsModule, RouterLink],
+  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, InsumoVerPopupComponent, InsumoPrecioComponent, ButtonModule, FormsModule, RouterLink],
   templateUrl: './insumos.component.html',
   styleUrl: './insumos.component.scss'
 })
@@ -35,8 +37,17 @@ export class InsumosComponent {
     descripcion: '',
   }
 
+  selectedPrecio: PrecioInsumo | null = {
+    codPrecioInsumo: 0,
+    fechaDesde: '',
+    valor: 0,
+    valorVenta: 0,
+    idInsumo: 0,
+  }
+
   constructor(
     private insumoService: InsumoService
+    , private precioInsumoService: PrecioInsumoService
   ) { }
 
   ngOnInit() {
@@ -92,6 +103,8 @@ export class InsumosComponent {
       },
       (error) => {
         console.error(`Error al actualizar insumo con código ${codInsumo}:`, error);
+        this.selectedPrecio = null
+        this.displayPricePopup = true
       }
     );
   }
@@ -121,6 +134,7 @@ export class InsumosComponent {
   displayCreatePopup: boolean = false
   displayUpdatePopup: boolean = false
   displaySelectPopup: boolean = false
+  displayPricePopup: boolean = false
 
   //toggle popups
 
@@ -143,6 +157,19 @@ export class InsumosComponent {
     if (!insumo.codInsumo) return
 
     this.deleteInsumo(insumo.codInsumo)
+  }
+
+  togglePricePopup(insumo: Insumo) {
+    this.selected = insumo
+    this.precioInsumoService.findMostRecentByInsumo(insumo.codInsumo!).subscribe(
+      (precio) => {
+        this.selectedPrecio = precio
+        this.displayPricePopup = true
+      },
+      (error) => {
+        console.error(`Error al buscar precio del insumo con ID ${insumo.codInsumo}:`, error)
+      }
+    )
   }
 
   // confirmaciones

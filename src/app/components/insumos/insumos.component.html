@@ -16,7 +16,7 @@
   </div>
 
   <div *ngFor="let insumo of insumos">
-    <app-insumo-card [insumo]="insumo" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)" (select)="toggleSelectPopup($event)">
+    <app-insumo-card [insumo]="insumo" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)" (select)="toggleSelectPopup($event)" (price)="togglePricePopup($event)">
     </app-insumo-card>
   </div>
 
@@ -27,3 +27,5 @@
 <app-insumo-popup [insumo]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar insumo"></app-insumo-popup>
 
 <app-insumo-ver-popup [insumo]="selected" [tipoInsumo]="tipoInsumo" [(display)]="displaySelectPopup"></app-insumo-ver-popup>
+
+<app-insumo-precio [insumo]="selected" [precioInsumo]="selectedPrecio" [(display)]="displayPricePopup" title="Nuevo precio" ></app-insumo-precio>

@@ -1,0 +1,29 @@
+<p-dialog [header]="title" [(visible)]="display" [modal]="true" [closable]="false">
+
+  <div class="column gap-05 p">
+    <p><strong>Valor actual:</strong> {{ precioInsumo ? precioInsumo.valor : 'No encontrado' }}</p>
+    <p><strong>Valor venta actual:</strong> {{ precioInsumo ? precioInsumo.valorVenta : 'No encontrado' }}</p>
+    <p><strong>Fecha vigencia:</strong> {{ precioInsumo ? precioInsumo.fechaDesde : 'No encontrada' }}</p>
+  </div>
+
+  <div class="column gap-1 form-wrapper" [formGroup]="precioForm">
+
+    <div class="row gap-05">
+      <span class="label">Valor:</span>
+      <input type="number" formControlName="valor">
+    </div>
+
+    <div class="row gap-05">
+      <span class="label">Valor de venta:</span>
+      <input type="number" formControlName="valorVenta">
+    </div>
+
+  </div>
+
+  <p-footer>
+    <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!precioForm.valid">Confirmar</button>
+
+    <button type="button" class="cancel" (click)="onCancel()">Cancelar</button>
+  </p-footer>
+
+</p-dialog>

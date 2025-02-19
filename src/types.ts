@@ -76,6 +76,14 @@ export interface Insumo {
   idTipoInsumo: number,
 }
 
+export interface PrecioInsumo {
+  codPrecioInsumo?: number,
+  fechaDesde: string,
+  valor: number,
+  valorVenta: number,
+  idInsumo: number,
+}
+
 export interface Especie {
   codEspecie?: number,
   descripcion: string,
