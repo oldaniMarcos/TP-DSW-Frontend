@@ -25,6 +25,18 @@
               </option>
             </select>
         </div>
+        
+        <!-- solo si se esta creando -->
+
+        <div class="row gap-05" *ngIf="isCreating">
+            <span class="label">Precio:</span>
+            <input type="number" formControlName="valor">
+        </div>
+
+        <div class="row gap-05" *ngIf="isCreating">
+            <span class="label">Precio venta:</span>
+            <input type="number" formControlName="valorVenta">
+        </div>
 
     </div>
 

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { DialogModule } from 'primeng/dialog';
 import { Insumo, TipoInsumo } from '../../../../types';
 import { InsumoService } from '../../../services/insumo.service';
+import { PrecioInsumoService } from '../../../services/precio-insumo.service.js';
 
 @Component({
   selector: 'app-insumo-popup',
@@ -16,22 +17,27 @@ export class InsumoPopupComponent {
 
   insumoForm: FormGroup
 
-  constructor( private formBuilder: FormBuilder, private insumoService: InsumoService) {
+  constructor( private formBuilder: FormBuilder, private insumoService: InsumoService, private precioInsumoService: PrecioInsumoService) {
     this.insumoForm = this.formBuilder.group({
       descripcion: ['', [Validators.required]],
-      stock: ['', [Validators.required]],
+      stock: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
       fechaVencimiento: ['', [Validators.required]],
       idTipoInsumo: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
+
+      valor: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
+      valorVenta: ['' , [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
     })
   }
 
   tiposInsumo: TipoInsumo[] = [];
 
   @Input() display: boolean = false
-  @Input() title!: string //! -> siempre se provee
+  @Input() title!: string
+  @Input() isCreating: boolean = true
 
   @Output() displayChange = new EventEmitter<boolean>()
-  @Output() confirm = new EventEmitter<Insumo>()
+  @Output() confirm = new EventEmitter<{ insumo: Insumo; valor: number; valorVenta: number }>();
+
 
   @Input() insumo: Insumo = {
     descripcion: '',
@@ -41,13 +47,20 @@ export class InsumoPopupComponent {
   }
 
   onConfirm() {
-    const { descripcion, stock, fechaVencimiento, idTipoInsumo} = this.insumoForm.value
+    const { descripcion, stock, fechaVencimiento, idTipoInsumo, valor, valorVenta} = this.insumoForm.value
 
-    this.confirm.emit({
+    const insumo: Insumo = {
       descripcion: descripcion || '',
       stock: Number(stock) || 0,
       fechaVencimiento: fechaVencimiento || '',
       idTipoInsumo: Number(idTipoInsumo) || 0,
+    };
+
+    this.confirm.emit({
+
+      insumo,
+      valor: Number(valor) || 0,
+      valorVenta: Number(valorVenta) || 0,
     })
 
     this.display = false
@@ -60,7 +73,18 @@ export class InsumoPopupComponent {
   }
 
   ngOnChanges() {
-    this.insumoForm.patchValue(this.insumo)
+    if (this.insumo && !this.isCreating) {
+      this.insumoForm.patchValue({
+        ...this.insumo,
+        valor: 1, 
+        valorVenta: 1, 
+      });
+    } else if (this.isCreating) {
+      this.insumoForm.patchValue({
+        valor: '',
+        valorVenta: ''
+      });
+    }
   }
 
   ngOnInit(): void {

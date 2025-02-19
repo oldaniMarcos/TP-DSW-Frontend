@@ -83,14 +83,22 @@ export class InsumosComponent {
     )
   }
 
-  createInsumo(insumo: Insumo): void {
-  this.insumoService.post(insumo).subscribe(
+  createInsumo(insumo: Insumo, valor: number, valorVenta: number): void {
+    this.insumoService.post(insumo).subscribe(
     (newInsumo: Insumo) => {
-      this.insumos.push(newInsumo); 
+
+      this.insumos.push(newInsumo);
+
+      const newPrecio: PrecioInsumo = {
+        fechaDesde: new Date().toISOString(),
+        valor,
+        valorVenta,
+        idInsumo: newInsumo.codInsumo!,
+      };
+
+      this.precioInsumoService.post(newPrecio).subscribe();
     },
-    (error) => {
-      console.error('Error al crear un insumo:', error);
-    }
+    (error) => console.error('Error al crear un insumo:', error)
   );
   }
 
@@ -174,15 +182,14 @@ export class InsumosComponent {
 
   // confirmaciones
 
-  onConfirmCreate(insumo: Insumo) {
-    this.createInsumo(insumo)
-    this.displayCreatePopup = false
+  onConfirmCreate(event: { insumo: Insumo; valor: number; valorVenta: number }) {
+    this.createInsumo(event.insumo, event.valor, event.valorVenta);
   }
 
-  onConfirmUpdate(insumo: Insumo) {
+  onConfirmUpdate(event: { insumo: Insumo; valor: number; valorVenta: number }) {
     if (!this.selected.codInsumo) return
 
-    this.updateInsumo(this.selected.codInsumo, insumo)
+    this.updateInsumo(this.selected.codInsumo, event.insumo)
     this.displayUpdatePopup = false
   }
 }

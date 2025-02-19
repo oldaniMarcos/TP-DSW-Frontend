@@ -19,10 +19,8 @@ export class InsumoPrecioComponent {
 
   constructor( private formBuilder: FormBuilder, private precioInsumoService: PrecioInsumoService) {
     this.precioForm = this.formBuilder.group({
-      fechaDesde: ['', [Validators.required]],
       valor: ['', [Validators.required]],
       valorVenta: ['', [Validators.required]],
-      idInsumo: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
     })
   }
 
@@ -45,7 +43,7 @@ export class InsumoPrecioComponent {
     if (!this.insumo.codInsumo) return;
 
     const precio: PrecioInsumo = {
-      fechaDesde: this.precioForm.value.fechaDesde || '',
+      fechaDesde: new Date().toISOString(),
       valor: Number(this.precioForm.value.valor),
       valorVenta: Number(this.precioForm.value.valorVenta),
       idInsumo: this.insumo.codInsumo,

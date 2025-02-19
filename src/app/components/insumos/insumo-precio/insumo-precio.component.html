@@ -3,7 +3,7 @@
   <div class="column gap-05 p">
     <p><strong>Valor actual:</strong> {{ precioInsumo ? precioInsumo.valor : 'No encontrado' }}</p>
     <p><strong>Valor venta actual:</strong> {{ precioInsumo ? precioInsumo.valorVenta : 'No encontrado' }}</p>
-    <p><strong>Fecha vigencia:</strong> {{ precioInsumo ? precioInsumo.fechaDesde : 'No encontrada' }}</p>
+    <p><strong>Fecha vigencia:</strong> {{ precioInsumo ? (precioInsumo.fechaDesde | date:'yyyy-MM-dd') : 'No encontrada' }}</p>
   </div>
 
   <div class="column gap-1 form-wrapper" [formGroup]="precioForm">
