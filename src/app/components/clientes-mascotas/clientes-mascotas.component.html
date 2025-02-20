@@ -1,0 +1,14 @@
+<h2>Clientes y Mascotas</h2>
+
+<div class="clientes-mascotas">
+
+  <div>
+    <input type="text" [(ngModel)]="dniFiltro" (input)="findClientes()" placeholder="Buscar por DNI"
+      class="search-input" />
+  </div>
+
+
+  <div *ngFor="let cliente of clientes">
+    <app-cliente-mascota-card [cliente]="cliente" [mascotas]="mascotasCliente[cliente.id!] || []">
+    </app-cliente-mascota-card>
+  </div>

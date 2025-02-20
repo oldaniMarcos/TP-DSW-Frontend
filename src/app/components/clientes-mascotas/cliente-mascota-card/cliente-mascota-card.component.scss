@@ -1,0 +1,49 @@
+.cliente-mascota-card {
+  background: #f0f4f8;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+
+  .red {
+    color: #ff6666;
+  }
+
+  .mascotas-container {
+    margin-top: 0.5rem;
+  }
+
+  .mascotas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin: 0.5rem 0;
+  }
+
+  .mascota-card {
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .mascota-card h4 {
+    color: #2ea8e6;
+  }
+
+  .mascota-card p {
+    margin: 4px 0;
+    font-size: 14px;
+  }
+}

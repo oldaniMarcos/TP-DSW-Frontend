@@ -1,0 +1,29 @@
+<div class="cliente-mascota-card">
+  <h3>{{ cliente.nombreYApellido }}, DNI: {{ cliente.dni }}</h3>
+<!-- 
+  @if (mascotas.length > 0) {
+    <h3>Mascotas:</h3>
+    <ul>
+      <li *ngFor="let mascota of mascotas">
+        {{ mascota.nombre }} (Edad: {{ mascota.edad }} años)
+      </li>
+    </ul>
+  } -->
+
+  @if (mascotas.length > 0) {
+    <div class="mascotas-container">
+      <h3>Mascotas:</h3>
+      <div class="mascotas-grid">
+        <div class="mascota-card" *ngFor="let mascota of mascotas">
+          <h4>{{ mascota.nombre }}</h4>
+          <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+          <p><strong>Hist. clinica:</strong> {{ mascota.nroHistClinica }}</p>
+        </div>
+      </div>
+    </div>
+  }
+  
+  @if (mascotas.length === 0) {
+    <p class="red"><strong>No se han cargado mascotas</strong></p>
+  }
+</div>

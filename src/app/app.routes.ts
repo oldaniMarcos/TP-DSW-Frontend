@@ -17,6 +17,8 @@ import { RazasComponent } from './components/razas/razas.component.js';
 import { NotAuthorizedComponent } from './components/not-authorized/not-authorized.component.js';
 import { RolGuard } from './guards/rol.guard.js';
 import { TiposInsumosComponent } from './components/tipos-insumos/tipos-insumos.component.js';
+import { IngresosComponent } from './components/ingresos/ingresos.component.js';
+import { ClientesMascotasComponent } from './components/clientes-mascotas/clientes-mascotas.component.js';
 
 export const routes: Routes = [
 
@@ -55,6 +57,10 @@ export const routes: Routes = [
   { path: 'veterinarios', component: VeterinariosComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
   { path: 'listados', component: ListadosComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
+
+  { path: 'ingresos', component: IngresosComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
+
+  { path: 'clientes-mascotas', component: ClientesMascotasComponent, canActivate: [RolGuard], data: {rol: 'admin'} },
 
   // Errores
 

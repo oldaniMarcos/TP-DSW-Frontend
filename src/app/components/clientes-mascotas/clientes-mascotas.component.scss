@@ -1,0 +1,52 @@
+.clientes-mascotas {
+  text-align: center;
+
+  .search-input {
+    width: 80%;
+    max-width: 300px;
+    padding: 8px;
+    margin: 10px 0;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: #66afe9;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+  }
+
+
+  .cliente-mascota-card {
+    margin: 0.5rem auto;
+    width: 90%;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+
+    button {
+      background-color: #e0e0e0;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin: 0 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+
+  .btn {
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .cliente-card {
+      width: 60%;
+    }
+  }
+}
