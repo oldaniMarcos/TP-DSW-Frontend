@@ -11,7 +11,6 @@
     />
   </div>
 
-  <div *ngIf="filteredAtenciones.length > 0; else noAtenciones">
     <div *ngFor="let atencion of filteredAtenciones">
       <app-atencion-card
       [mascota]="atencion.animal?.nombre || 'Sin nombre'"
@@ -22,9 +21,3 @@
     >
     </app-atencion-card>
     </div>
-  </div>
-
-  <ng-template #noAtenciones>
-    <br>
-    <p>No hay atenciones para la fecha seleccionada.</p>
-  </ng-template>

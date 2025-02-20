@@ -1,23 +1,19 @@
-.card {
-  background-color: #e0f7fa;
-  margin: 0.25rem;
-  padding: 0.75rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-  h3 {
-    margin: 0;
-    font-size: 1.2rem;
-  }
+.mascota-card {
+  background: #f0f4f8;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
 
   p {
     margin: 0.5rem 0;
-    font-size: 0.9rem;
   }
 
-  .acciones {
+  .actions {
     display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
   }
+
 }

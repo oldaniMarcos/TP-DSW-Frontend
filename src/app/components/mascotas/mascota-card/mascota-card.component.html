@@ -1,10 +1,10 @@
-<div class="card">
+<div class="mascota-card">
   <h3>{{ animal.nombre }}</h3>
   <p>Edad:{{ animal.edad }}</p>
   <p>Nro. Historia Clínica: {{ animal.nroHistClinica }}</p>
-  <div class="acciones">
+  <div class="actions">
     <button type="button" (click)="confirmDelete()" #deleteButton class="delete">Eliminar</button>
-    <button class="edit">Editar</button>
+    <button class="edit" (click)="editMascota()">Editar</button>
   </div>
 </div>
 

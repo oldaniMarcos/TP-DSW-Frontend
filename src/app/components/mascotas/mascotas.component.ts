@@ -1,110 +1,166 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Para usar *ngFor
-import { MascotaCardComponent } from './mascota-card/mascota-card.component';
-import { RegistrarMascotaComponent } from './registrar-mascota/registrar-mascota.component';
+import { MascotaCardComponent } from './mascota-card/mascota-card.component.js';
+import { Animal } from '../../../types.js';
+import { MascotaPopupComponent } from './mascota-popup/mascota-popup.component.js';
+import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { Animal } from '../../../types';
-import { AnimalService } from '../../services/animal.service';
+import { MascotaVerPopupComponent } from './mascota-ver-popup/mascota-ver-popup.component.js';
+import { AnimalService } from '../../services/animal.service.js';
 
 @Component({
-  selector: 'app-mascotas',
+  selector: 'app-veterinarios',
   standalone: true,
+imports: [CommonModule, MascotaCardComponent, MascotaPopupComponent, MascotaVerPopupComponent, ButtonModule, FormsModule],
   templateUrl: './mascotas.component.html',
-  styleUrls: ['./mascotas.component.scss'],
-  imports: [
-    MascotaCardComponent,
-    RegistrarMascotaComponent,
-    CommonModule,
-    FormsModule,
-  ],
+  styleUrl: './mascotas.component.scss'
 })
 export class MascotasComponent {
 
-  animales: Animal[] = []
+  mascotas: Animal[] = []
   selected: Animal = {
     nroHistClinica: 0,
     nombre: '',
     fechaNac: '',
     edad: 0,
     idCliente: 0,
-    idRaza: 0,
-  };
+    idRaza: 0
+  }
 
-  nroHistFiltro: string = '';
+  mascotasFiltradas: Animal[] = []
+  selectedFiltrado: Animal = {
+    nroHistClinica: 0,
+    nombre: '',
+    fechaNac: '',
+    edad: 0,
+    idCliente: 0,
+    idRaza: 0
+  }
+
+  nomFiltro: string = ''
   idClienteLogueado: number | null = null;
 
-  constructor(private animalService: AnimalService) {
-    // Obtener el ID del cliente logueado desde localStorage
+  constructor(
+    private animalService: AnimalService
+  ) {
     const idCliente = localStorage.getItem('id');
-    this.idClienteLogueado = idCliente ? parseInt(idCliente, 10) : null; // Convertir a número
-    console.log('ID Cliente Logueado:', this.idClienteLogueado); // Verifica aquí
-  }
+    this.idClienteLogueado = idCliente ? parseInt(idCliente, 10) : null;
+    console.log('ID Cliente Logueado:', this.idClienteLogueado);
+   }
 
   ngOnInit() {
-    console.log('Buscando animales...');
-    this.findAnimales();
+    this.findMascotas()
   }
 
-  findAnimales(): void {
+  findMascotas(): void {
     // Asegúrate de que idClienteLogueado no sea null antes de hacer la llamada a la API
     if (this.idClienteLogueado !== null) {
       this.animalService.findByClienteId(this.idClienteLogueado).subscribe(
         (data: Animal[]) => {
-          this.animales = data; // Ya no necesitas filtrar por idCliente
+          this.mascotas = data; // Ya no necesitas filtrar por idCliente
   
           // Si hay un filtro por nroHistoriaClinica, aplicar también
-          if (this.nroHistFiltro) {
-            this.animales = this.animales.filter(animal => 
+          if (this.nomFiltro) {
+            this.mascotas = this.mascotas.filter(animal => 
               animal.nroHistClinica !== undefined && 
-              animal.nroHistClinica.toString().includes(this.nroHistFiltro)
+              animal.nroHistClinica.toString().includes(this.nomFiltro)
             );
           }
-          console.log(this.animales); // Cambié 'data' por 'this.animales' para mostrar los animales filtrados
+          console.log(this.mascotas); // Cambié 'data' por 'this.mascotas' para mostrar los mascotas filtrados
         },
         (error) => {
-          console.error('Error al buscar animales:', error);
-        }
-      );
-    } else {
-      console.error('ID del cliente logueado es null. No se puede buscar animales.');
+          console.error('Error al buscar mascotas:', error);
+        }  
+        );
+      } else {
+        console.error('ID del cliente logueado es null. No se puede buscar animales.');
+      }
+  
     }
-  }
-
-  mostrarModal: boolean = false;
-  toggleModal(): void {
-    this.mostrarModal = !this.mostrarModal;
-  }
-
-  onConfirmRegistrarMascota(nuevaMascota: Animal): void {
-    this.animalService.post(nuevaMascota).subscribe(
-      (animalCreado: Animal) => {
-        this.animales.push(animalCreado); // Agrega la nueva mascota a la lista
-        this.toggleModal(); // Cierra el modal
+    
+  findMascota(nroHistClinica: number): void {
+    this.animalService.findOne(nroHistClinica).subscribe(
+      (data: Animal) => {
+        this.selected = data
       },
       (error) => {
-        console.error('Error al registrar la mascota:', error);
+        console.error(`Error al buscar mascota con id ${nroHistClinica}:`, error)
+      }
+    )
+  }
+
+  createMascota(animal: Animal): void {
+  this.animalService.post(animal).subscribe(
+    (newMascota: Animal) => {
+      this.mascotas.push(newMascota); 
+    },
+    (error) => {
+      console.error('Error al crear una mascota:', error);
+    }
+  );
+  }
+
+  updateMascota(nroHistClinica: number, animal: Animal): void {
+    this.animalService.patch(nroHistClinica, animal).subscribe(
+      (updatedMascota: Animal) => {
+        const index = this.mascotas.findIndex(c => c.nroHistClinica === nroHistClinica);
+        if (index > -1) this.mascotas[index] = updatedMascota;
+      },
+      (error) => {
+        console.error(`Error al actualizar animal con id ${nroHistClinica}:`, error);
       }
     );
   }
 
   deleteMascota(nroHistClinica: number): void {
-    console.log('borrandoooo');
     this.animalService.delete(nroHistClinica).subscribe(
       () => {
-        this.animales = this.animales.filter(c => c.nroHistClinica !== nroHistClinica);
+        this.mascotas = this.mascotas.filter(c => c.nroHistClinica !== nroHistClinica);
       },
       (error) => {
-        console.error(`Error al eliminar mascota con número ${nroHistClinica}:`, error);
+        console.error(`Error al eliminar mascota con id ${nroHistClinica}:`, error);
       }
     );
   }
 
-  toggleDeletePopup(animal: Animal) {
-    if (animal.nroHistClinica !== undefined) {
-      this.deleteMascota(animal.nroHistClinica);
-    } else {
-      console.error('No se puede eliminar: Número de historia clínica indefinido.');
-    }
+  displayCreatePopup: boolean = false
+  displayUpdatePopup: boolean = false
+  displaySelectPopup: boolean = false
+
+
+  //toggle popups
+
+  toggleCreatePopup() {
+    this.displayCreatePopup = true
   }
-  
+
+  toggleUpdatePopup(animal: Animal) {
+    this.selected = animal
+    this.displayUpdatePopup = true
+  }
+
+  toggleSelectPopup(animal: Animal) {
+    this.selected = animal
+    this.displaySelectPopup = true
+  }
+
+  toggleDeletePopup(animal: Animal) {
+    if (!animal.nroHistClinica) return
+
+    this.deleteMascota(animal.nroHistClinica)
+  }
+
+  // confirmaciones
+
+  onConfirmCreate(animal: Animal) {
+    this.createMascota(animal)
+    this.displayCreatePopup = false
+  }
+
+  onConfirmUpdate(animal: Animal) {
+    if (!this.selected.nroHistClinica) return
+
+    this.updateMascota(this.selected.nroHistClinica, animal)
+    this.displayUpdatePopup = false
+  }
 }

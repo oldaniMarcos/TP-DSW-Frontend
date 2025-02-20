@@ -18,7 +18,7 @@ export class PrecioAtencionPopupComponent {
     constructor( private formBuilder: FormBuilder) {
       this.precioAtencionForm = this.formBuilder.group({
         fechaDesde: [this.getTodayDate(), [Validators.required]],
-        valor: ['', [Validators.required]],
+        valor: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
       })
     }
   

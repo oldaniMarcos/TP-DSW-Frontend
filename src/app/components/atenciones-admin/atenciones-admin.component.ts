@@ -33,6 +33,8 @@ export class AtencionesAdminComponent {
     idsInsumos: []
   }
 
+  filteredAtenciones: (Atencion & { animal?: Animal, precioAtencion?: PrecioAtencion })[] = [];
+
   precioAtencion: PrecioAtencion = {
     idPrecioAtencion: 0,
     fechaDesde: '',
@@ -52,18 +54,19 @@ export class AtencionesAdminComponent {
   }
 
   selectedDate: string = '';
-  filteredAtenciones = [...this.atenciones];
 
   findAtenciones(): void {
     this.atencionService.findAll().subscribe(
       (data: Atencion[]) => {
-        this.atenciones = data
+        this.atenciones = data;
+        this.filteredAtenciones = [...this.atenciones];
       },
       (error) => {
-        console.error('Error al buscar atenciones:', error)
+        console.error('Error al buscar atenciones:', error);
       }
-    )
+    );
   }
+  
 
   filterAtencionesByDate(): void {
     if (this.selectedDate) {
@@ -72,9 +75,10 @@ export class AtencionesAdminComponent {
         return atencionFecha === this.selectedDate;
       });
     } else {
-      this.filteredAtenciones = [...this.atenciones]; // Mostrar todas las atenciones
+      this.filteredAtenciones = [...this.atenciones];
     }
   }
+  
   
 
   findAtencion(idAtencion: number): void {
@@ -115,9 +119,10 @@ export class AtencionesAdminComponent {
     this.atencionService.delete(idAtencion).pipe(take(1)).subscribe(
       () => {
         this.atenciones = this.atenciones.filter(c => c.idAtencion !== idAtencion);
+        this.filteredAtenciones = this.filteredAtenciones.filter(c => c.idAtencion !== idAtencion);
       },
       (error) => {
-        console.error(`Error al eliminar atencion con id ${idAtencion}:`, error);
+        console.error(`Error al eliminar atención con id ${idAtencion}:`, error);
       }
     );
   }

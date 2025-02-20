@@ -26,7 +26,8 @@ export class AtencionesComponent implements OnInit {
   }
 
   selectedDate: string = '';
-  filteredAtenciones = [...this.atenciones];
+  filteredAtenciones: (Atencion & { animal?: Animal, precioAtencion?: PrecioAtencion })[] = [];
+
 
   findAtenciones(): void {
     const id = localStorage.getItem('id');
@@ -34,6 +35,7 @@ export class AtencionesComponent implements OnInit {
       this.atencionService.findByClienteId(+id).subscribe(
         (data: Atencion[]) => {
           this.atenciones = data;
+          this.filteredAtenciones = [...this.atenciones];
         },
         (error) => {
           console.error('Error al buscar atenciones:', error);

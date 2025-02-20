@@ -5,7 +5,6 @@
     <h3>El precio de atención actual es: $<strong>{{ precioAtencionActual?.valor || 'No disponible' }}</strong></h3><br>
     <button class="btn" (click)="toggleActualizarAtencionPopup()">Actualizar el precio de la atención</button>
   </aside>
-  
 
   <div class="filter">
     <label for="filter-date">Filtrar por fecha: </label>
@@ -17,7 +16,6 @@
     />
   </div>
 
-  <div *ngIf="filteredAtenciones.length > 0; else noAtenciones">
     <div *ngFor="let atencion of filteredAtenciones">
       <app-atencion-admin-card
         [atencion]="atencion"
@@ -30,11 +28,6 @@
         (delete)="toggleDeletePopup($event)"
       ></app-atencion-admin-card>
     </div>
-  </div>
-
-  <ng-template #noAtenciones>
-    <p>No hay atenciones para la fecha seleccionada.</p>
-  </ng-template>
 
 <!--create, no esta siendo usado-->
 <app-atencion-admin-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear atencion"></app-atencion-admin-popup>

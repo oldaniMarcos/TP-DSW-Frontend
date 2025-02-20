@@ -1,0 +1,10 @@
+<p-dialog [header]="animal.nombre" [(visible)]="display" [modal]="true" [closable]="false">
+
+    <p><strong>Fecha de nacimiento:</strong> {{ animal.fechaNac }}</p>
+    <p><strong>Edad:</strong> {{ animal.edad }}</p>
+    
+    <p-footer>
+      <button type="button" class="cancel" (click)="onClose()">Cerrar</button>
+    </p-footer>
+    
+    </p-dialog>

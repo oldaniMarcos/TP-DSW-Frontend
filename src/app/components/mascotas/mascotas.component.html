@@ -1,34 +1,24 @@
 <h2>Mascotas</h2>
 
-<div class="mascotas-container">
+<div class="mascotas">
 
-  <button class="btn" (click)="toggleModal()">Agregar</button>
+  <!--Crear vet-->
+  <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
-  <div class="modal-overlay" *ngIf="mostrarModal">
-    <div class="modal-content">
-      <app-registrar-mascota
-        (registrarMascota)="onConfirmRegistrarMascota($event)"
-        (cerrarModal)="toggleModal()"
-      ></app-registrar-mascota>
-    </div>
+  <div>
+    <input type="text" [(ngModel)]="nomFiltro" (input)="findMascotas()" placeholder="Buscar por nombre"
+      class="search-input" />
   </div>
 
-  <div class="buscador">
-    <input
-      type="text"
-      [(ngModel)]="nroHistFiltro"
-      (input)="findAnimales()"
-      placeholder="Buscar por historia clínica"
-      class="search-input"
-    />
+  <div *ngFor="let animal of mascotas">
+    <app-mascota-card [animal]="animal" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)" (select)="toggleSelectPopup($event)">
+    </app-mascota-card>
   </div>
 
-  <div class="tarjetas">
-    <app-mascota-card
-      *ngFor="let animal of animales"
-      [animal]="animal"
-      (delete)="toggleDeletePopup($event)"
-    ></app-mascota-card>
-  </div>
+<!--create-->
+<app-mascota-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear mascota"></app-mascota-popup>
 
-<h1>Integrar con backend, tiene que buscar mascotas del cliente logueado, hacer card y popup</h1>
+<!--update-->
+<app-mascota-popup [mascota]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar mascota"></app-mascota-popup>
+
+<app-mascota-ver-popup [animal]="selected" [(display)]="displaySelectPopup"></app-mascota-ver-popup>

@@ -1,0 +1,48 @@
+<p-dialog [title]="title" [(visible)]="display" [modal]="true" [closable]="false">
+
+    <div class="column gap-1 form-wrapper" [formGroup]="mascotaForm">
+
+        <div class="row gap-05">
+            <span class="label">Nombre:</span>
+            <input type="text" formControlName="nombre">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Fecha de nacimiento:</span>
+            <input type="date" formControlName="fechaNac">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Edad:</span>
+            <input type="text" formControlName="edad">
+        </div>
+
+        <div class="row gap-05">
+            <label for="idEspecie">Especie:</label>
+            <select id="idEspecie" name="idEspecie" formControlName="idEspecie" (change)="onEspecieChange()">
+                <option value="" disabled selected>Selecciona una especie</option>
+                <option *ngFor="let especie of especies" [value]="especie.codEspecie">
+                  {{ especie.descripcion }}
+                </option>
+              </select>
+        </div>
+
+        <div class="row gap-05">
+            <label for="idRaza">Raza:</label>
+            <select id="idRaza" name="idRaza" formControlName="idRaza">
+                <option value="" disabled selected>Selecciona una raza</option>
+                <option *ngFor="let raza of razas" [value]="raza.codRaza">
+                  {{ raza.descripcion }}
+                </option>
+              </select>
+        </div>
+
+    </div>
+
+    <p-footer>
+        <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!mascotaForm.valid">Confirmar</button>
+
+        <button type="button" class="cancel" (click)="onCancel()">Cancelar</button>
+    </p-footer>
+
+</p-dialog>
