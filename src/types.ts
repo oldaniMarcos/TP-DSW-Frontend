@@ -56,6 +56,7 @@ export interface Atencion {
   fechaHora: string,
   resultado: string,
   observaciones: string,
+  valor: number,
   idAnimal: number,
   idPrecio: number,
   idVeterinario: number,

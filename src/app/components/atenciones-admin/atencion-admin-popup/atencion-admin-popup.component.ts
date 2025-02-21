@@ -33,6 +33,7 @@ export class AtencionAdminPopupComponent {
     fechaHora: '',
     resultado: '',
     observaciones: '',
+    valor: 0,
     idAnimal: 0,
     idPrecio: 0,
     idVeterinario: 0,
@@ -40,12 +41,13 @@ export class AtencionAdminPopupComponent {
   }
 
   onConfirm() {
-    const { fechaHora, resultado, observaciones, idAnimal, idPrecio, idVeterinario} = this.atencionForm.value
+    const { fechaHora, resultado, observaciones, valor, idAnimal, idPrecio, idVeterinario} = this.atencionForm.value
 
     this.confirm.emit({
       fechaHora: fechaHora || '',
       resultado: resultado || '',
       observaciones: observaciones || '',
+      valor: valor || 0,
       idAnimal: idAnimal || 0,
       idPrecio: idPrecio || 0,
       idVeterinario: idVeterinario || 0,

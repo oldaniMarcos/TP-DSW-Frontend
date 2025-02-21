@@ -8,6 +8,7 @@ import { PrecioAtencionService } from '../../services/precio-atencion.service.js
 import { InsumoService } from '../../services/insumo.service.js';
 import { AnimalService } from '../../services/animal.service.js';
 import { catchError, map, Observable, of, Subject } from 'rxjs';
+import { PrecioInsumoService } from '../../services/precio-insumo.service.js';
 
 @Component({
   selector: 'app-registrar-atencion',
@@ -41,6 +42,7 @@ export class RegistrarAtencionComponent {
     , private precioAtencionService: PrecioAtencionService
     , private insumoService: InsumoService
     , private animalService: AnimalService
+    , private precioInsumoService: PrecioInsumoService
   ) {
     this.insumoSelections = this.formBuilder.array([])  // <--------------------
 
@@ -64,6 +66,7 @@ export class RegistrarAtencionComponent {
     fechaHora: '',
     resultado: '',
     observaciones: '',
+    valor: 0,
     idAnimal: 0,
     idPrecio: 0,
     idVeterinario: 0,
@@ -90,39 +93,98 @@ export class RegistrarAtencionComponent {
     };
   }
 
-  onConfirm(): void {
+  // onConfirm(): void {
     
-    const {resultado, observaciones, idAnimal, idVeterinario, idsInsumos} = this.atencionForm.value
+  //   const {resultado, observaciones, idAnimal, idVeterinario, idsInsumos} = this.atencionForm.value
 
-    const insumoUpdates = this.insumoSelections.value.map((insumo: { idInsumo: number; cantidad: number }) =>
-      this.insumoService.decreaseStock(insumo.idInsumo, insumo.cantidad).toPromise()
-    );
+  //   let valorTotal = this.precio.valor // valor inicial es el precio de la atencion
 
-    Promise.all(insumoUpdates)
-    .then(() => {
-      this.confirm.emit({
-        fechaHora: new Date().toISOString(),
-        resultado: resultado || '',
-        observaciones: observaciones || '',
-        idAnimal: Number(idAnimal) || 0,
-        idPrecio: Number(this.precio.idPrecioAtencion) || 0,
-        idVeterinario: Number(idVeterinario) || 0,
-        idsInsumos: this.insumoSelections.value.map((i: { idInsumo: number }) => i.idInsumo),
-      });
+  //   const insumoUpdates = this.insumoSelections.value.map((insumo: { idInsumo: number; cantidad: number }) =>
+  //     this.insumoService.decreaseStock(insumo.idInsumo, insumo.cantidad).toPromise()
+  //   );
 
-      this.display = false;
-      this.displayChange.emit(this.display);
+  //   Promise.all(insumoUpdates)
+  //   .then(() => {
+  //     this.confirm.emit({
+  //       fechaHora: new Date().toISOString(),
+  //       resultado: resultado || '',
+  //       observaciones: observaciones || '',
+  //       valor: 0, //por ahora -----------------------------------------------------------------
+  //       idAnimal: Number(idAnimal) || 0,
+  //       idPrecio: Number(this.precio.idPrecioAtencion) || 0,
+  //       idVeterinario: Number(idVeterinario) || 0,
+  //       idsInsumos: this.insumoSelections.value.map((i: { idInsumo: number }) => i.idInsumo),
+  //     });
 
-      this.insumoService.findAll().subscribe((data: Insumo[]) => {
-        this.insumos = data.filter((insumo) => insumo.stock > 0)
-      })
+  //     this.display = false;
+  //     this.displayChange.emit(this.display);
 
-    })
-    .catch((error) => {
-      console.error('Error al actualizar stock', error);
-      alert('No se pudo actualizar el stock de algunos insumos.');
+  //     this.insumoService.findAll().subscribe((data: Insumo[]) => {
+  //       this.insumos = data.filter((insumo) => insumo.stock > 0)
+  //     })
+
+  //   })
+  //   .catch((error) => {
+  //     console.error('Error al actualizar stock', error);
+  //     alert('No se pudo actualizar el stock de algunos insumos.');
+  //   });
+  // }
+
+  onConfirm(): void {
+    const { resultado, observaciones, idAnimal, idVeterinario } = this.atencionForm.value;
+
+    // Get most recent PrecioAtencion
+    this.precioAtencionService.findMostRecent().subscribe((precioAtencion) => {
+      let totalValor = precioAtencion.valor; // Start with latest PrecioAtencion value
+
+      // Get the latest PrecioInsumo for each selected Insumo
+      const insumoRequests: Observable<number>[] = this.insumoSelections.value.map(
+        (insumo: { idInsumo: number; cantidad: number }) =>
+          this.precioInsumoService.findMostRecentByInsumo(insumo.idInsumo).pipe(
+            map((precioInsumo) => precioInsumo.valorVenta * insumo.cantidad)
+          )
+      );
+
+      // Execute all requests
+      Promise.all(insumoRequests.map((req: Observable<number>) => req.toPromise()))
+        .then((preciosInsumo: (number | undefined)[]) => {
+          const validPrecios = preciosInsumo.filter((p): p is number => p !== undefined);
+          totalValor += validPrecios.reduce((acc, curr) => acc + curr, 0);
+
+          // Update stock before confirming
+          const stockUpdates = this.insumoSelections.value.map(
+            (insumo: { idInsumo: number; cantidad: number }) =>
+              this.insumoService.decreaseStock(insumo.idInsumo, insumo.cantidad).toPromise()
+          );
+
+          return Promise.all(stockUpdates).then(() => totalValor);
+        })
+        .then((finalValor) => {
+          this.confirm.emit({
+            fechaHora: new Date().toISOString(),
+            resultado: resultado || '',
+            observaciones: observaciones || '',
+            valor: finalValor, // Updated valor
+            idAnimal: Number(idAnimal) || 0,
+            idPrecio: Number(precioAtencion.idPrecioAtencion) || 0,
+            idVeterinario: Number(idVeterinario) || 0,
+            idsInsumos: this.insumoSelections.value.map((i: { idInsumo: number }) => i.idInsumo),
+          });
+
+          this.display = false;
+          this.displayChange.emit(this.display);
+
+          this.insumoService.findAll().subscribe((data: Insumo[]) => {
+            this.insumos = data.filter((insumo) => insumo.stock > 0);
+          });
+        })
+        .catch((error) => {
+          console.error('Error al actualizar stock o calcular precios', error);
+          alert('No se pudo completar la operación.');
+        });
     });
   }
+
   
   onCancel() {
     this.display = false

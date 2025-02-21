@@ -27,6 +27,7 @@ export class AtencionesAdminComponent {
     fechaHora: '',
     resultado: '',
     observaciones: '',
+    valor: 0,
     idAnimal: 0,
     idPrecio: 0,
     idVeterinario: 0,
