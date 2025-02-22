@@ -1,15 +1,6 @@
 <div class="cliente-mascota-card">
   <h3>{{ cliente.nombreYApellido }}, DNI: {{ cliente.dni }}</h3>
-<!-- 
-  @if (mascotas.length > 0) {
-    <h3>Mascotas:</h3>
-    <ul>
-      <li *ngFor="let mascota of mascotas">
-        {{ mascota.nombre }} (Edad: {{ mascota.edad }} años)
-      </li>
-    </ul>
-  } -->
-
+  
   @if (mascotas.length > 0) {
     <div class="mascotas-container">
       <h3>Mascotas:</h3>

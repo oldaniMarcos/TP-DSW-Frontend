@@ -20,7 +20,6 @@ export class AdminComponent {
     , private atencionService: AtencionService
   ) {}
 
-  // atenciones: Atencion[] = []
   displayCreatePopup: boolean = false
 
 
@@ -31,16 +30,6 @@ export class AdminComponent {
 
   createAtencion(atencion: Atencion): void {
     this.atencionService.post(atencion).subscribe()
-    /*
-    .subscribe(
-      (newAtencion: Atencion) => {
-        this.atenciones.push(newAtencion); 
-      },
-      (error) => {
-        console.error('Error al crear una atencion:', error);
-      }
-    );
-    */
   }
 
   toggleCreatePopup() {

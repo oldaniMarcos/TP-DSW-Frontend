@@ -23,14 +23,12 @@
         [fecha]="atencion.fechaHora"
         [resultado]="atencion.resultado"
         [observaciones]="atencion.observaciones"
+        [valor]="atencion.valor"
         [precioAtencion]="atencion.precioAtencion?.valor ?? 0"
         (edit)="toggleUpdatePopup($event)"
         (delete)="toggleDeletePopup($event)"
       ></app-atencion-admin-card>
     </div>
-
-<!--create, no esta siendo usado-->
-<app-atencion-admin-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear atencion"></app-atencion-admin-popup>
 
 <!--update-->
 <app-atencion-admin-popup [atencion]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar atencion"></app-atencion-admin-popup>

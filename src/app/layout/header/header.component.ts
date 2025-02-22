@@ -4,11 +4,12 @@ import {Location, NgStyle} from '@angular/common';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { LocalStorageService } from '../../services/local-storage.service.js';
+import { TruncateNamePipe } from '../../pipes/truncate-name.pipe.js';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgStyle, SidebarModule, ButtonModule],
+  imports: [NgStyle, SidebarModule, ButtonModule, TruncateNamePipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

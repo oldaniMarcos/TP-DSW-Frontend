@@ -45,7 +45,7 @@ export class MascotasComponent {
   ) {
     const idCliente = localStorage.getItem('id');
     this.idClienteLogueado = idCliente ? parseInt(idCliente, 10) : null;
-    console.log('ID Cliente Logueado:', this.idClienteLogueado);
+    // console.log('ID Cliente Logueado:', this.idClienteLogueado);
    }
 
   ngOnInit() {
@@ -53,11 +53,10 @@ export class MascotasComponent {
   }
 
   findMascotas(): void {
-    // Asegúrate de que idClienteLogueado no sea null antes de hacer la llamada a la API
     if (this.idClienteLogueado !== null) {
       this.animalService.findByClienteId(this.idClienteLogueado).subscribe(
         (data: Animal[]) => {
-          this.mascotas = data; // Ya no necesitas filtrar por idCliente
+          this.mascotas = data;
   
           // Si hay un filtro por nroHistoriaClinica, aplicar también
           if (this.nomFiltro) {
@@ -66,7 +65,7 @@ export class MascotasComponent {
               animal.nroHistClinica.toString().includes(this.nomFiltro)
             );
           }
-          console.log(this.mascotas); // Cambié 'data' por 'this.mascotas' para mostrar los mascotas filtrados
+          // console.log(this.mascotas); // Cambié 'data' por 'this.mascotas' para mostrar los mascotas filtrados
         },
         (error) => {
           console.error('Error al buscar mascotas:', error);

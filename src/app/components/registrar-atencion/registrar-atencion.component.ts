@@ -44,7 +44,7 @@ export class RegistrarAtencionComponent {
     , private animalService: AnimalService
     , private precioInsumoService: PrecioInsumoService
   ) {
-    this.insumoSelections = this.formBuilder.array([])  // <--------------------
+    this.insumoSelections = this.formBuilder.array([]) 
 
     this.atencionForm = this.formBuilder.group({
       idAnimal: [0, [Validators.required, Validators.pattern('^[1-9][0-9]*$')], [this.animalValidator()]], // <-- funcion async
@@ -93,51 +93,12 @@ export class RegistrarAtencionComponent {
     };
   }
 
-  // onConfirm(): void {
-    
-  //   const {resultado, observaciones, idAnimal, idVeterinario, idsInsumos} = this.atencionForm.value
-
-  //   let valorTotal = this.precio.valor // valor inicial es el precio de la atencion
-
-  //   const insumoUpdates = this.insumoSelections.value.map((insumo: { idInsumo: number; cantidad: number }) =>
-  //     this.insumoService.decreaseStock(insumo.idInsumo, insumo.cantidad).toPromise()
-  //   );
-
-  //   Promise.all(insumoUpdates)
-  //   .then(() => {
-  //     this.confirm.emit({
-  //       fechaHora: new Date().toISOString(),
-  //       resultado: resultado || '',
-  //       observaciones: observaciones || '',
-  //       valor: 0, //por ahora -----------------------------------------------------------------
-  //       idAnimal: Number(idAnimal) || 0,
-  //       idPrecio: Number(this.precio.idPrecioAtencion) || 0,
-  //       idVeterinario: Number(idVeterinario) || 0,
-  //       idsInsumos: this.insumoSelections.value.map((i: { idInsumo: number }) => i.idInsumo),
-  //     });
-
-  //     this.display = false;
-  //     this.displayChange.emit(this.display);
-
-  //     this.insumoService.findAll().subscribe((data: Insumo[]) => {
-  //       this.insumos = data.filter((insumo) => insumo.stock > 0)
-  //     })
-
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error al actualizar stock', error);
-  //     alert('No se pudo actualizar el stock de algunos insumos.');
-  //   });
-  // }
-
   onConfirm(): void {
     const { resultado, observaciones, idAnimal, idVeterinario } = this.atencionForm.value;
 
-    // Get most recent PrecioAtencion
     this.precioAtencionService.findMostRecent().subscribe((precioAtencion) => {
-      let totalValor = precioAtencion.valor; // Start with latest PrecioAtencion value
+      let totalValor = precioAtencion.valor;
 
-      // Get the latest PrecioInsumo for each selected Insumo
       const insumoRequests: Observable<number>[] = this.insumoSelections.value.map(
         (insumo: { idInsumo: number; cantidad: number }) =>
           this.precioInsumoService.findMostRecentByInsumo(insumo.idInsumo).pipe(
@@ -145,13 +106,11 @@ export class RegistrarAtencionComponent {
           )
       );
 
-      // Execute all requests
       Promise.all(insumoRequests.map((req: Observable<number>) => req.toPromise()))
         .then((preciosInsumo: (number | undefined)[]) => {
           const validPrecios = preciosInsumo.filter((p): p is number => p !== undefined);
           totalValor += validPrecios.reduce((acc, curr) => acc + curr, 0);
 
-          // Update stock before confirming
           const stockUpdates = this.insumoSelections.value.map(
             (insumo: { idInsumo: number; cantidad: number }) =>
               this.insumoService.decreaseStock(insumo.idInsumo, insumo.cantidad).toPromise()
@@ -159,12 +118,12 @@ export class RegistrarAtencionComponent {
 
           return Promise.all(stockUpdates).then(() => totalValor);
         })
-        .then((finalValor) => {
+        .then((valor) => {
           this.confirm.emit({
             fechaHora: new Date().toISOString(),
             resultado: resultado || '',
             observaciones: observaciones || '',
-            valor: finalValor, // Updated valor
+            valor: valor,
             idAnimal: Number(idAnimal) || 0,
             idPrecio: Number(precioAtencion.idPrecioAtencion) || 0,
             idVeterinario: Number(idVeterinario) || 0,
@@ -208,7 +167,7 @@ export class RegistrarAtencionComponent {
       this.insumos = data.filter((insumo) => insumo.stock > 0)
     })
 
-    this.addInsumoSelection() // <--------------------
+    this.addInsumoSelection() 
     
   }
 

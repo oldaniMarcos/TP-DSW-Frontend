@@ -15,7 +15,7 @@
   @if(!isAdmin()) {
   <h1>{{ nombreYApellido }}</h1>
   <h2><strong>DNI: </strong>{{ dni }}</h2>
-  <h2>{{ email }}</h2>
+  <h2>{{ email | truncateName: 20: '...'}}</h2>
   <button class="btn salir" (click)="logout()">Cerrar sesión</button>
   }
   @if(isAdmin()) {

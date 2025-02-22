@@ -15,5 +15,6 @@ export class AtencionCardComponent {
   @Input() fecha!: string;
   @Input() resultado!: string;
   @Input() observaciones!: string;
+  @Input() valor!: number;
   @Input() precioAtencion!: number;
 }

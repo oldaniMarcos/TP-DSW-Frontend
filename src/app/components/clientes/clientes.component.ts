@@ -61,7 +61,6 @@ export class ClientesComponent {
           this.clientes = data.filter(cliente => cliente.dni.includes(this.dniFiltro) && cliente.rol === 'cliente');
         } else {
           // Si no hay filtro, muestra todos los clientes
-          // this.clientes = data;
           this.clientes = data.filter(cliente => cliente.rol === 'cliente');
         }
       },
@@ -70,31 +69,6 @@ export class ClientesComponent {
       }
     );
   }
-
-  //esto no se usa???
-
-  // findCliente(id: number): void {
-  //   this.clienteService.findOne(id).subscribe(
-  //     (data: Cliente) => {
-  //       this.selected = data
-  //     },
-  //     (error) => {
-  //       console.error(`Error al buscar cliente con id ${id}:`, error)
-  //     }
-  //   )
-  // }
-
-  /*
-  filtrarPorDni() {
-    if (this.dniFiltro) {
-      this.clientesFiltrados = this.clientes.filter(cliente =>
-        cliente.dni.includes(this.dniFiltro)
-      );
-    } else {
-      // Si el campo de búsqueda está vacío, muestra todos los clientes
-      this.clientesFiltrados = this.clientes;
-    }
-  }*/
 
   createCliente(cliente: Cliente): void {
   this.clienteService.post(cliente).subscribe(

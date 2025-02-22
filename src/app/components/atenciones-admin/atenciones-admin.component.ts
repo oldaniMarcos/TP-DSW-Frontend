@@ -19,8 +19,6 @@ import { PrecioAtencionPopupComponent } from './precio-atencion-popup/precio-ate
 })
 export class AtencionesAdminComponent {
 
-  //private destroy$ = new Subject<void>() //para manejar los unsuscribes, sino interfiere con el componente registrar-atencion
-
   atenciones: (Atencion & { animal?: Animal, precioAtencion?: PrecioAtencion })[] = [];
   selected: Atencion = {
     idAtencion: 0,
@@ -79,8 +77,6 @@ export class AtencionesAdminComponent {
       this.filteredAtenciones = [...this.atenciones];
     }
   }
-  
-  
 
   findAtencion(idAtencion: number): void {
     this.atencionService.findOne(idAtencion).subscribe(
@@ -156,15 +152,10 @@ export class AtencionesAdminComponent {
     );
   }
 
-  displayCreatePopup: boolean = false
   displayUpdatePopup: boolean = false
   displayActualizarAtencionPopup: boolean = false
 
   //toggle popups
-
-  toggleCreatePopup() {
-    this.displayCreatePopup = true
-  }
 
   toggleActualizarAtencionPopup() {
     this.displayActualizarAtencionPopup = true
@@ -182,11 +173,6 @@ export class AtencionesAdminComponent {
   }
 
   // confirmaciones
-
-  onConfirmCreate(atencion: Atencion) {
-    this.createAtencion(atencion)
-    this.displayCreatePopup = false
-  }
 
   onConfirmUpdate(atencion: Atencion) {
     if (!this.selected.idAtencion) return
@@ -206,10 +192,5 @@ export class AtencionesAdminComponent {
       }
     );
   }
-
-  // ngOnDestroy(): void {
-  //   this.destroy$.next();
-  //   this.destroy$.complete();
-  // }
 
 }
