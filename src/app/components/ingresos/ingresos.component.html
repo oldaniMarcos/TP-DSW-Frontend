@@ -1,1 +1,8 @@
-<p>ingresos works!</p>
+<h2>Ingresos</h2>
+
+<div class="chart-container">
+  <label for="monthPicker">Seleccionar mes: </label>
+  <input id="monthPicker" type="month" [(ngModel)]="selectedMonth" (change)="updateChart()" />
+
+  <canvas #chart></canvas>
+</div>

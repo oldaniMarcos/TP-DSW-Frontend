@@ -6,7 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TruncateNamePipe implements PipeTransform {
 
-  transform(value: string, maxLength: number = 16, ellipsis: string = "..."): unknown {
+  transform(value: string | null | undefined, maxLength: number = 16, ellipsis: string = "..."): unknown {
+
+    if (!value) {
+      return ''
+    }
+    
     if (value.length > maxLength) {
       return value.slice(0, maxLength) + ellipsis
     }
