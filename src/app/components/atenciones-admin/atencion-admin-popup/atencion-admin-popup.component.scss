@@ -1,0 +1,24 @@
+:host ::ng-deep .p-calendar {
+    width: 100%;
+  
+    .p-inputtext {
+      width: 100%;
+      font-size: 14px; // Ajusta el tamaño de la fuente
+    }
+  
+    .p-datepicker {
+      width: 100%;
+      max-width: 300px; // Ajusta el ancho máximo del calendario
+      font-size: 14px; // Ajusta el tamaño de la fuente del calendario
+  
+      // Estilos específicos para móviles
+      @media (max-width: 768px) {
+        position: fixed;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 90%;
+      }
+    }
+  }

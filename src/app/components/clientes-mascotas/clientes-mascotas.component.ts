@@ -49,18 +49,38 @@ export class ClientesMascotasComponent {
 
   findMascotas(): void {
     this.clientes.forEach(cliente => {
-
       this.animalService.findByClienteId(cliente.id!).subscribe(
         (mascotas: Animal[]) => {
-          this.mascotasCliente[cliente.id!] = mascotas
+          // Calcular edad y agregarla como propiedad extra
+          this.mascotasCliente[cliente.id!] = mascotas.map(mascota => ({
+            ...mascota,
+            edad: this.calcularEdad(mascota.fechaNac) ?? undefined  // Asegura el tipo correcto
+          }));
         },
         (error) => {
-          console.error(`Error al buscar mascotas del cliente ${cliente.id}:`, error)
+          console.error(`Error al buscar mascotas del cliente ${cliente.id}:`, error);
         }
       );
-
     });
-    
   }
+  
+  calcularEdad(fechaNac: string | undefined): number | undefined {
+    if (!fechaNac) return undefined;
+  
+    const fechaNacimiento = new Date(fechaNac);
+    if (isNaN(fechaNacimiento.getTime())) return undefined;  // Evita fechas inválidas
+  
+    const hoy = new Date();
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+  
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+      edad--;
+    }
+  
+    return edad >= 0 ? edad : undefined;  // Asegura un número válido o undefined
+  }
+  
+  
   
 }

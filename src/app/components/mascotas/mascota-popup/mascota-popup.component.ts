@@ -21,7 +21,6 @@ export class MascotaPopupComponent {
       nroHistClinica: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
       fechaNac: ['', [Validators.required]],
-      edad: [, [Validators.required]],
       idCliente: ['', [Validators.required]],
       idRaza: ['', [Validators.required]],
       idEspecie: ['', [Validators.required]],
@@ -38,7 +37,6 @@ export class MascotaPopupComponent {
     nroHistClinica: 0,
     nombre: '',
     fechaNac: '',
-    edad: 0, 
     idCliente: 0, 
     idRaza: 0,
   }
@@ -84,13 +82,12 @@ export class MascotaPopupComponent {
     }
 
   onConfirm() {
-    const { nombre, fechaNac, edad, idRaza} = this.mascotaForm.value
+    const { nombre, fechaNac, idRaza} = this.mascotaForm.value
     const idCliente = localStorage.getItem('id');
 
     this.confirm.emit({
       nombre: nombre || '',
       fechaNac: fechaNac || '',
-      edad: Number(edad),
       idCliente: Number(idCliente),
       idRaza: Number(idRaza),
     })
@@ -105,6 +102,6 @@ export class MascotaPopupComponent {
   }
 
   ngOnChanges() {
-    this.mascotaForm.patchValue(this.mascota)
+    this.mascotaForm.patchValue(this.mascota);
   }
 }

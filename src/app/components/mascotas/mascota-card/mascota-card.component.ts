@@ -25,6 +25,7 @@ export class MascotaCardComponent {
   @Output() delete: EventEmitter<Animal> = new EventEmitter<Animal>()
   @Output() select: EventEmitter<Animal> = new EventEmitter<Animal>()
 
+  edad: number | null = null;
 
   editMascota() {
     this.edit.emit(this.animal)
@@ -49,7 +50,23 @@ export class MascotaCardComponent {
   }
 
   ngOnInit() {
+    if (this.animal?.fechaNac) {
+      this.calcularEdad(this.animal.fechaNac);
+    }
+  }
 
+  calcularEdad(fechaNac: string) {
+    const fechaNacimiento = new Date(fechaNac);
+    const hoy = new Date();
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+      edad--;
+    }
+
+    this.edad = edad;
+    console.log(this.edad)
   }
 
 }

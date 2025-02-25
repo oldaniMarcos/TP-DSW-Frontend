@@ -17,12 +17,33 @@ export class MascotaVerPopupComponent {
     nroHistClinica: 0,
     nombre: '',
     fechaNac: '',
-    edad: 0,
     idCliente: 0,
     idRaza: 0,
   }
 
-  @Output() displayChange = new EventEmitter<boolean>()
+  @Output() displayChange = new EventEmitter<boolean>();
+
+  edad: number | null = null;
+
+  ngOnInit() {
+    if (this.animal?.fechaNac) {
+      this.calcularEdad(this.animal.fechaNac);
+    }
+  }
+
+  calcularEdad(fechaNac: string) {
+    const fechaNacimiento = new Date(fechaNac);
+    const hoy = new Date();
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+      edad--;
+    }
+
+    this.edad = edad;
+    console.log(this.edad)
+  }
 
   onClose() {
     this.display = false

@@ -24,7 +24,6 @@ export class RegistrarAtencionComponent {
   animal: Animal = {
     nombre: '',
     fechaNac: '',
-    edad: 0,
     idCliente: 0,
     idRaza: 0,
   }

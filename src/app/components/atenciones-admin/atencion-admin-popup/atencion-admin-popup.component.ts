@@ -3,24 +3,25 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { Atencion } from '../../../../types';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-atencion-admin-popup',
   standalone: true,
-  imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule, CalendarModule],
   templateUrl: './atencion-admin-popup.component.html',
   styleUrl: './atencion-admin-popup.component.scss'
 })
 export class AtencionAdminPopupComponent {
 
-  atencionForm: FormGroup
+  atencionForm: FormGroup;
 
   constructor( private formBuilder: FormBuilder) {
     this.atencionForm = this.formBuilder.group({
-      fechaHora: ['', [Validators.required]],
+      fechaHora: [new Date(), [Validators.required]],
       resultado: ['', [Validators.required]],
       observaciones: ['', [Validators.required]],
-    })
+    });
   }
 
   @Input() display: boolean = false
@@ -42,9 +43,10 @@ export class AtencionAdminPopupComponent {
 
   onConfirm() {
     const { fechaHora, resultado, observaciones, valor, idAnimal, idPrecio, idVeterinario} = this.atencionForm.value
-
+    const fechaHoraDate = fechaHora instanceof Date ? fechaHora : new Date(fechaHora);
+  
     this.confirm.emit({
-      fechaHora: fechaHora || '',
+      fechaHora: fechaHoraDate.toISOString(),
       resultado: resultado || '',
       observaciones: observaciones || '',
       valor: valor || 0,
@@ -53,9 +55,9 @@ export class AtencionAdminPopupComponent {
       idVeterinario: idVeterinario || 0,
       idsInsumos: [] //falta esto
     })
-
-    this.display = false
-    this.displayChange.emit(this.display)
+  
+    this.display = false;
+    this.displayChange.emit(this.display);
   }
 
   onCancel() {
@@ -64,7 +66,13 @@ export class AtencionAdminPopupComponent {
   }
 
   ngOnChanges() {
-    this.atencionForm.patchValue(this.atencion)
+    if (this.atencion) {
+      const fechaHora = this.atencion.fechaHora ? new Date(this.atencion.fechaHora) : new Date();
+      this.atencionForm.patchValue({
+        ...this.atencion,
+        fechaHora: fechaHora
+      });
+    }
   }
 
 }

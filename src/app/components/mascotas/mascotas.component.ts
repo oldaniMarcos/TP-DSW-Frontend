@@ -22,7 +22,6 @@ export class MascotasComponent {
     nroHistClinica: 0,
     nombre: '',
     fechaNac: '',
-    edad: 0,
     idCliente: 0,
     idRaza: 0
   }
@@ -32,7 +31,6 @@ export class MascotasComponent {
     nroHistClinica: 0,
     nombre: '',
     fechaNac: '',
-    edad: 0,
     idCliente: 0,
     idRaza: 0
   }
@@ -56,17 +54,15 @@ export class MascotasComponent {
     if (this.idClienteLogueado !== null) {
       this.animalService.findByClienteId(this.idClienteLogueado).subscribe(
         (data: Animal[]) => {
-          this.mascotas = data;
-  
-          // Si hay un filtro por nroHistoriaClinica, aplicar también
-          if (this.nomFiltro) {
-            this.mascotas = this.mascotas.filter(animal => 
-              animal.nroHistClinica !== undefined && 
-              animal.nroHistClinica.toString().includes(this.nomFiltro)
-            );
-          }
-          // console.log(this.mascotas); // Cambié 'data' por 'this.mascotas' para mostrar los mascotas filtrados
-        },
+                if (this.nomFiltro) {
+                  const filtroLowerCase = this.nomFiltro.toLowerCase();
+                  this.mascotas = data.filter(mascota =>
+                    mascota.nombre.toLowerCase().includes(filtroLowerCase)
+                  );
+                } else {
+                  this.mascotas = data;
+                }
+              },
         (error) => {
           console.error('Error al buscar mascotas:', error);
         }  

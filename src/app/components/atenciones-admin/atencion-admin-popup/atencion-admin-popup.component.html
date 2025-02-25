@@ -4,7 +4,16 @@
 
         <div class="row gap-05">
             <span class="label">Fecha y hora:</span>
-            <input type="text" formControlName="fechaHora">
+            <p-calendar 
+    formControlName="fechaHora"
+    [showTime]="true"
+    hourFormat="24" 
+    dateFormat="dd/mm/yy"
+    showButtonBar
+    [showIcon]="true"
+    inputId="touch"
+    >
+</p-calendar>
         </div>
 
         <div class="row gap-05">
@@ -21,7 +30,6 @@
 
     <p-footer>
         <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!atencionForm.valid">Confirmar</button>
-
         <button type="button" class="cancel" (click)="onCancel()">Cancelar</button>
     </p-footer>
 

@@ -36,10 +36,9 @@ export interface Animal {
   nroHistClinica?: number,
   nombre: string,
   fechaNac: string,
-  edad: number,
   idCliente: number,
   idRaza: number,
-}
+  edad?: number | null;}
 
 export interface Veterinario {
   idVeterinario?: number,
