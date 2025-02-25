@@ -1,9 +1,25 @@
 .chart-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   margin: auto;
+}
+
+.month-picker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
 }
 
 input, label, canvas {
   margin: 0.5rem;
+}
+
+.stats {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
 }

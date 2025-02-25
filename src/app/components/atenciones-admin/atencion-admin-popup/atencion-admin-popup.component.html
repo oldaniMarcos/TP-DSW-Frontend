@@ -4,16 +4,17 @@
 
         <div class="row gap-05">
             <span class="label">Fecha y hora:</span>
-            <p-calendar 
-    formControlName="fechaHora"
-    [showTime]="true"
-    hourFormat="24" 
-    dateFormat="dd/mm/yy"
-    showButtonBar
-    [showIcon]="true"
-    inputId="touch"
-    >
-</p-calendar>
+            <!-- <p-calendar 
+                formControlName="fechaHora"
+                [showTime]="true"
+                hourFormat="24" 
+                dateFormat="dd/mm/yy"
+                showButtonBar
+                [showIcon]="true"
+                inputId="touch"
+            >
+            </p-calendar> -->
+            <input type="datetime-local" formControlName="fechaHora">
         </div>
 
         <div class="row gap-05">

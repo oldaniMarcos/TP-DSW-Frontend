@@ -42,22 +42,40 @@ export class AtencionAdminPopupComponent {
   }
 
   onConfirm() {
-    const { fechaHora, resultado, observaciones, valor, idAnimal, idPrecio, idVeterinario} = this.atencionForm.value
-    const fechaHoraDate = fechaHora instanceof Date ? fechaHora : new Date(fechaHora);
+    // const { fechaHora, resultado, observaciones, valor, idAnimal, idPrecio, idVeterinario} = this.atencionForm.value
+    // const fechaHoraDate = fechaHora instanceof Date ? fechaHora : new Date(fechaHora);
   
-    this.confirm.emit({
-      fechaHora: fechaHoraDate.toISOString(),
-      resultado: resultado || '',
-      observaciones: observaciones || '',
-      valor: valor || 0,
-      idAnimal: idAnimal || 0,
-      idPrecio: idPrecio || 0,
-      idVeterinario: idVeterinario || 0,
-      idsInsumos: [] //falta esto
-    })
+    // this.confirm.emit({
+    //   fechaHora: fechaHoraDate.toISOString(),
+    //   resultado: resultado || '',
+    //   observaciones: observaciones || '',
+    //   valor: valor || 0,
+    //   idAnimal: idAnimal || 0,
+    //   idPrecio: idPrecio || 0,
+    //   idVeterinario: idVeterinario || 0,
+    //   idsInsumos: [] //falta esto
+    // })
   
-    this.display = false;
-    this.displayChange.emit(this.display);
+    // this.display = false;
+    // this.displayChange.emit(this.display);
+
+    const formValues = this.atencionForm.value
+
+    const updatedAtencion = { 
+      ...this.atencion, 
+      ...formValues 
+    }
+
+    delete updatedAtencion.idAtencion
+    delete updatedAtencion.animal
+    delete updatedAtencion.precioAtencion
+    delete updatedAtencion.veterinario
+    delete updatedAtencion.insumos
+
+    this.confirm.emit(updatedAtencion)
+
+    this.display = false
+    this.displayChange.emit(this.display)
   }
 
   onCancel() {
@@ -66,13 +84,14 @@ export class AtencionAdminPopupComponent {
   }
 
   ngOnChanges() {
-    if (this.atencion) {
-      const fechaHora = this.atencion.fechaHora ? new Date(this.atencion.fechaHora) : new Date();
-      this.atencionForm.patchValue({
-        ...this.atencion,
-        fechaHora: fechaHora
-      });
-    }
+    // if (this.atencion) {
+    //   const fechaHora = this.atencion.fechaHora ? new Date(this.atencion.fechaHora) : new Date();
+    //   this.atencionForm.patchValue({
+    //     ...this.atencion,
+    //     fechaHora: fechaHora
+    //   });
+    // }
+    this.atencionForm.patchValue(this.atencion)   
   }
 
 }

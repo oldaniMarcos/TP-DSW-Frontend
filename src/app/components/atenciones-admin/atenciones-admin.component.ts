@@ -6,7 +6,7 @@ import { PrecioAtencionService } from '../../services/precio-atencion.service';
 import { ButtonModule } from 'primeng/button';
 import { AtencionAdminCardComponent } from './atencion-admin-card/atencion-admin-card.component';
 import { AtencionAdminPopupComponent } from './atencion-admin-popup/atencion-admin-popup.component';
-import { Subject, take } from 'rxjs';
+import { take } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { PrecioAtencionPopupComponent } from './precio-atencion-popup/precio-atencion-popup.component';
 
@@ -104,7 +104,14 @@ export class AtencionesAdminComponent {
     this.atencionService.patch(idAtencion, atencion).subscribe(
       (updatedAtencion: Atencion) => {
         const index = this.atenciones.findIndex(c => c.idAtencion === idAtencion);
-        if (index > -1) this.atenciones[index] = updatedAtencion;
+        if (index > -1) {
+          this.atenciones = [
+            ...this.atenciones.slice(0, index),
+            updatedAtencion,
+            ...this.atenciones.slice(index + 1)
+          ]
+        }
+        this.filterAtencionesByDate();
       },
       (error) => {
         console.error(`Error al actualizar atencion con id ${idAtencion}:`, error);

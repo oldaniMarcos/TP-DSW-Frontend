@@ -19,6 +19,10 @@ export class IngresosComponent {
 
   @ViewChild('chart') chartCanvas: any;
 
+  highest: number = 0
+  lowest: number = 0
+  average: number = 0
+
   ngAfterViewInit(): void {
     this.chartRef = new Chart(this.chartCanvas.nativeElement, {
       type: 'bar',
@@ -93,6 +97,12 @@ export class IngresosComponent {
         dailyTotals[day] = (dailyTotals[day] || 0) + atencion.valor;        
       }
     });
+
+    const values = Object.values(dailyTotals);
+
+    this.highest = values.length ? Math.max(...values) : 0;
+    this.lowest = values.length ? Math.min(...values) : 0;
+    this.average = values.length ? values.reduce((sum, val) => sum + val, 0) / values.length : 0;
 
     this.ingresosChartData.labels = Array.from({ length: 31 }, (_, i) => i + 1).filter(day => dailyTotals[day]);
     this.ingresosChartData.datasets[0].data = (this.ingresosChartData.labels as number[]).map((day: number) => dailyTotals[day] || 0);

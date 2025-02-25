@@ -1,8 +1,17 @@
 <h2>Ingresos</h2>
 
-<div class="chart-container">
+<div class="month-picker">
   <label for="monthPicker">Seleccionar mes: </label>
   <input id="monthPicker" type="month" [(ngModel)]="selectedMonth" (change)="updateChart()" />
+</div>
 
+<div class="stats">
+  <p><strong>Ingreso más alto:</strong> ${{ highest | number: '1.2-2'}}</p>
+  <p><strong>Ingreso más bajo:</strong> ${{ lowest | number: '1.2-2'}}</p>
+  <p><strong>Ingreso promedio:</strong> ${{ average | number: '1.2-2' }}</p>
+</div>
+
+<div class="chart-container">
   <canvas #chart></canvas>
 </div>
+

@@ -2,8 +2,8 @@
   <h2>Atenciones</h2>
 
   <aside>
-    <h3>El precio de atención actual es: $<strong>{{ precioAtencionActual?.valor || 'No disponible' }}</strong></h3><br>
-    <button class="btn" (click)="toggleActualizarAtencionPopup()">Actualizar el precio de la atención</button>
+    <h3>Precio de atención actual: $<strong>{{ precioAtencionActual?.valor || 'No disponible' }}</strong></h3><br>
+    <button class="btn" (click)="toggleActualizarAtencionPopup()">Actualizar precio de atención</button>
   </aside>
 
   <div class="filter">
@@ -16,19 +16,19 @@
     />
   </div>
 
-    <div *ngFor="let atencion of filteredAtenciones">
-      <app-atencion-admin-card
-        [atencion]="atencion"
-        [mascota]="atencion.animal?.nombre || 'Sin nombre'"
-        [fecha]="atencion.fechaHora"
-        [resultado]="atencion.resultado"
-        [observaciones]="atencion.observaciones"
-        [valor]="atencion.valor"
-        [precioAtencion]="atencion.precioAtencion?.valor ?? 0"
-        (edit)="toggleUpdatePopup($event)"
-        (delete)="toggleDeletePopup($event)"
-      ></app-atencion-admin-card>
-    </div>
+  <div *ngFor="let atencion of filteredAtenciones">
+    <app-atencion-admin-card
+      [atencion]="atencion"
+      [mascota]="atencion.animal?.nombre || 'Sin nombre'"
+      [fecha]="atencion.fechaHora"
+      [resultado]="atencion.resultado"
+      [observaciones]="atencion.observaciones"
+      [valor]="atencion.valor"
+      [precioAtencion]="atencion.precioAtencion?.valor ?? 0"
+      (edit)="toggleUpdatePopup($event)"
+      (delete)="toggleDeletePopup($event)"
+    ></app-atencion-admin-card>
+  </div>
 
 <!--update-->
 <app-atencion-admin-popup [atencion]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar atencion"></app-atencion-admin-popup>
