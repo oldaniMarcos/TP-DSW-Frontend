@@ -1,0 +1,24 @@
+<p-dialog [header]="atencion.animal?.nombre" [(visible)]="display" [modal]="true" [closable]="false">
+
+    <p><strong>Fecha:</strong> {{ atencion.fechaHora | date: 'dd/MM/yyyy HH:mm' }}</p>
+    <p><strong>Resultado:</strong> {{ atencion.resultado }}</p>
+    <p><strong>Observaciones:</strong> {{ atencion.observaciones }}</p>
+    <p><strong>Valor:</strong> ${{ atencion.valor }}</p>
+    <p><strong>Precio Atención:</strong> ${{ atencion.precioAtencion?.valor ?? 0 }}</p>
+    <p><strong>Veterinario:</strong> {{ atencion.veterinario?.nombreYApellido ?? 0 }}</p>
+    <p><strong>Insumos utilizados:</strong>
+      <ul *ngIf="atencion.insumos?.length; else noInsumos">
+        <li *ngFor="let insumo of atencion.insumos" class="insumo-list">
+          {{ insumo.descripcion }}
+       </li>
+      </ul>
+  <ng-template #noInsumos>
+    <p>No se usaron insumos en esta atención.</p>
+  </ng-template>
+
+
+    <p-footer>
+      <button type="button" class="cancel" (click)="onClose()">Cerrar</button>
+    </p-footer>
+
+</p-dialog>

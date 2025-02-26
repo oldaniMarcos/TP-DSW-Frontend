@@ -29,6 +29,11 @@ export class AtencionAdminCardComponent {
 
   @Output() edit: EventEmitter<Atencion> = new EventEmitter<Atencion>()
   @Output() delete: EventEmitter<Atencion> = new EventEmitter<Atencion>()
+  @Output() select = new EventEmitter<Atencion>();
+
+  selectAtencion() {
+    this.select.emit(this.atencion);
+  }
 
   editAtencion() {
     this.edit.emit(this.atencion)

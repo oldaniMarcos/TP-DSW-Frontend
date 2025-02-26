@@ -13,12 +13,16 @@
 
     <div *ngFor="let atencion of filteredAtenciones">
       <app-atencion-card
+      [atencion]="atencion"
       [mascota]="atencion.animal?.nombre || 'Sin nombre'"
       [fecha]="atencion.fechaHora"
       [resultado]="atencion.resultado"
       [observaciones]="atencion.observaciones"
       [valor]="atencion.valor"
       [precioAtencion]="atencion.precioAtencion?.valor ?? 0"
+      (select)="toggleSelectPopup($event)"
     >
     </app-atencion-card>
     </div>
+
+    <app-atencion-ver-popup [atencion]="selected" [(display)]="displaySelectPopup"></app-atencion-ver-popup>

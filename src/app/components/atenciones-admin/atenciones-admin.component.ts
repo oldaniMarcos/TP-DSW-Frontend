@@ -9,11 +9,12 @@ import { AtencionAdminPopupComponent } from './atencion-admin-popup/atencion-adm
 import { take } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { PrecioAtencionPopupComponent } from './precio-atencion-popup/precio-atencion-popup.component';
+import { AtencionAdminVerPopupComponent } from './atencion-admin-ver-popup/atencion-admin-ver-popup.component';
 
 @Component({
   selector: 'app-atenciones-admin',
   standalone: true,
-  imports: [CommonModule, AtencionAdminCardComponent, AtencionAdminPopupComponent, ButtonModule, FormsModule, PrecioAtencionPopupComponent],
+  imports: [CommonModule, AtencionAdminCardComponent, AtencionAdminPopupComponent, ButtonModule, FormsModule, PrecioAtencionPopupComponent, AtencionAdminVerPopupComponent],
   templateUrl: './atenciones-admin.component.html',
   styleUrls: ['./atenciones-admin.component.scss'],
 })
@@ -159,6 +160,7 @@ export class AtencionesAdminComponent {
     );
   }
 
+  displaySelectPopup: boolean = false
   displayUpdatePopup: boolean = false
   displayActualizarAtencionPopup: boolean = false
 
@@ -166,6 +168,12 @@ export class AtencionesAdminComponent {
 
   toggleActualizarAtencionPopup() {
     this.displayActualizarAtencionPopup = true
+  }
+
+  toggleSelectPopup(atencion: Atencion) {
+    this.selected = atencion
+    this.displaySelectPopup = true
+    console.log('atencion:', atencion)
   }
 
   toggleUpdatePopup(atencion: Atencion) {

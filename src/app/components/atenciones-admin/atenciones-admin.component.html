@@ -27,11 +27,13 @@
       [precioAtencion]="atencion.precioAtencion?.valor ?? 0"
       (edit)="toggleUpdatePopup($event)"
       (delete)="toggleDeletePopup($event)"
+      (select)="toggleSelectPopup($event)"
     ></app-atencion-admin-card>
   </div>
 
 <!--update-->
 <app-atencion-admin-popup [atencion]="selected" [(display)]="displayUpdatePopup" (confirm)="onConfirmUpdate($event)" title="Editar atencion"></app-atencion-admin-popup>
 
+<app-atencion-admin-ver-popup [atencion]="selected" [(display)]="displaySelectPopup"></app-atencion-admin-ver-popup>
 
 <app-precio-atencion-popup [(display)]="displayActualizarAtencionPopup" (confirm)="onConfirmActualizarPrecioAtencion($event)" title="Crear atencion"></app-precio-atencion-popup>
