@@ -1,0 +1,50 @@
+<p-dialog [header]="title" [(visible)]="display" [modal]="true" [closable]="false">
+
+    <div class="column gap-1 form-wrapper" [formGroup]="clienteForm">
+
+        <div class="row gap-05">
+            <span class="label">DNI:</span>
+            <input type="text" formControlName="dni">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Nombre y apellido:</span>
+            <input type="text" formControlName="nombreYApellido">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Telefono:</span>
+            <input type="text" formControlName="telefono">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Direccion:</span>
+            <input type="text" formControlName="direccion">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Email:</span>
+            <input type="text" formControlName="email">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Usuario:</span>
+            <input type="text" formControlName="usuario">
+        </div>
+
+        <div class="row gap-05">
+            <span class="label">Contraseña:</span>
+            <input type="password" formControlName="password">
+        </div>
+
+    </div>
+
+    <p-footer>
+        <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!clienteForm.valid">Confirmar</button>
+
+        <button type="button" class="cancel" (click)="onCancel()">Cancelar</button>
+    </p-footer>
+
+</p-dialog>
+
+<p-toast></p-toast>

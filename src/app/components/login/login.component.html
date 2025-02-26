@@ -29,7 +29,14 @@
 
     <button type="submit" class="btn">Iniciar Sesión</button>
   </form>
+
+  <br>
+  <button class="btn" (click)="toggleCreatePopup()">Registrar Nuevo Cliente</button>
+
 </div>
+
+<app-signin-popup [(display)]="displayCreatePopup" (confirm)="onConfirmCreate($event)" title="Crear especie"></app-signin-popup>
+
 
 <h1>
    token JWT, opcional hacer formulario de registro de clientes, sacar paginación (es con el backend)
