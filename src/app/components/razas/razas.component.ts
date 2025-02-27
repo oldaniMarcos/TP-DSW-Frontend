@@ -6,11 +6,14 @@ import { Especie, Raza } from '../../../types.js';
 import { RazaService } from '../../services/raza.service.js';
 import { EspecieService } from '../../services/especie.service.js';
 import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-razas',
   standalone: true,
-  imports: [CommonModule, RazaPopupComponent, RazaCardComponent, FormsModule],
+  imports: [CommonModule, RazaPopupComponent, RazaCardComponent, FormsModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './razas.component.html',
   styleUrl: './razas.component.scss'
 })
@@ -28,7 +31,7 @@ export class RazasComponent {
   especies: Especie[] = []
 
   constructor (
-    private razaService: RazaService, private especieService: EspecieService
+    private razaService: RazaService, private especieService: EspecieService, private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -135,6 +138,8 @@ export class RazasComponent {
   onConfirmCreate(raza: Raza) {
     this.createRaza(raza)
     this.displayCreatePopup = false
+
+    this.messageService.add({severity: 'success', detail: 'Raza creada correctamente.', life: 2000});
   }
 
   onConfirmUpdate(raza: Raza) {
@@ -142,5 +147,7 @@ export class RazasComponent {
 
     this.updateRaza(this.selected.codRaza, raza)
     this.displayUpdatePopup = false
+
+    this.messageService.add({severity: 'success', detail: 'Raza editada correctamente.', life: 2000});
   }
 }

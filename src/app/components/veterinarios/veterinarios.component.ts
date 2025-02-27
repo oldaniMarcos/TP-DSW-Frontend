@@ -7,11 +7,14 @@ import { VeterinarioPopupComponent } from './veterinario-popup/veterinario-popup
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { VeterinarioVerPopupComponent } from './veterinario-ver-popup/veterinario-ver-popup.component.js';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-veterinarios',
   standalone: true,
-  imports: [CommonModule, VeterinarioCardComponent, VeterinarioPopupComponent, VeterinarioVerPopupComponent, ButtonModule, FormsModule],
+  imports: [CommonModule, VeterinarioCardComponent, VeterinarioPopupComponent, VeterinarioVerPopupComponent, ButtonModule, FormsModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './veterinarios.component.html',
   styleUrl: './veterinarios.component.scss'
 })
@@ -42,7 +45,8 @@ export class VeterinariosComponent {
   matFiltro: string = ''
 
   constructor(
-    private veterinarioService: VeterinarioService
+    private veterinarioService: VeterinarioService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -141,6 +145,8 @@ export class VeterinariosComponent {
   onConfirmCreate(veterinario: Veterinario) {
     this.createVeterinario(veterinario)
     this.displayCreatePopup = false
+
+    this.messageService.add({severity:'success', detail:'Veterinario creado correctamente.', life: 2000});
   }
 
   onConfirmUpdate(veterinario: Veterinario) {
@@ -148,5 +154,7 @@ export class VeterinariosComponent {
 
     this.updateVeterinario(this.selected.idVeterinario, veterinario)
     this.displayUpdatePopup = false
+
+    this.messageService.add({severity:'success', detail:'Veterinario editado correctamente.', life: 2000});
   }
 }

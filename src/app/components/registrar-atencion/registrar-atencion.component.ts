@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Animal, Atencion, Insumo, PrecioAtencion, Veterinario } from '../../../types.js';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
@@ -7,13 +7,16 @@ import { VeterinarioService } from '../../services/veterinario.service.js';
 import { PrecioAtencionService } from '../../services/precio-atencion.service.js';
 import { InsumoService } from '../../services/insumo.service.js';
 import { AnimalService } from '../../services/animal.service.js';
-import { catchError, map, Observable, of, Subject } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { PrecioInsumoService } from '../../services/precio-insumo.service.js';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-registrar-atencion',
   standalone: true,
-  imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './registrar-atencion.component.html',
   styleUrl: './registrar-atencion.component.scss'
 })
@@ -42,6 +45,7 @@ export class RegistrarAtencionComponent {
     , private insumoService: InsumoService
     , private animalService: AnimalService
     , private precioInsumoService: PrecioInsumoService
+    , private messageService: MessageService
   ) {
     this.insumoSelections = this.formBuilder.array([]) 
 
@@ -135,6 +139,9 @@ export class RegistrarAtencionComponent {
           this.insumoService.findAll().subscribe((data: Insumo[]) => {
             this.insumos = data.filter((insumo) => insumo.stock > 0);
           });
+
+          this.messageService.add({severity: 'success', detail: 'Atencion registrada correctamente.', life: 2000});
+
         })
         .catch((error) => {
           console.error('Error al actualizar stock o calcular precios', error);

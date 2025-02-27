@@ -2,6 +2,8 @@ p {
     padding: 0.5rem;
     color: black;
     font-size: 1.1rem;
+    max-width: 300px;
+    overflow-x: auto;
   }
   
   h2 {

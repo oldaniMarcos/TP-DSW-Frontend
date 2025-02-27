@@ -1,16 +1,13 @@
 .atenciones {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
+
+  text-align: center;
 
   .atencion-card {
     margin: 0.5rem auto;
     width: 90%;
   }
 
-  .filter-container {
+  .filter {
     display: flex;
     flex-direction: column;
     align-items: center;

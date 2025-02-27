@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { Cliente } from '../../../../types';
 import { ClienteService } from '../../../services/cliente.service';
@@ -71,12 +71,12 @@ export class SignInPopupComponent {
     const usuarioExistente = this.clientes.some(cliente => cliente.usuario === usuario);
   
     if (dniExistente) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El DNI ya está registrado. Por favor, ingrese otro.' });
+      this.messageService.add({ severity: 'error', detail: 'El DNI ya está registrado. Por favor, ingrese otro.', life: 2000 });
       return;
     }
   
     if (usuarioExistente) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El usuario ya está en uso. Por favor, elija otro.' });
+      this.messageService.add({ severity: 'error', detail: 'El usuario ya está en uso. Por favor, elija otro.', life: 2000 });
       return;
     }
   
@@ -94,7 +94,7 @@ export class SignInPopupComponent {
     this.display = false;
     this.displayChange.emit(this.display);
 
-    this.messageService.add({severity: 'success', summary: 'Exito', detail: 'Cliente registrado correctamente.'});
+    this.messageService.add({severity: 'success', detail: 'Cliente registrado correctamente.', life: 2000});
   }
   
 

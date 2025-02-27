@@ -11,11 +11,14 @@ import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { InsumoPrecioComponent } from './insumo-precio/insumo-precio.component.js';
 import { PrecioInsumoService } from '../../services/precio-insumo.service.js';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-insumos',
   standalone: true,
-  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, InsumoVerPopupComponent, InsumoPrecioComponent, ButtonModule, FormsModule, RouterLink],
+  imports: [CommonModule, InsumoCardComponent, InsumoPopupComponent, InsumoVerPopupComponent, InsumoPrecioComponent, ButtonModule, FormsModule, RouterLink, ToastModule],
+  providers: [MessageService],
   templateUrl: './insumos.component.html',
   styleUrl: './insumos.component.scss'
 })
@@ -48,6 +51,7 @@ export class InsumosComponent {
   constructor(
     private insumoService: InsumoService
     , private precioInsumoService: PrecioInsumoService
+    , private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -184,6 +188,8 @@ export class InsumosComponent {
 
   onConfirmCreate(event: { insumo: Insumo; valor: number; valorVenta: number }) {
     this.createInsumo(event.insumo, event.valor, event.valorVenta);
+
+    this.messageService.add({severity: 'success', detail: 'Insumo creado correctamente.', life: 2000});
   }
 
   onConfirmUpdate(event: { insumo: Insumo; valor: number; valorVenta: number }) {
@@ -191,5 +197,7 @@ export class InsumosComponent {
 
     this.updateInsumo(this.selected.codInsumo, event.insumo)
     this.displayUpdatePopup = false
+
+    this.messageService.add({severity: 'success', detail: 'Insumo editado correctamente.', life: 2000});
   }
 }

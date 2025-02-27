@@ -7,11 +7,14 @@ import { EspeciePopupComponent } from './especie-popup/especie-popup.component.j
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-especies',
   standalone: true,
-  imports: [CommonModule, EspecieCardComponent, EspeciePopupComponent, ButtonModule, RouterLink, FormsModule],
+  imports: [CommonModule, EspecieCardComponent, EspeciePopupComponent, ButtonModule, RouterLink, FormsModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './especies.component.html',
   styleUrl: './especies.component.scss'
 })
@@ -27,7 +30,8 @@ export class EspeciesComponent {
   especieFiltro: string = '';
 
   constructor(
-    private especieService: EspecieService
+    private especieService: EspecieService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -122,6 +126,8 @@ export class EspeciesComponent {
   onConfirmCreate(especie: Especie) {
     this.createEspecie(especie)
     this.displayCreatePopup = false
+
+    this.messageService.add({severity: 'success', detail: 'Especie creada correctamente.', life: 2000});
   }
 
   onConfirmUpdate(especie: Especie) {
@@ -129,5 +135,7 @@ export class EspeciesComponent {
 
     this.updateEspecie(this.selected.codEspecie, especie)
     this.displayUpdatePopup = false
+
+    this.messageService.add({severity: 'success', detail: 'Especie editada correctamente.', life: 2000});
   }
 }

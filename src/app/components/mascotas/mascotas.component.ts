@@ -7,11 +7,14 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { MascotaVerPopupComponent } from './mascota-ver-popup/mascota-ver-popup.component.js';
 import { AnimalService } from '../../services/animal.service.js';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-veterinarios',
   standalone: true,
-imports: [CommonModule, MascotaCardComponent, MascotaPopupComponent, MascotaVerPopupComponent, ButtonModule, FormsModule],
+imports: [CommonModule, MascotaCardComponent, MascotaPopupComponent, MascotaVerPopupComponent, ButtonModule, FormsModule, ToastModule],
+providers: [MessageService],
   templateUrl: './mascotas.component.html',
   styleUrl: './mascotas.component.scss'
 })
@@ -39,7 +42,8 @@ export class MascotasComponent {
   idClienteLogueado: number | null = null;
 
   constructor(
-    private animalService: AnimalService
+    private animalService: AnimalService,
+    private messageService: MessageService
   ) {
     const idCliente = localStorage.getItem('id');
     this.idClienteLogueado = idCliente ? parseInt(idCliente, 10) : null;
@@ -150,6 +154,8 @@ export class MascotasComponent {
   onConfirmCreate(animal: Animal) {
     this.createMascota(animal)
     this.displayCreatePopup = false
+
+    this.messageService.add({severity:'success', detail:'Mascota creada correctamente.', life: 2000});
   }
 
   onConfirmUpdate(animal: Animal) {
@@ -157,5 +163,7 @@ export class MascotasComponent {
 
     this.updateMascota(this.selected.nroHistClinica, animal)
     this.displayUpdatePopup = false
+
+    this.messageService.add({severity:'success', detail:'Mascota editada correctamente.', life: 2000});
   }
 }

@@ -219,6 +219,10 @@ input, select {
   
 }
 
+.p-toast {
+  max-width: 300px;
+}
+
 .p-button-profile {
   background-color: transparent;
   padding: 0;
@@ -295,5 +299,9 @@ input[type=number] {
 
   .sidebar img {
     height: 10vw;
+  }
+
+  .p-toast {
+    max-width: fit-content;
   }
 }

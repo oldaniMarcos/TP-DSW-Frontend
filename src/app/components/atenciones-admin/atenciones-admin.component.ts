@@ -10,11 +10,14 @@ import { take } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { PrecioAtencionPopupComponent } from './precio-atencion-popup/precio-atencion-popup.component';
 import { AtencionAdminVerPopupComponent } from './atencion-admin-ver-popup/atencion-admin-ver-popup.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-atenciones-admin',
   standalone: true,
-  imports: [CommonModule, AtencionAdminCardComponent, AtencionAdminPopupComponent, ButtonModule, FormsModule, PrecioAtencionPopupComponent, AtencionAdminVerPopupComponent],
+  imports: [CommonModule, AtencionAdminCardComponent, AtencionAdminPopupComponent, ButtonModule, FormsModule, PrecioAtencionPopupComponent, AtencionAdminVerPopupComponent, ToastModule],
+  providers: [MessageService],
   templateUrl: './atenciones-admin.component.html',
   styleUrls: ['./atenciones-admin.component.scss'],
 })
@@ -43,7 +46,8 @@ export class AtencionesAdminComponent {
 
   constructor(
     private atencionService: AtencionService,
-    private precioAtencionService: PrecioAtencionService
+    private precioAtencionService: PrecioAtencionService,
+    private messageService: MessageService
   ) { }
 
   precioAtencionActual: PrecioAtencion | null = null;
@@ -193,6 +197,7 @@ export class AtencionesAdminComponent {
 
     this.updateAtencion(this.selected.idAtencion, atencion)
     this.displayUpdatePopup = false
+    this.messageService.add({severity: 'success', detail: 'Atencion editada correctamente.', life: 2000});
   }
 
   onConfirmActualizarPrecioAtencion(precioAtencion: PrecioAtencion): void {
@@ -200,6 +205,7 @@ export class AtencionesAdminComponent {
       (newPrecioAtencion: PrecioAtencion) => {
         this.precioAtencionActual = newPrecioAtencion;
         this.displayActualizarAtencionPopup = false;
+        this.messageService.add({severity: 'success', detail: 'Precio de atencion actualizado correctamente.', life: 2000});
       },
       (error) => {
         console.error('Error al actualizar el precio de atención:', error);

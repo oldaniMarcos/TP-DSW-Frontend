@@ -6,11 +6,14 @@ import { Cliente } from '../../../types.js';
 import { ClientePopupComponent } from './cliente-popup/cliente-popup.component';
 import { FormsModule } from '@angular/forms';
 import { ClienteVerPopupComponent } from './cliente-ver-popup/cliente-ver-popup.component.js';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, ClienteCardComponent, ClientePopupComponent, ClienteVerPopupComponent, FormsModule], 
+  imports: [CommonModule, ClienteCardComponent, ClientePopupComponent, ClienteVerPopupComponent, FormsModule, ToastModule], 
+  providers: [MessageService],
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss'],
 })
@@ -45,7 +48,8 @@ export class ClientesComponent {
   dniFiltro: string = '';
 
   constructor(
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -136,6 +140,8 @@ export class ClientesComponent {
   onConfirmCreate(cliente: Cliente) {
     this.createCliente(cliente)
     this.displayCreatePopup = false
+
+    this.messageService.add({severity: 'success', detail: 'Cliente creado correctamente.', life: 2000});
   }
 
   onConfirmUpdate(cliente: Cliente) {
@@ -143,6 +149,8 @@ export class ClientesComponent {
 
     this.updateCliente(this.selected.id, cliente)
     this.displayUpdatePopup = false
+
+    this.messageService.add({severity: 'success', detail: 'Cliente editado correctamente.', life: 2000});
 
   }  
 

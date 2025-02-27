@@ -6,11 +6,14 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { TipoInsumo } from '../../../types.js';
 import { TipoInsumoService } from '../../services/tipo-insumo.service.js';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-tipos-tiposInsumos',
   standalone: true,
-  imports: [CommonModule, TipoInsumoCardComponent, TipoInsumoPopupComponent, ButtonModule, FormsModule],
+  imports: [CommonModule, TipoInsumoCardComponent, TipoInsumoPopupComponent, ButtonModule, FormsModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './tipos-insumos.component.html',
   styleUrl: './tipos-insumos.component.scss'
 })
@@ -26,6 +29,7 @@ export class TiposInsumosComponent {
 
   constructor(
     private tipoInsumoService: TipoInsumoService
+    , private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -121,6 +125,8 @@ export class TiposInsumosComponent {
   onConfirmCreate(tipoInsumo: TipoInsumo) {
     this.createTipoInsumo(tipoInsumo)
     this.displayCreatePopup = false
+
+    this.messageService.add({severity: 'success', detail: 'Tipo de insumo creado correctamente.', life: 2000});
   }
 
   onConfirmUpdate(tipoInsumo: TipoInsumo) {
@@ -128,5 +134,7 @@ export class TiposInsumosComponent {
 
     this.updateTipoInsumo(this.selected.codTipoInsumo, tipoInsumo)
     this.displayUpdatePopup = false
+
+    this.messageService.add({severity: 'success', detail: 'Tipo de insumo editado correctamente.', life: 2000});
   }
 }
