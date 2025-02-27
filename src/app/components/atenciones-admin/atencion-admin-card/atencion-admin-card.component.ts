@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
+import { TruncateNamePipe } from '../../../pipes/truncate-name.pipe.js';
 
 @Component({
   selector: 'app-atencion-admin-card',
   standalone: true,
-  imports: [FormsModule, ConfirmPopupModule, ToastModule, CommonModule],
+  imports: [FormsModule, ConfirmPopupModule, ToastModule, CommonModule, TruncateNamePipe],
   templateUrl: './atencion-admin-card.component.html',
   styleUrls: ['./atencion-admin-card.component.scss'],
 })

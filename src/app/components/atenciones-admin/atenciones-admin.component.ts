@@ -173,7 +173,6 @@ export class AtencionesAdminComponent {
   toggleSelectPopup(atencion: Atencion) {
     this.selected = atencion
     this.displaySelectPopup = true
-    console.log('atencion:', atencion)
   }
 
   toggleUpdatePopup(atencion: Atencion) {
