@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { LocalStorageService } from '../../services/local-storage.service.js';
+import { Router, RouterLink } from '@angular/router';
 import { AtencionService } from '../../services/atencion.service.js';
 import { Atencion } from '../../../types.js';
 import { RegistrarAtencionComponent } from "../registrar-atencion/registrar-atencion.component";
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service.js';
 
 @Component({
   selector: 'app-admin',
@@ -16,15 +16,15 @@ import { CommonModule } from '@angular/common';
 export class AdminComponent {
 
   constructor(private router: Router
-    , private localStorage: LocalStorageService
     , private atencionService: AtencionService
+    , private authService: AuthService
   ) {}
 
   displayCreatePopup: boolean = false
 
 
   logout() {
-    this.localStorage.clear();
+    this.authService.logout()
     this.router.navigate(['/login']);
   }
 

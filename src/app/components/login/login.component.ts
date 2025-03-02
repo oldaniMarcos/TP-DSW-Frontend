@@ -6,6 +6,7 @@ import { ClienteService } from '../../services/cliente.service.js';
 import { LocalStorageService } from '../../services/local-storage.service.js';
 import { Cliente } from '../../../types.js';
 import { SignInPopupComponent } from './sign-in-popup/sign-in-popup.component.js';
+import { AuthService } from '../../services/auth.service.js';
 
 @Component({
   selector: 'app-login',
@@ -23,19 +24,21 @@ export class LoginComponent {
   constructor(private clienteService: ClienteService
     , private router: Router
     , private localStorage: LocalStorageService
+    , private authService: AuthService
   ) { }
 
   onSubmit() {
-    this.clienteService.login(this.loginData.usuario, this.loginData.password).subscribe(
+
+    this.authService.login(this.loginData.usuario, this.loginData.password).subscribe(
       (res) => {
+        this.localStorage.setItem('token', res.token)
+        this.localStorage.setItem('rol', res.user.rol)
+        this.localStorage.setItem('id', res.user.id)
+        this.localStorage.setItem('nombreYApellido', res.user.nombreYApellido)
+        this.localStorage.setItem('dni', res.user.dni)
+        this.localStorage.setItem('email', res.user.email)
 
-        this.localStorage.setItem('rol', res.rol)
-        this.localStorage.setItem('id', res.id)
-        this.localStorage.setItem('nombreYApellido', res.nombreYApellido)
-        this.localStorage.setItem('dni', res.dni)
-        this.localStorage.setItem('email', res.email)
-
-        if (res.rol === 'admin') {
+        if (res.user.rol === 'admin') {
           this.router.navigate(['/admin'])
         }
         else {
@@ -43,7 +46,7 @@ export class LoginComponent {
         }
       },
       () => {
-        this.errorMessage = 'Credenciales incorrectas';
+        this.errorMessage = 'Credenciales Incorrectas'
       }
     )
   }
@@ -67,16 +70,16 @@ export class LoginComponent {
         console.error('Error al crear un cliente:', error);
       }
     );      
-    }
+  }
 
-    displayCreatePopup: boolean = false
+  displayCreatePopup: boolean = false
 
-    toggleCreatePopup() {
-      this.displayCreatePopup = true
-    }
-  
-    onConfirmCreate(cliente: Cliente) {
-        this.createCliente(cliente)
-        this.displayCreatePopup = false
-      }
+  toggleCreatePopup() {
+    this.displayCreatePopup = true
+  }
+
+  onConfirmCreate(cliente: Cliente) {
+    this.createCliente(cliente)
+    this.displayCreatePopup = false
+  }
 }

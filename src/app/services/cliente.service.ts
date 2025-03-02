@@ -34,8 +34,4 @@ export class ClienteService {
   delete(id: number): Observable<void> {
     return this.apiService.delete<void>(`${this.URL}/${id}`, {})
   }
-
-  login(usuario: string, password: string): Observable<any> {
-    return this.apiService.post(`${this.URL}/login`, { usuario, password }, {})
-  }
 }

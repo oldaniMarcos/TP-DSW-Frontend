@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { LocalStorageService } from '../../services/local-storage.service.js';
+import { AuthService } from '../../services/auth.service.js';
 
 @Component({
   selector: 'app-home',
@@ -11,12 +11,13 @@ import { LocalStorageService } from '../../services/local-storage.service.js';
 })
 export class HomeComponent {
   
-  constructor(private router: Router
-    , private localStorage: LocalStorageService
+  constructor(
+      private router: Router
+    , private authService: AuthService
   ) {}
 
   logout() {
-    this.localStorage.clear()
+    this.authService.logout()
     this.router.navigate(['/login']);
   }
 
