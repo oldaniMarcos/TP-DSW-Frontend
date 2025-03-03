@@ -34,7 +34,13 @@
 
         <div class="row gap-05">
             <span class="label">Contraseña:</span>
-            <input type="password" formControlName="password">
+            <input 
+            type="password" 
+            formControlName="password"
+            pTooltip="Al menos 8 caracteres, una mayúscula y un número."
+            tooltipPosition="top"
+            tooltipEvent="focus"
+            >
         </div>
 
     </div>

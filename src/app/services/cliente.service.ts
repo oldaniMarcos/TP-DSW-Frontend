@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service.js';
 import { environment } from '../../environment.js';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Cliente } from '../../types.js';
 
 @Injectable({
@@ -34,4 +34,14 @@ export class ClienteService {
   delete(id: number): Observable<void> {
     return this.apiService.delete<void>(`${this.URL}/${id}`, {})
   }
+
+  check(dni: string, email: string, usuario: string): Observable<{ dni: string; email: string; usuario: string }> {
+    return this.apiService.post<{ dni: string; email: string; usuario: string }, { dni: string; email: string; usuario: string }>(
+      `${this.URL}/check`, 
+      { dni, email, usuario }, 
+      {}
+    )
+  }
+
+
 }

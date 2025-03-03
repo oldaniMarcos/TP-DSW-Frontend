@@ -6,11 +6,12 @@ import { Cliente } from '../../../../types';
 import { ClienteService } from '../../../services/cliente.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-signin-popup',
   standalone: true,
-  imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule, ToastModule],
+  imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule, ToastModule, TooltipModule],
   providers: [MessageService],
   templateUrl: './sign-in-popup.component.html',
   styleUrl: './sign-in-popup.component.scss'
@@ -18,7 +19,6 @@ import { MessageService } from 'primeng/api';
 export class SignInPopupComponent {
 
   clienteForm: FormGroup;
-  clientes: Cliente[] = [];
 
   constructor( private formBuilder: FormBuilder, private clienteService: ClienteService, private messageService: MessageService) {
     this.clienteForm = this.formBuilder.group({
@@ -28,7 +28,7 @@ export class SignInPopupComponent {
       direccion: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       usuario: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/)]],
     });
     
   }
@@ -52,51 +52,42 @@ export class SignInPopupComponent {
 
   title: string = 'Nuevo Cliente'
 
-  loadClientes() {
-    this.clienteService.findAll().subscribe(
-      (data: Cliente[]) => {
-        this.clientes = data;
-      },
-      (error) => {
-        console.error('Error al obtener clientes:', error);
-      }
-    );
-  }
-
   onConfirm() {
-
     const { dni, nombreYApellido, telefono, direccion, email, usuario, password } = this.clienteForm.value;
-  
-    const dniExistente = this.clientes.some(cliente => cliente.dni === dni);
-    const usuarioExistente = this.clientes.some(cliente => cliente.usuario === usuario);
-  
-    if (dniExistente) {
-      this.messageService.add({ severity: 'error', detail: 'El DNI ya está registrado. Por favor, ingrese otro.', life: 2000 });
-      return;
-    }
-  
-    if (usuarioExistente) {
-      this.messageService.add({ severity: 'error', detail: 'El usuario ya está en uso. Por favor, elija otro.', life: 2000 });
-      return;
-    }
-  
-    this.confirm.emit({
-      dni,
-      nombreYApellido,
-      telefono,
-      direccion,
-      email,
-      usuario,
-      password,
-      rol: 'cliente'
-    });
-  
-    this.display = false;
-    this.displayChange.emit(this.display);
 
-    this.messageService.add({severity: 'success', detail: 'Cliente registrado correctamente.', life: 2000});
+    this.clienteService.check(dni, email, usuario).subscribe(response => {
+      if (response.dni) {
+        this.messageService.add({ severity: 'error', detail: 'El DNI ya está registrado. Por favor, ingrese otro.', life: 2000 });
+        return;
+      }
+
+      if (response.usuario) {
+        this.messageService.add({ severity: 'error', detail: 'El usuario ya está en uso. Por favor, elija otro.', life: 2000 });
+        return;
+      }
+
+      if (response.email) {
+        this.messageService.add({ severity: 'error', detail: 'El correo electrónico ya está en uso. Por favor, ingrese otro.', life: 2000 });
+        return;
+      }
+
+      this.confirm.emit({
+        dni,
+        nombreYApellido,
+        telefono,
+        direccion,
+        email,
+        usuario,
+        password,
+        rol: 'cliente'
+      });
+
+      this.display = false;
+      this.displayChange.emit(this.display);
+
+      this.messageService.add({ severity: 'success', detail: 'Cliente registrado correctamente.', life: 2000 });
+    });
   }
-  
 
   onCancel() {
     this.display = false
@@ -105,10 +96,6 @@ export class SignInPopupComponent {
 
   ngOnChanges() {
     this.clienteForm.patchValue(this.cliente)
-  }
-
-  ngOnInit() {
-    this.loadClientes();
   }
   
 }
