@@ -47,7 +47,6 @@ export class MascotasComponent {
   ) {
     const idCliente = localStorage.getItem('id');
     this.idClienteLogueado = idCliente ? parseInt(idCliente, 10) : null;
-    // console.log('ID Cliente Logueado:', this.idClienteLogueado);
    }
 
   ngOnInit() {

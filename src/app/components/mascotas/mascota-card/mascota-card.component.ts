@@ -83,6 +83,5 @@ export class MascotaCardComponent {
     }
 
     this.edad = edad;
-    console.log(this.edad);
   }
 }
