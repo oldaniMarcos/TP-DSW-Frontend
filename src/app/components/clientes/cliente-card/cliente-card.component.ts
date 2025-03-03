@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
 import { Cliente } from '../../../../types';
+import { AtencionService } from '../../../services/atencion.service';
 
 @Component({
   selector: 'app-cliente-card',
@@ -11,10 +12,11 @@ import { Cliente } from '../../../../types';
   imports: [FormsModule, ConfirmPopupModule, ToastModule],
   templateUrl: './cliente-card.component.html',
   styleUrls: ['./cliente-card.component.scss'],
+  providers: [MessageService]
 })
 export class ClienteCardComponent {
   
-  constructor(private confirmationService: ConfirmationService) { }
+  constructor(private confirmationService: ConfirmationService, private atencionService: AtencionService, private messageService: MessageService) { }
 
   @ViewChild('deleteButton') deleteButton: any
 
@@ -29,13 +31,23 @@ export class ClienteCardComponent {
   }
 
   confirmDelete() {
-    this.confirmationService.confirm({
-      target: this.deleteButton.nativeElement,
-      message: '¿Eliminar este cliente?',
-      accept: () => {
-        this.deleteCliente()
-      },
-    })
+    if (!this.cliente.id) {
+      return;
+    }
+  
+    this.atencionService.hasCliente(this.cliente.id).subscribe((tieneAtenciones) => {
+      if (tieneAtenciones) {
+        this.messageService.add({ severity: 'warn', summary: 'No se puede eliminar', detail: 'Este cliente tiene atenciones registradas.' });
+      } else {
+        this.confirmationService.confirm({
+          target: this.deleteButton.nativeElement,
+          message: '¿Eliminar este cliente?',
+          accept: () => {
+            this.deleteCliente();
+          },
+        });
+      }
+    });
   }
 
   deleteCliente() {

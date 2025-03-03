@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environment.js';
 import { ApiService } from './api.service.js';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Atencion } from '../../types.js';
 
 @Injectable({
@@ -37,5 +37,20 @@ export class AtencionService {
 
   findByClienteId(clienteId: number): Observable<Atencion[]> {
     return this.apiService.get<Atencion[]>(`${this.URL}/cliente/${clienteId}`, {});
+  }
+
+  hasAnimal(idAnimal: number): Observable<boolean> {
+    return this.apiService.get<{ exists: boolean }>(`${this.URL}/exists/animal/${idAnimal}`, {})
+      .pipe(map(response => response.exists));
+  }
+
+  hasCliente(idCliente: number): Observable<boolean> {
+    return this.apiService.get<{ exists: boolean }>(`${this.URL}/exists/animal/cliente/${idCliente}`, {})
+      .pipe(map(response => response.exists));
+  }
+
+  hasVeterinario(idVeterinario: number): Observable<boolean> {
+    return this.apiService.get<{ exists: boolean }>(`${this.URL}/exists/veterinario/${idVeterinario}`, {})
+      .pipe(map(response => response.exists));
   }
 }
