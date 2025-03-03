@@ -1,22 +1,25 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { LocalStorageService } from '../services/local-storage.service';
+import { catchError, retry, throwError } from 'rxjs';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export const AuthInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('token')
+  const authService = inject(AuthService)
+  const localStorage = inject(LocalStorageService)
 
-    if(token) {
-      const cloned = req.clone({
-        headers: req.headers.set("authorization", "Bearer" + token)
-      })
+  const token = localStorage.getItem('token')
 
-      return next.handle(cloned)
-    }
-    else {
-      return next.handle(req)
-    }
+  if(token) {
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    })
   }
+
+  return next(req).pipe(
+    retry(2)
+  )
 }
