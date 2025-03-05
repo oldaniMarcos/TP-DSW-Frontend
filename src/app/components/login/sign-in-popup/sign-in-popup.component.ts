@@ -28,7 +28,7 @@ export class SignInPopupComponent {
       direccion: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       usuario: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/)]],
+      password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+{}\[\]:;<>,.?~\/\-=`]{8,}$/)]],
     });
     
   }

@@ -34,4 +34,12 @@ export class VeterinarioService {
   delete(idVeterinario: number): Observable<void> {
     return this.apiService.delete<void>(`${this.URL}/${idVeterinario}`, {})
   }
+
+  check(dni: string, email: string, nroMatricula: string): Observable<{ dni: string; email: string; nroMatricula: string }> {
+    return this.apiService.post<{ dni: string; email: string; nroMatricula: string }, { dni: string; email: string; nroMatricula: string }>(
+      `${this.URL}/check`, 
+      { dni, email, nroMatricula }, 
+      {}
+    )
+  }
 }

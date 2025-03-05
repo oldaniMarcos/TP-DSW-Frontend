@@ -102,54 +102,73 @@ export class RegistrarAtencionComponent {
     this.precioAtencionService.findMostRecent().subscribe((precioAtencion) => {
       let totalValor = precioAtencion.valor;
 
-      const insumoRequests: Observable<number>[] = this.insumoSelections.value.map(
-        (insumo: { idInsumo: number; cantidad: number }) =>
-          this.precioInsumoService.findMostRecentByInsumo(insumo.idInsumo).pipe(
-            map((precioInsumo) => precioInsumo.valorVenta * insumo.cantidad)
-          )
-      );
+      const insumoSelections = this.insumoSelections.value
+      .filter((insumo: { idInsumo: number }) => insumo.idInsumo !== 0);
 
-      Promise.all(insumoRequests.map((req: Observable<number>) => req.toPromise()))
-        .then((preciosInsumo: (number | undefined)[]) => {
-          const validPrecios = preciosInsumo.filter((p): p is number => p !== undefined);
-          totalValor += validPrecios.reduce((acc, curr) => acc + curr, 0);
+      if (insumoSelections.length > 0) {
+        const insumoRequests: Observable<number>[] = insumoSelections.map(
+          (insumo: { idInsumo: number; cantidad: number }) =>
+            this.precioInsumoService.findMostRecentByInsumo(insumo.idInsumo).pipe(
+              map((precioInsumo) => precioInsumo.valorVenta * insumo.cantidad)
+            )
+        );
 
-          const stockUpdates = this.insumoSelections.value.map(
-            (insumo: { idInsumo: number; cantidad: number }) =>
-              this.insumoService.decreaseStock(insumo.idInsumo, insumo.cantidad).toPromise()
-          );
+        Promise.all(insumoRequests.map((req: Observable<number>) => req.toPromise()))
+          .then((preciosInsumo: (number | undefined)[]) => {
+            const validPrecios = preciosInsumo.filter((p): p is number => p !== undefined);
+            totalValor += validPrecios.reduce((acc, curr) => acc + curr, 0);
 
-          return Promise.all(stockUpdates).then(() => totalValor);
-        })
-        .then((valor) => {
-          this.confirm.emit({
-            fechaHora: new Date().toISOString(),
-            resultado: resultado || '',
-            observaciones: observaciones || '',
-            valor: valor,
-            idAnimal: Number(idAnimal) || 0,
-            idPrecio: Number(precioAtencion.idPrecioAtencion) || 0,
-            idVeterinario: Number(idVeterinario) || 0,
-            idsInsumos: this.insumoSelections.value.map((i: { idInsumo: number }) => i.idInsumo),
+            const stockUpdates = insumoSelections.map(
+              (insumo: { idInsumo: number; cantidad: number }) =>
+                this.insumoService.decreaseStock(insumo.idInsumo, insumo.cantidad).toPromise()
+            );
+
+            return Promise.all(stockUpdates).then(() => totalValor);
+          })
+          .then((valor) => {
+            this.confirm.emit({
+              fechaHora: new Date().toISOString(),
+              resultado: resultado || '',
+              observaciones: observaciones || '',
+              valor: valor,
+              idAnimal: Number(idAnimal) || 0,
+              idPrecio: Number(precioAtencion.idPrecioAtencion) || 0,
+              idVeterinario: Number(idVeterinario) || 0,
+              idsInsumos: insumoSelections.map((i: { idInsumo: number }) => i.idInsumo),
+            });
+
+            this.display = false;
+            this.displayChange.emit(this.display);
+
+            this.insumoService.findAll().subscribe((data: Insumo[]) => {
+              this.insumos = data.filter((insumo) => insumo.stock > 0);
+            });
+
+            this.messageService.add({severity: 'success', detail: 'Atencion registrada correctamente.', life: 2000});
+          })
+          .catch((error) => {
+            console.error('Error al actualizar stock o calcular precios', error);
+            alert('No se pudo completar la operación.');
           });
-
-          this.display = false;
-          this.displayChange.emit(this.display);
-
-          this.insumoService.findAll().subscribe((data: Insumo[]) => {
-            this.insumos = data.filter((insumo) => insumo.stock > 0);
-          });
-
-          this.messageService.add({severity: 'success', detail: 'Atencion registrada correctamente.', life: 2000});
-
-        })
-        .catch((error) => {
-          console.error('Error al actualizar stock o calcular precios', error);
-          alert('No se pudo completar la operación.');
+      } else {
+        this.confirm.emit({
+          fechaHora: new Date().toISOString(),
+          resultado: resultado || '',
+          observaciones: observaciones || '',
+          valor: totalValor,  // Solo precioAtencion ya que no hay insumos
+          idAnimal: Number(idAnimal) || 0,
+          idPrecio: Number(precioAtencion.idPrecioAtencion) || 0,
+          idVeterinario: Number(idVeterinario) || 0,
+          idsInsumos: [],  // No hay insumos
         });
+
+        this.display = false;
+        this.displayChange.emit(this.display);
+
+        this.messageService.add({severity: 'success', detail: 'Atencion registrada correctamente.', life: 2000});
+      }
     });
   }
-
   
   onCancel() {
     this.display = false
@@ -180,13 +199,23 @@ export class RegistrarAtencionComponent {
   //-----------------------------------------------------------------------------------
 
   addInsumoSelection(): void {
-    this.insumoSelections.push(
-      this.formBuilder.group({
-        idInsumo: [null, Validators.required],
-        cantidad: ['', [Validators.required, Validators.min(1)]],
-      })
-    );
-  }
+    const group = this.formBuilder.group({
+      idInsumo: [null, Validators.required],
+      cantidad: [{ value: '', disabled: false }, [Validators.required, Validators.min(1)]],
+    });
+
+    group.get('idInsumo')?.valueChanges.subscribe((value) => {
+      if (value === 0) {
+        group.get('cantidad')?.setValue(null);
+        group.get('cantidad')?.disable();
+      } else {
+        group.get('cantidad')?.enable();
+      }
+  });
+
+  this.insumoSelections.push(group);
+}
+
 
   removeInsumoSelection(index: number): void {
     if (this.insumoSelections.length > 1) {
@@ -198,8 +227,21 @@ export class RegistrarAtencionComponent {
 
     const target = event.target as HTMLSelectElement
     const idInsumo = Number(target?.value)
-
     const control = this.insumoSelections.at(index) as FormGroup
+
+    if (idInsumo === 0) {
+      control.patchValue({ idInsumo: 0 });
+      control.get('cantidad')?.setValue(null);
+      control.get('cantidad')?.disable();
+
+      if (this.insumoSelections.length > 1) {
+        this.insumoSelections.removeAt(index + 1)
+      }
+
+    } else {
+      control.get('cantidad')?.enable()
+    }
+
     control.patchValue({ idInsumo })
   }
 

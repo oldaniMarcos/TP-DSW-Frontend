@@ -18,6 +18,5 @@ export class AtencionVerPopupComponent {
 
   onClose() {
     this.displayChange.emit(false);
-    console.log(this.atencion);
   }
 }

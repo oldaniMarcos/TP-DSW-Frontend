@@ -28,7 +28,7 @@ export class ClientePopupComponent {
       direccion: ['', [Validators.required]],
       email: ['', [Validators.required]],
       usuario: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/)]],
+      password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+{}\[\]:;<>,.?~\/\-=`]{8,}$/)]],
     })
   }
 
@@ -52,7 +52,15 @@ export class ClientePopupComponent {
   onConfirm() {
     const { dni, nombreYApellido, telefono, direccion, email, usuario, password } = this.clienteForm.value;
 
-    this.clienteService.check(dni, email, usuario).subscribe(response => {
+    const checkDni = dni !== this.cliente.dni;
+    const checkUsuario = usuario !== this.cliente.usuario;
+    const checkEmail = email !== this.cliente.email;    
+
+    this.clienteService.check(
+      checkDni ? dni : '', 
+      checkEmail ? email : '', 
+      checkUsuario ? usuario : ''
+    ).subscribe(response => {
       if (response.dni) {
         this.messageService.add({ severity: 'error', detail: 'El DNI ya está registrado. Por favor, ingrese otro.', life: 2000 });
         return;
@@ -81,7 +89,6 @@ export class ClientePopupComponent {
 
       this.display = false;
       this.displayChange.emit(this.display);
-      this.messageService.add({ severity: 'success', detail: 'Cliente registrado correctamente.', life: 2000 });
     });
   }
 

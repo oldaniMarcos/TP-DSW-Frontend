@@ -30,7 +30,7 @@
     
     <select formControlName="idInsumo" (change)="onInsumoChange(i, $event)">
 
-      <option value="0" disabled >Insumo</option>
+      <option *ngIf="i === 0 && insumoSelections.length === 1" value="0">No utilizó insumos</option>
       <option 
         *ngFor="let insumo of getAvailableInsumos(i)" 
         [value]="insumo.codInsumo"
