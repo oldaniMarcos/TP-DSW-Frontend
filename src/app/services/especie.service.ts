@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Especie, Raza } from '../../types.js';
 import { ApiService } from './api.service.js';
-import { environment } from '../../environment.js';
+import { environment } from '../../environments/environment.js';
 
 @Injectable({
   providedIn: 'root'

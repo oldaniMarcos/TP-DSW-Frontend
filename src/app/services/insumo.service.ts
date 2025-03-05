@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service.js';
-import { environment } from '../../environment.js';
+import { environment } from '../../environments/environment.js';
 import { Observable } from 'rxjs';
 import { Insumo, TipoInsumo } from '../../types.js';
 

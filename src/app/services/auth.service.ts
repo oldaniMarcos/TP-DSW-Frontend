@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { environment } from '../../environment';
+import { environment } from '../../environments/environment.js';
 import { tap } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 

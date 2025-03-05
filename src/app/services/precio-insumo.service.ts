@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environment.js';
+import { environment } from '../../environments/environment.js';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service.js';
 import { PrecioInsumo } from '../../types.js';

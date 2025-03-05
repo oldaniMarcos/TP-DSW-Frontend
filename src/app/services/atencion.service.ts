@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environment.js';
+import { environment } from '../../environments/environment.js';
 import { ApiService } from './api.service.js';
 import { map, Observable } from 'rxjs';
 import { Atencion } from '../../types.js';
