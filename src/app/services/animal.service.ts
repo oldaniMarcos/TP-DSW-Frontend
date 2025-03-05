@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.js';
 import { ApiService } from './api.service.js';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Animal } from '../../types.js';
 
 @Injectable({
@@ -38,4 +38,9 @@ export class AnimalService {
   findByClienteId(clienteId: number): Observable<Animal[]> {
     return this.apiService.get<Animal[]>(`${this.URL}/cliente/${clienteId}`, {});
   }
+
+  hasCliente(idCliente: number): Observable<boolean> {
+      return this.apiService.get<{ exists: boolean }>(`${this.URL}/exists/cliente/${idCliente}`, {})
+        .pipe(map(response => response.exists));
+    }
 }

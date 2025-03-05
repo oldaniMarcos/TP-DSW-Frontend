@@ -44,11 +44,6 @@ export class AtencionService {
       .pipe(map(response => response.exists));
   }
 
-  hasCliente(idCliente: number): Observable<boolean> {
-    return this.apiService.get<{ exists: boolean }>(`${this.URL}/exists/animal/cliente/${idCliente}`, {})
-      .pipe(map(response => response.exists));
-  }
-
   hasVeterinario(idVeterinario: number): Observable<boolean> {
     return this.apiService.get<{ exists: boolean }>(`${this.URL}/exists/veterinario/${idVeterinario}`, {})
       .pipe(map(response => response.exists));

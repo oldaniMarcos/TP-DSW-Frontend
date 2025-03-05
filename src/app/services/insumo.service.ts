@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service.js';
 import { environment } from '../../environments/environment.js';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Insumo, TipoInsumo } from '../../types.js';
 
 
@@ -51,5 +51,10 @@ export class InsumoService {
 
   findTipoInsumo(codInsumo: number): Observable<TipoInsumo> {
     return this.apiService.get<TipoInsumo>(`${this.URL}/${codInsumo}/tipo-insumo`, {});
+  }
+
+  hasTipoInsumo(codTipoInsumo: number): Observable<boolean> {
+    return this.apiService.get<{ exists: boolean }>(`${this.URL}/exists/tipo-insumo/${codTipoInsumo}`, {})
+      .pipe(map(response => response.exists));
   }
 }

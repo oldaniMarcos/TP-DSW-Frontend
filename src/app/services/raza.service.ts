@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.js';
 import { ApiService } from './api.service.js';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Especie, Raza } from '../../types.js';
 
 @Injectable({
@@ -38,5 +38,10 @@ export class RazaService {
   delete(codRaza: number): Observable<void> {
     return this.apiService.delete<void>(`${this.URL}/${codRaza}`, {});
   }
+
+  hasEspecie(codEspecie: number): Observable<boolean> {
+      return this.apiService.get<{ exists: boolean }>(`${this.URL}/exists/especie/${codEspecie}`, {})
+        .pipe(map(response => response.exists));
+    }
 
 }

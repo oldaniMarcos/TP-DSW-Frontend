@@ -4,7 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
 import { Cliente } from '../../../../types';
-import { AtencionService } from '../../../services/atencion.service';
+import { AnimalService } from '../../../services/animal.service';
 
 @Component({
   selector: 'app-cliente-card',
@@ -16,7 +16,7 @@ import { AtencionService } from '../../../services/atencion.service';
 })
 export class ClienteCardComponent {
   
-  constructor(private confirmationService: ConfirmationService, private atencionService: AtencionService, private messageService: MessageService) { }
+  constructor(private confirmationService: ConfirmationService, private animalService: AnimalService, private messageService: MessageService) { }
 
   @ViewChild('deleteButton') deleteButton: any
 
@@ -35,9 +35,9 @@ export class ClienteCardComponent {
       return;
     }
   
-    this.atencionService.hasCliente(this.cliente.id).subscribe((tieneAtenciones) => {
+    this.animalService.hasCliente(this.cliente.id).subscribe((tieneAtenciones) => {
       if (tieneAtenciones) {
-        this.messageService.add({ severity: 'warn', summary: 'No se puede eliminar', detail: 'Este cliente tiene atenciones registradas.' });
+        this.messageService.add({ severity: 'warn', summary: 'No se puede eliminar', detail: 'Este cliente tiene animales registrados.' });
       } else {
         this.confirmationService.confirm({
           target: this.deleteButton.nativeElement,
