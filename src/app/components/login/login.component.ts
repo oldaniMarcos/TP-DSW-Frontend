@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ClienteService } from '../../services/cliente.service.js';
-import { LocalStorageService } from '../../services/local-storage.service.js';
-import { Cliente } from '../../../types.js';
-import { SignInPopupComponent } from './sign-in-popup/sign-in-popup.component.js';
-import { AuthService } from '../../services/auth.service.js';
+import { ClienteService } from '../../services/cliente.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { Cliente } from '../../../types';
+import { SignInPopupComponent } from './sign-in-popup/sign-in-popup.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',

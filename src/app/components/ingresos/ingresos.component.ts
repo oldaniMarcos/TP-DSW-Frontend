@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { Chart, ChartConfiguration, ChartOptions } from 'chart.js';
-import { AtencionService } from '../../services/atencion.service.js';
-import { Atencion } from '../../../types.js';
+import { AtencionService } from '../../services/atencion.service';
+import { Atencion } from '../../../types';
 import { FormsModule } from '@angular/forms';
 
 @Component({

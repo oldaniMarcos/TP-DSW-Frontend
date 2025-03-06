@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TipoInsumo } from '../../../../types.js';
+import { TipoInsumo } from '../../../../types';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 

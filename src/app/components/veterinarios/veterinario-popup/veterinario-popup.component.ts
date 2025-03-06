@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { Veterinario } from '../../../../types';
-import { VeterinarioService } from '../../../services/veterinario.service.js';
+import { VeterinarioService } from '../../../services/veterinario.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 

@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
-import { TipoInsumo } from '../../../../types.js';
-import { InsumoService } from '../../../services/insumo.service.js';
+import { TipoInsumo } from '../../../../types';
+import { InsumoService } from '../../../services/insumo.service';
 
 @Component({
   selector: 'app-tipo-insumo-card',

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MascotaCardComponent } from './mascota-card/mascota-card.component.js';
-import { Animal } from '../../../types.js';
-import { MascotaPopupComponent } from './mascota-popup/mascota-popup.component.js';
+import { MascotaCardComponent } from './mascota-card/mascota-card.component';
+import { Animal } from '../../../types';
+import { MascotaPopupComponent } from './mascota-popup/mascota-popup.component';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { MascotaVerPopupComponent } from './mascota-ver-popup/mascota-ver-popup.component.js';
-import { AnimalService } from '../../services/animal.service.js';
+import { MascotaVerPopupComponent } from './mascota-ver-popup/mascota-ver-popup.component';
+import { AnimalService } from '../../services/animal.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 

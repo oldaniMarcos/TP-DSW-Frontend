@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './layout/header/header.component.js';
+import { HeaderComponent } from './layout/header/header.component';
 import { CommonModule } from '@angular/common';
-import { LocalStorageService } from './services/local-storage.service.js';
+import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -15,15 +15,9 @@ export class AppComponent {
   title = 'TP-DSW-Frontend';
   isVisible = true;
 
-  constructor(private router: Router
-    , private localStorage: LocalStorageService
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-
-    // if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-    //   this.localStorage.clear();
-    // }
 
     //esconder el header en la pagina de login
     this.router.events.subscribe(() => {

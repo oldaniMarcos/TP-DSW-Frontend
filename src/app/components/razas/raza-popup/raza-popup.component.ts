@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
-import { Especie, Raza } from '../../../../types.js';
-import { EspecieService } from '../../../services/especie.service.js';
+import { Especie, Raza } from '../../../../types';
+import { EspecieService } from '../../../services/especie.service';
 
 @Component({
   selector: 'app-raza-popup',

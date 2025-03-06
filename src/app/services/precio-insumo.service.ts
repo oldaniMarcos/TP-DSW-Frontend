@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.js';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { ApiService } from './api.service.js';
-import { PrecioInsumo } from '../../types.js';
+import { ApiService } from './api.service';
+import { PrecioInsumo } from '../../types';
 
 @Injectable({
   providedIn: 'root'

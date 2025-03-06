@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service.js';
-import { environment } from '../../environments/environment.js';
+import { ApiService } from './api.service';
+import { environment } from '../../environments/environment';
 import { map, Observable } from 'rxjs';
-import { Insumo, TipoInsumo } from '../../types.js';
+import { Insumo, TipoInsumo } from '../../types';
 
 
 @Injectable({

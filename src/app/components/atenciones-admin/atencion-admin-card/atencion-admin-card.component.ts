@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
-import { TruncateNamePipe } from '../../../pipes/truncate-name.pipe.js';
+import { TruncateNamePipe } from '../../../pipes/truncate-name.pipe';
 
 @Component({
   selector: 'app-atencion-admin-card',

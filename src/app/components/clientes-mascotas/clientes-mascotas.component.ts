@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Animal, Cliente } from '../../../types.js';
-import { ClienteService } from '../../services/cliente.service.js';
+import { Animal, Cliente } from '../../../types';
+import { ClienteService } from '../../services/cliente.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ClienteMascotaCardComponent } from './cliente-mascota-card/cliente-mascota-card.component.js';
-import { AnimalService } from '../../services/animal.service.js';
+import { ClienteMascotaCardComponent } from './cliente-mascota-card/cliente-mascota-card.component';
+import { AnimalService } from '../../services/animal.service';
 
 @Component({
   selector: 'app-clientes-mascotas',

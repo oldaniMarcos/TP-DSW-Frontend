@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { VeterinarioCardComponent } from './veterinario-card/veterinario-card.component.js';
-import { Veterinario } from '../../../types.js';
-import { VeterinarioService } from '../../services/veterinario.service.js';
-import { VeterinarioPopupComponent } from './veterinario-popup/veterinario-popup.component.js';
+import { VeterinarioCardComponent } from './veterinario-card/veterinario-card.component';
+import { Veterinario } from '../../../types';
+import { VeterinarioService } from '../../services/veterinario.service';
+import { VeterinarioPopupComponent } from './veterinario-popup/veterinario-popup.component';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { VeterinarioVerPopupComponent } from './veterinario-ver-popup/veterinario-ver-popup.component.js';
+import { VeterinarioVerPopupComponent } from './veterinario-ver-popup/veterinario-ver-popup.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 

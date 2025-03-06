@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
-import { Especie, Raza } from '../../../../types.js';
-import { RazaService } from '../../../services/raza.service.js';
+import { Especie, Raza } from '../../../../types';
+import { RazaService } from '../../../services/raza.service';
 
 @Component({
   selector: 'app-raza-card',

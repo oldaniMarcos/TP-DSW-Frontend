@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Animal, Cliente } from '../../../../types.js';
+import { Animal, Cliente } from '../../../../types';
 import { CommonModule } from '@angular/common';
 
 @Component({

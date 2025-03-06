@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AtencionService } from '../../services/atencion.service.js';
-import { Atencion } from '../../../types.js';
+import { AtencionService } from '../../services/atencion.service';
+import { Atencion } from '../../../types';
 import { RegistrarAtencionComponent } from "../registrar-atencion/registrar-atencion.component";
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service.js';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-admin',

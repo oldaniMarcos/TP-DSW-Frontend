@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Veterinario } from '../../../../types.js';
+import { Veterinario } from '../../../../types';
 import { DialogModule } from 'primeng/dialog';
 
 @Component({

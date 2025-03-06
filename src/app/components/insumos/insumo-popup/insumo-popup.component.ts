@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { DialogModule } from 'primeng/dialog';
 import { Insumo, TipoInsumo } from '../../../../types';
 import { InsumoService } from '../../../services/insumo.service';
-import { PrecioInsumoService } from '../../../services/precio-insumo.service.js';
+import { PrecioInsumoService } from '../../../services/precio-insumo.service';
 
 @Component({
   selector: 'app-insumo-popup',

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { EspecieCardComponent } from './especie-card/especie-card.component.js';
-import { Especie, Raza } from '../../../types.js';
-import { EspecieService } from '../../services/especie.service.js';
-import { EspeciePopupComponent } from './especie-popup/especie-popup.component.js';
+import { EspecieCardComponent } from './especie-card/especie-card.component';
+import { Especie, Raza } from '../../../types';
+import { EspecieService } from '../../services/especie.service';
+import { EspeciePopupComponent } from './especie-popup/especie-popup.component';
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.js';
-import { ApiService } from './api.service.js';
-import { Veterinario } from '../../types.js';
+import { environment } from '../../environments/environment';
+import { ApiService } from './api.service';
+import { Veterinario } from '../../types';
 import { Observable } from 'rxjs';
 
 @Injectable({

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClienteCardComponent } from './cliente-card/cliente-card.component';
-import { ClienteService } from '../../services/cliente.service.js';
-import { Cliente } from '../../../types.js';
+import { ClienteService } from '../../services/cliente.service';
+import { Cliente } from '../../../types';
 import { ClientePopupComponent } from './cliente-popup/cliente-popup.component';
 import { FormsModule } from '@angular/forms';
-import { ClienteVerPopupComponent } from './cliente-ver-popup/cliente-ver-popup.component.js';
+import { ClienteVerPopupComponent } from './cliente-ver-popup/cliente-ver-popup.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 

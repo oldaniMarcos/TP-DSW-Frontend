@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RazaPopupComponent } from './raza-popup/raza-popup.component.js';
-import { RazaCardComponent } from './raza-card/raza-card.component.js';
-import { Especie, Raza } from '../../../types.js';
-import { RazaService } from '../../services/raza.service.js';
-import { EspecieService } from '../../services/especie.service.js';
+import { RazaPopupComponent } from './raza-popup/raza-popup.component';
+import { RazaCardComponent } from './raza-card/raza-card.component';
+import { Especie, Raza } from '../../../types';
+import { RazaService } from '../../services/raza.service';
+import { EspecieService } from '../../services/especie.service';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';

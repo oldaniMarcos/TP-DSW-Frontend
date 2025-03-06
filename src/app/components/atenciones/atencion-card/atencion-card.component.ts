@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Animal, Atencion, Insumo, PrecioAtencion, Veterinario } from '../../../../types';
 import { CommonModule } from '@angular/common';
-import { TruncateNamePipe } from '../../../pipes/truncate-name.pipe.js';
+import { TruncateNamePipe } from '../../../pipes/truncate-name.pipe';
 
 @Component({
   selector: 'app-atencion-card',

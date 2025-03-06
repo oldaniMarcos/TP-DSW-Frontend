@@ -3,8 +3,8 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import {Location, NgStyle} from '@angular/common';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
-import { LocalStorageService } from '../../services/local-storage.service.js';
-import { TruncateNamePipe } from '../../pipes/truncate-name.pipe.js';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { TruncateNamePipe } from '../../pipes/truncate-name.pipe';
 
 @Component({
   selector: 'app-header',

@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { Animal, Atencion, Insumo, PrecioAtencion, Veterinario } from '../../../types.js';
+import { Animal, Atencion, Insumo, PrecioAtencion, Veterinario } from '../../../types';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
-import { VeterinarioService } from '../../services/veterinario.service.js';
-import { PrecioAtencionService } from '../../services/precio-atencion.service.js';
-import { InsumoService } from '../../services/insumo.service.js';
-import { AnimalService } from '../../services/animal.service.js';
+import { VeterinarioService } from '../../services/veterinario.service';
+import { PrecioAtencionService } from '../../services/precio-atencion.service';
+import { InsumoService } from '../../services/insumo.service';
+import { AnimalService } from '../../services/animal.service';
 import { catchError, map, Observable, of } from 'rxjs';
-import { PrecioInsumoService } from '../../services/precio-insumo.service.js';
+import { PrecioInsumoService } from '../../services/precio-insumo.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 

@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { TipoInsumoCardComponent } from './tipo-insumo-card/tipo-insumo-card.component.js';
-import { TipoInsumoPopupComponent } from './tipo-insumo-popup/tipo-insumo-popup.component.js';
+import { TipoInsumoCardComponent } from './tipo-insumo-card/tipo-insumo-card.component';
+import { TipoInsumoPopupComponent } from './tipo-insumo-popup/tipo-insumo-popup.component';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { TipoInsumo } from '../../../types.js';
-import { TipoInsumoService } from '../../services/tipo-insumo.service.js';
+import { TipoInsumo } from '../../../types';
+import { TipoInsumoService } from '../../services/tipo-insumo.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 

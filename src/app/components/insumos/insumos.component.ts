@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { InsumoCardComponent } from './insumo-card/insumo-card.component.js';
-import { Insumo, PrecioInsumo, TipoInsumo } from '../../../types.js';
-import { InsumoService } from '../../services/insumo.service.js';
-import { InsumoPopupComponent } from './insumo-popup/insumo-popup.component.js';
+import { InsumoCardComponent } from './insumo-card/insumo-card.component';
+import { Insumo, PrecioInsumo, TipoInsumo } from '../../../types';
+import { InsumoService } from '../../services/insumo.service';
+import { InsumoPopupComponent } from './insumo-popup/insumo-popup.component';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { InsumoVerPopupComponent } from './insumo-ver-popup/insumo-ver-popup.component.js';
+import { InsumoVerPopupComponent } from './insumo-ver-popup/insumo-ver-popup.component';
 import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
-import { InsumoPrecioComponent } from './insumo-precio/insumo-precio.component.js';
-import { PrecioInsumoService } from '../../services/precio-insumo.service.js';
+import { InsumoPrecioComponent } from './insumo-precio/insumo-precio.component';
+import { PrecioInsumoService } from '../../services/precio-insumo.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 

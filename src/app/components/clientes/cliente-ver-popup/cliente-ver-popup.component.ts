@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Cliente } from '../../../../types.js';
+import { Cliente } from '../../../../types';
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
