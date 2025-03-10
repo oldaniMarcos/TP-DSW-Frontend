@@ -63,8 +63,4 @@ export class VeterinarioCardComponent {
     this.select.emit(this.veterinario)
   }
 
-  ngOnInit() {
-
-  }
-
 }

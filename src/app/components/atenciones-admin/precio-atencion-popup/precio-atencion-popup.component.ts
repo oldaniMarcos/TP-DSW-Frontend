@@ -8,26 +8,23 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
   selector: 'app-precio-atencion-popup',
   standalone: true,
   imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './precio-atencion-popup.component.html',
-  styleUrl: './precio-atencion-popup.component.scss'
+  templateUrl: './precio-atencion-popup.component.html'
 })
 export class PrecioAtencionPopupComponent {
   
   precioAtencionForm: FormGroup
 
-    constructor( private formBuilder: FormBuilder) {
-      this.precioAtencionForm = this.formBuilder.group({
-        fechaDesde: [this.getTodayDate(), [Validators.required]],
-        valor: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
-      })
-    }
+  constructor( private formBuilder: FormBuilder) {
+    this.precioAtencionForm = this.formBuilder.group({
+      fechaDesde: [this.getTodayDate(), [Validators.required]],
+      valor: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
+    })
+   }
   
     title = 'Actualizar precio atención'
     @Input() display: boolean = false
-  
     @Output() displayChange = new EventEmitter<boolean>()
     @Output() confirm = new EventEmitter<PrecioAtencion>()
-  
     @Input() precioAtencion: PrecioAtencion = {
       fechaDesde: this.getTodayDate(),
       valor: 0,

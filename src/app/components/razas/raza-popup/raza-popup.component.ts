@@ -9,15 +9,14 @@ import { EspecieService } from '../../../services/especie.service';
   selector: 'app-raza-popup',
   standalone: true,
   imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './raza-popup.component.html',
-  styleUrl: './raza-popup.component.scss'
+  templateUrl: './raza-popup.component.html'
 })
 export class RazaPopupComponent {
 
-  razaForm: FormGroup
+  breedForm: FormGroup
 
   constructor( private formBuilder: FormBuilder, private especieService: EspecieService) {
-    this.razaForm = this.formBuilder.group({
+    this.breedForm = this.formBuilder.group({
       descripcion: ['', [Validators.required]],
       idEspecie: [0, [Validators.required, Validators.pattern('^[1-9][0-9]*$')]]
     })
@@ -37,7 +36,7 @@ export class RazaPopupComponent {
   }
 
   onConfirm() {
-    const { descripcion, idEspecie } = this.razaForm.value
+    const { descripcion, idEspecie } = this.breedForm.value
 
     this.confirm.emit({
       descripcion: descripcion || '',
@@ -54,7 +53,7 @@ export class RazaPopupComponent {
   }
 
   ngOnChanges() {
-    this.razaForm.patchValue(this.raza)
+    this.breedForm.patchValue(this.raza)
   }
 
   ngOnInit(): void {

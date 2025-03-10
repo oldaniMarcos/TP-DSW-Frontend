@@ -66,9 +66,6 @@ export class LoginComponent {
       (newCliente: Cliente) => {
         this.clientes.push(newCliente); 
       },
-      (error) => {
-        console.error('Error al crear un cliente:', error);
-      }
     );      
   }
 

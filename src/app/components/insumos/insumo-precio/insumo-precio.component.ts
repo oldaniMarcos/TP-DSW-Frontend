@@ -54,9 +54,6 @@ export class InsumoPrecioComponent {
         this.display = false;
         this.displayChange.emit(this.display);
       },
-      (error) => {
-        console.error('Error al crear el precio:', error);
-      }
     );
   }
 

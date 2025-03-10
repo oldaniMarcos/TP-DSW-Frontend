@@ -19,13 +19,13 @@ import { MessageService } from 'primeng/api';
 })
 export class TiposInsumosComponent {
 
-  tiposInsumos: TipoInsumo[] = []
+  supplyTypes: TipoInsumo[] = []
   selected: TipoInsumo = {
     codTipoInsumo: 0,
     descripcion: '',
   }
 
-  tipoInsumoFiltro: string = '';
+  supplyTypeFilter: string = '';
 
   constructor(
     private tipoInsumoService: TipoInsumoService
@@ -39,18 +39,15 @@ export class TiposInsumosComponent {
   findTiposInsumos(): void {
     this.tipoInsumoService.findAll().subscribe(
       (data: TipoInsumo[]) => {
-        if (this.tipoInsumoFiltro) {
-          const filtroLowerCase = this.tipoInsumoFiltro.toLowerCase();
-          this.tiposInsumos = data.filter(tipoInsumo =>
+        if (this.supplyTypeFilter) {
+          const filtroLowerCase = this.supplyTypeFilter.toLowerCase();
+          this.supplyTypes = data.filter(tipoInsumo =>
             tipoInsumo.descripcion.toLowerCase().includes(filtroLowerCase)
           );
         } else {
-          this.tiposInsumos = data;
+          this.supplyTypes = data;
         }
       },
-      (error) => {
-        console.error('Error al buscar tipos de insumos:', error);
-      }
     );
   }
 
@@ -59,20 +56,14 @@ export class TiposInsumosComponent {
       (data: TipoInsumo) => {
         this.selected = data
       },
-      (error) => {
-        console.error(`Error al buscar tipo de insumo con código ${codTipoInsumo}:`, error)
-      }
     )
   }
 
   createTipoInsumo(tipoInsumo: TipoInsumo): void {
   this.tipoInsumoService.post(tipoInsumo).subscribe(
     (newInsumo: TipoInsumo) => {
-      this.tiposInsumos.push(newInsumo); 
+      this.supplyTypes.push(newInsumo); 
     },
-    (error) => {
-      console.error('Error al crear un tipo de insumo:', error);
-    }
   );
   }
 
@@ -80,23 +71,17 @@ export class TiposInsumosComponent {
 
     this.tipoInsumoService.patch(codTipoInsumo, tipoInsumo).subscribe(
       (updatedInsumo: TipoInsumo) => {
-        const index = this.tiposInsumos.findIndex(c => c.codTipoInsumo === codTipoInsumo);
-        if (index > -1) this.tiposInsumos[index] = updatedInsumo;
+        const index = this.supplyTypes.findIndex(c => c.codTipoInsumo === codTipoInsumo);
+        if (index > -1) this.supplyTypes[index] = updatedInsumo;
       },
-      (error) => {
-        console.error(`Error al actualizar tipo de insumo con código ${codTipoInsumo}:`, error);
-      }
     );
   }
 
   deleteTipoInsumo(codTipoInsumo: number): void {
     this.tipoInsumoService.delete(codTipoInsumo).subscribe(
       () => {
-        this.tiposInsumos = this.tiposInsumos.filter(c => c.codTipoInsumo !== codTipoInsumo);
+        this.supplyTypes = this.supplyTypes.filter(c => c.codTipoInsumo !== codTipoInsumo);
       },
-      (error) => {
-        console.error(`Error al eliminar insumo con código ${codTipoInsumo}:`, error);
-      }
     );
   }
 

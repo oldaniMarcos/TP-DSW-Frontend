@@ -2,8 +2,8 @@
   <h2>Atenciones</h2>
 
   <aside>
-    <h3>Precio de atención actual: $<strong>{{ precioAtencionActual?.valor || 'No disponible' }}</strong></h3><br>
-    <button class="btn" (click)="toggleActualizarAtencionPopup()">Actualizar precio de atención</button>
+    <h3>Precio de atención actual: $<strong>{{ currentConsultationPrice?.valor || 'No disponible' }}</strong></h3><br>
+    <button class="btn" (click)="toggleUpdateAtencionPopup()">Actualizar precio de atención</button>
   </aside>
 
   <div class="filter">
@@ -36,6 +36,6 @@
 
 <app-atencion-admin-ver-popup [atencion]="selected" [(display)]="displaySelectPopup"></app-atencion-admin-ver-popup>
 
-<app-precio-atencion-popup [(display)]="displayActualizarAtencionPopup" (confirm)="onConfirmActualizarPrecioAtencion($event)" title="Crear atencion"></app-precio-atencion-popup>
+<app-precio-atencion-popup [(display)]="displayUpdateAtencionPopup" (confirm)="onConfirmUpdatePrecioAtencion($event)" title="Crear atencion"></app-precio-atencion-popup>
 
 <p-toast></p-toast>

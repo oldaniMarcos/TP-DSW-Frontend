@@ -24,7 +24,7 @@ import { MessageService } from 'primeng/api';
 })
 export class InsumosComponent {
 
-  insumos: Insumo[] = []
+  supplies: Insumo[] = []
   selected: Insumo = {
     codInsumo: 0,
     descripcion: '',
@@ -33,9 +33,9 @@ export class InsumosComponent {
     idTipoInsumo: 0,
   }
 
-  insumoFiltro: string = '';
+  supplyFilter: string = '';
 
-  tipoInsumo: TipoInsumo = {
+  supplyType: TipoInsumo = {
     codTipoInsumo: 0,
     descripcion: '',
   }
@@ -61,18 +61,15 @@ export class InsumosComponent {
   findInsumos(): void {
     this.insumoService.findAll().subscribe(
       (data: Insumo[]) => {
-        if (this.insumoFiltro) {
-          const filtroLowerCase = this.insumoFiltro.toLowerCase();
-          this.insumos = data.filter(insumo =>
+        if (this.supplyFilter) {
+          const filtroLowerCase = this.supplyFilter.toLowerCase();
+          this.supplies = data.filter(insumo =>
             insumo.descripcion.toLowerCase().includes(filtroLowerCase)
           );
         } else {
-          this.insumos = data;
+          this.supplies = data;
         }
       },
-      (error) => {
-        console.error('Error al buscar insumos:', error);
-      }
     );
   }
 
@@ -81,9 +78,6 @@ export class InsumosComponent {
       (data: Insumo) => {
         this.selected = data
       },
-      (error) => {
-        console.error(`Error al buscar insumo con código ${codInsumo}:`, error)
-      }
     )
   }
 
@@ -91,7 +85,7 @@ export class InsumosComponent {
     this.insumoService.post(insumo).subscribe(
     (newInsumo: Insumo) => {
 
-      this.insumos.push(newInsumo);
+      this.supplies.push(newInsumo);
 
       const newPrecio: PrecioInsumo = {
         fechaDesde: new Date().toISOString(),
@@ -102,7 +96,6 @@ export class InsumosComponent {
 
       this.precioInsumoService.post(newPrecio).subscribe();
     },
-    (error) => console.error('Error al crear un insumo:', error)
   );
   }
 
@@ -110,36 +103,25 @@ export class InsumosComponent {
 
     this.insumoService.patch(codInsumo, insumo).subscribe(
       (updatedInsumo: Insumo) => {
-        const index = this.insumos.findIndex(c => c.codInsumo === codInsumo);
-        if (index > -1) this.insumos[index] = updatedInsumo;
+        const index = this.supplies.findIndex(c => c.codInsumo === codInsumo);
+        if (index > -1) this.supplies[index] = updatedInsumo;
       },
-      (error) => {
-        console.error(`Error al actualizar insumo con código ${codInsumo}:`, error);
-        this.selectedPrecio = null
-        this.displayPricePopup = true
-      }
     );
   }
 
   deleteInsumo(codInsumo: number): void {
     this.insumoService.delete(codInsumo).subscribe(
       () => {
-        this.insumos = this.insumos.filter(c => c.codInsumo !== codInsumo);
+        this.supplies = this.supplies.filter(c => c.codInsumo !== codInsumo);
       },
-      (error) => {
-        console.error(`Error al eliminar insumo con código ${codInsumo}:`, error);
-      }
     );
   }
 
   findTipoInsumo(codInsumo: number): void {
     this.insumoService.findTipoInsumo(codInsumo).subscribe(
       (data: TipoInsumo | null) => {
-        this.tipoInsumo = data ?? { codTipoInsumo: 0, descripcion: '' };
+        this.supplyType = data ?? { codTipoInsumo: 0, descripcion: '' };
       },
-      (error) => {
-        console.error(`Error al buscar tipo de insumo del insumo con ID ${codInsumo}:`, error);
-      }
     );
   }
 
@@ -178,13 +160,8 @@ export class InsumosComponent {
         this.selectedPrecio = precio
         this.displayPricePopup = true
       },
-      (error) => {
-        console.error(`Error al buscar precio del insumo con ID ${insumo.codInsumo}:`, error)
-      }
     )
   }
-
-  // confirmaciones
 
   onConfirmCreate(event: { insumo: Insumo; valor: number; valorVenta: number }) {
     this.createInsumo(event.insumo, event.valor, event.valorVenta);

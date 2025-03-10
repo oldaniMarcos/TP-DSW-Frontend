@@ -8,8 +8,7 @@ import { Especie } from '../../../../types';
   selector: 'app-especie-popup',
   standalone: true,
   imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './especie-popup.component.html',
-  styleUrl: './especie-popup.component.scss'
+  templateUrl: './especie-popup.component.html'
 })
 export class EspeciePopupComponent {
 

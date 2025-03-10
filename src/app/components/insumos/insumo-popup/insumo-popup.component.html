@@ -20,7 +20,7 @@
         <div class="row gap-05">
             <label for="idTipoInsumo">Tipo de Insumo:</label>
             <select id="idTipoInsumo" formControlName="idTipoInsumo">
-              <option *ngFor="let tipo of tiposInsumo" [value]="tipo.codTipoInsumo">
+              <option *ngFor="let tipo of insumoTypes" [value]="tipo.codTipoInsumo">
                 {{ tipo.descripcion }}
               </option>
             </select>

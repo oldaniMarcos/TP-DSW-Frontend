@@ -38,7 +38,7 @@ export class AtencionesAdminComponent {
 
   filteredAtenciones: (Atencion & { animal?: Animal, precioAtencion?: PrecioAtencion })[] = [];
 
-  precioAtencion: PrecioAtencion = {
+  consultationPrice: PrecioAtencion = {
     idPrecioAtencion: 0,
     fechaDesde: '',
     valor: 0
@@ -50,7 +50,7 @@ export class AtencionesAdminComponent {
     private messageService: MessageService
   ) { }
 
-  precioAtencionActual: PrecioAtencion | null = null;
+  currentConsultationPrice: PrecioAtencion | null = null;
 
   ngOnInit() {
     this.findAtenciones();
@@ -65,9 +65,6 @@ export class AtencionesAdminComponent {
         this.atenciones = data;
         this.filteredAtenciones = [...this.atenciones];
       },
-      (error) => {
-        console.error('Error al buscar atenciones:', error);
-      }
     );
   }
   
@@ -88,9 +85,6 @@ export class AtencionesAdminComponent {
       (data: Atencion) => {
         this.selected = data
       },
-      (error) => {
-        console.error(`Error al buscar atencion con id ${idAtencion}:`, error)
-      }
     )
   }
 
@@ -99,9 +93,6 @@ export class AtencionesAdminComponent {
     (newAtencion: Atencion) => {
       this.atenciones.push(newAtencion); 
     },
-    (error) => {
-      console.error('Error al crear una atencion:', error);
-    }
   );
   }
 
@@ -118,9 +109,6 @@ export class AtencionesAdminComponent {
         }
         this.filterAtencionesByDate();
       },
-      (error) => {
-        console.error(`Error al actualizar atencion con id ${idAtencion}:`, error);
-      }
     );
   }
 
@@ -130,9 +118,6 @@ export class AtencionesAdminComponent {
         this.atenciones = this.atenciones.filter(c => c.idAtencion !== idAtencion);
         this.filteredAtenciones = this.filteredAtenciones.filter(c => c.idAtencion !== idAtencion);
       },
-      (error) => {
-        console.error(`Error al eliminar atención con id ${idAtencion}:`, error);
-      }
     );
   }
 
@@ -140,38 +125,32 @@ export class AtencionesAdminComponent {
     this.precioAtencionService.findAll().subscribe(
       (precios: PrecioAtencion[]) => {
         if (precios.length > 0) {
-          this.precioAtencionActual = precios.reduce(
+          this.currentConsultationPrice = precios.reduce(
             (max, p) => (p.idPrecioAtencion !== undefined && max.idPrecioAtencion !== undefined && p.idPrecioAtencion > max.idPrecioAtencion) ? p : max, 
             precios[0]
           );
         }
       },
-      (error) => {
-        console.error('Error al obtener precio de atención:', error);
-      }
     );
   }
 
-  actualizarPrecioAtencion(precioAtencion: PrecioAtencion): void {
-    this.precioAtencionService.post(precioAtencion).subscribe(
-      (newPrecioAtencion: PrecioAtencion) => {
-        this.precioAtencion = newPrecioAtencion;
-        this.displayActualizarAtencionPopup = false;
+  updatePrecioAtencion(consultationPrice: PrecioAtencion): void {
+    this.precioAtencionService.post(consultationPrice).subscribe(
+      (newConsultationPrice: PrecioAtencion) => {
+        this.consultationPrice = newConsultationPrice;
+        this.displayUpdateAtencionPopup = false;
       },
-      (error) => {
-        console.error('Error al actualizar el precio de la atención:', error);
-      }
     );
   }
 
   displaySelectPopup: boolean = false
   displayUpdatePopup: boolean = false
-  displayActualizarAtencionPopup: boolean = false
+  displayUpdateAtencionPopup: boolean = false
 
   //toggle popups
 
-  toggleActualizarAtencionPopup() {
-    this.displayActualizarAtencionPopup = true
+  toggleUpdateAtencionPopup() {
+    this.displayUpdateAtencionPopup = true
   }
 
   toggleSelectPopup(atencion: Atencion) {
@@ -200,16 +179,13 @@ export class AtencionesAdminComponent {
     this.messageService.add({severity: 'success', detail: 'Atencion editada correctamente.', life: 2000});
   }
 
-  onConfirmActualizarPrecioAtencion(precioAtencion: PrecioAtencion): void {
-    this.precioAtencionService.post(precioAtencion).subscribe(
-      (newPrecioAtencion: PrecioAtencion) => {
-        this.precioAtencionActual = newPrecioAtencion;
-        this.displayActualizarAtencionPopup = false;
+  onConfirmUpdatePrecioAtencion(consultationPrice: PrecioAtencion): void {
+    this.precioAtencionService.post(consultationPrice).subscribe(
+      (newConsultationPrice: PrecioAtencion) => {
+        this.currentConsultationPrice = newConsultationPrice;
+        this.displayUpdateAtencionPopup = false;
         this.messageService.add({severity: 'success', detail: 'Precio de atencion actualizado correctamente.', life: 2000});
       },
-      (error) => {
-        console.error('Error al actualizar el precio de atención:', error);
-      }
     );
   }
 

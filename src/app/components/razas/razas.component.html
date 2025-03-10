@@ -7,15 +7,15 @@
   <div>
     <input
       type="text"
-      [(ngModel)]="razasFiltro"
+      [(ngModel)]="breedsFilter"
       (input)="findRazas()"
       placeholder="Buscar por nombre"
       class="search-input"
     />
   </div>
 
-  <div *ngFor="let raza of razas">
-    <app-raza-card [raza]="raza"
+  <div *ngFor="let breed of breeds">
+    <app-raza-card [breed]="breed"
     (delete)="toggleDeletePopup($event)"
     (edit)="toggleUpdatePopup($event)">
     </app-raza-card>

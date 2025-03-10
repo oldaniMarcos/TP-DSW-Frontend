@@ -15,10 +15,10 @@ import { AnimalService } from '../../services/animal.service';
 })
 export class ClientesMascotasComponent {
 
-  clientes: Cliente[] = []
+  clients: Cliente[] = []
   mascotasCliente: { [id: number]: Animal[] } = {}
 
-  dniFiltro: string = '';
+  dniFilter: string = '';
 
   constructor(
     private clienteService: ClienteService,
@@ -33,52 +33,45 @@ export class ClientesMascotasComponent {
     this.clienteService.findAll().subscribe(
       (data: Cliente[]) => {
 
-        if (this.dniFiltro) {
-          this.clientes = data.filter(cliente => cliente.dni.includes(this.dniFiltro) && cliente.rol === 'cliente')
+        if (this.dniFilter) {
+          this.clients = data.filter(cliente => cliente.dni.includes(this.dniFilter) && cliente.rol === 'cliente')
           this.findMascotas()
         } else {
-          this.clientes = data.filter(cliente => cliente.rol === 'cliente')
+          this.clients = data.filter(cliente => cliente.rol === 'cliente')
           this.findMascotas()
         }
       },
-      (error) => {
-        console.error('Error al buscar clientes:', error);
-      }
     );
   }
 
   findMascotas(): void {
-    this.clientes.forEach(cliente => {
+    this.clients.forEach(cliente => {
       this.animalService.findByClienteId(cliente.id!).subscribe(
         (mascotas: Animal[]) => {
-          // Calcular edad y agregarla como propiedad extra
           this.mascotasCliente[cliente.id!] = mascotas.map(mascota => ({
             ...mascota,
-            edad: this.calcularEdad(mascota.fechaNac) ?? undefined  // Asegura el tipo correcto
+            edad: this.calculateAge(mascota.fechaNac) ?? undefined 
           }));
         },
-        (error) => {
-          console.error(`Error al buscar mascotas del cliente ${cliente.id}:`, error);
-        }
       );
     });
   }
   
-  calcularEdad(fechaNac: string | undefined): number | undefined {
-    if (!fechaNac) return undefined;
+  calculateAge(birthDat: string | undefined): number | undefined {
+    if (!birthDat) return undefined;
   
-    const fechaNacimiento = new Date(fechaNac);
-    if (isNaN(fechaNacimiento.getTime())) return undefined;  // Evita fechas inválidas
+    const birthDate = new Date(birthDat);
+    if (isNaN(birthDate.getTime())) return undefined;
   
     const hoy = new Date();
-    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
-    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+    let edad = hoy.getFullYear() - birthDate.getFullYear();
+    const mes = hoy.getMonth() - birthDate.getMonth();
   
-    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
+    if (mes < 0 || (mes === 0 && hoy.getDate() < birthDate.getDate())) {
       edad--;
     }
   
-    return edad >= 0 ? edad : undefined;  // Asegura un número válido o undefined
+    return edad >= 0 ? edad : undefined;
   }
   
   

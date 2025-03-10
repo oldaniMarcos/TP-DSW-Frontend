@@ -51,8 +51,4 @@ export class InsumoCardComponent {
     this.price.emit(this.insumo)
   }
 
-  ngOnInit() {
-
-  }
-
 }

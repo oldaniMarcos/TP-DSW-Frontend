@@ -3,12 +3,12 @@
 <div class="clientes-mascotas">
 
   <div>
-    <input type="text" [(ngModel)]="dniFiltro" (input)="findClientes()" placeholder="Buscar por DNI"
+    <input type="text" [(ngModel)]="dniFilter" (input)="findClientes()" placeholder="Buscar por DNI"
       class="search-input" />
   </div>
 
 
-  <div *ngFor="let cliente of clientes">
+  <div *ngFor="let cliente of clients">
     <app-cliente-mascota-card [cliente]="cliente" [mascotas]="mascotasCliente[cliente.id!] || []">
     </app-cliente-mascota-card>
   </div>

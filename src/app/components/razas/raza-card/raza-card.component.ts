@@ -20,18 +20,18 @@ export class RazaCardComponent {
 
   @ViewChild('deleteButton') deleteButton: any
 
-  @Input() raza!: Raza
+  @Input() breed!: Raza
 
   @Output() edit: EventEmitter<Raza> = new EventEmitter<Raza>()
   @Output() delete: EventEmitter<Raza> = new EventEmitter<Raza>()
 
-  especie: Especie = {
+  species: Especie = {
     codEspecie: 0,
     descripcion: '',
   }
 
   editRaza() {
-    this.edit.emit(this.raza)
+    this.edit.emit(this.breed)
   }
 
   confirmDelete() {
@@ -47,20 +47,17 @@ export class RazaCardComponent {
   findEspecie(codRaza: number): void {
     this.razaService.findEspecie(codRaza).subscribe(
       (data: Especie) => {
-        this.especie = data
+        this.species = data
       },
-      (error) => {
-        console.error(`Error al buscar especie de la raza con ID ${codRaza}:`, error)
-      }
     )
   }
 
   deleteRaza() {
-    this.delete.emit(this.raza)
+    this.delete.emit(this.breed)
   }
 
   ngOnInit() {
-    this.findEspecie(this.raza.codRaza!)
+    this.findEspecie(this.breed.codRaza!)
   }
 
 }

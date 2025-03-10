@@ -10,8 +10,7 @@ import { PrecioInsumoService } from '../../../services/precio-insumo.service';
   selector: 'app-insumo-popup',
   standalone: true,
   imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './insumo-popup.component.html',
-  styleUrl: './insumo-popup.component.scss'
+  templateUrl: './insumo-popup.component.html'
 })
 export class InsumoPopupComponent {
 
@@ -29,7 +28,7 @@ export class InsumoPopupComponent {
     })
   }
 
-  tiposInsumo: TipoInsumo[] = [];
+  insumoTypes: TipoInsumo[] = [];
 
   @Input() display: boolean = false
   @Input() title!: string
@@ -89,7 +88,7 @@ export class InsumoPopupComponent {
 
   ngOnInit(): void {
     this.insumoService.findAllTipos().subscribe((data: TipoInsumo[]) => {
-      this.tiposInsumo = data;
+      this.insumoTypes = data;
     });
   }
 }

@@ -60,12 +60,7 @@ export class AtencionesComponent {
           this.atenciones = data;
           this.filteredAtenciones = [...this.atenciones];
         },
-        (error) => {
-          console.error('Error al buscar atenciones:', error);
-        }
       );
-    } else {
-      console.error('No se encontró el ID del cliente en el localStorage.');
     }
   }
   
@@ -86,9 +81,6 @@ export class AtencionesComponent {
       (data: Atencion) => {
         this.selected = data
       },
-      (error) => {
-        console.error(`Error al buscar atencion con id ${idAtencion}:`, error)
-      }
     )
   }
 

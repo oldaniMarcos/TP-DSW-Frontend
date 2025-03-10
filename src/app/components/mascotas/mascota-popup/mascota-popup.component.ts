@@ -9,8 +9,7 @@ import { EspecieService } from '../../../services/especie.service';
   selector: 'app-mascota-popup',
   standalone: true,
   imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './mascota-popup.component.html',
-  styleUrl: './mascota-popup.component.scss'
+  templateUrl: './mascota-popup.component.html'
 })
 export class MascotaPopupComponent {
 
@@ -55,9 +54,6 @@ export class MascotaPopupComponent {
         (data: Especie[]) => {
           this.especies = data; // Asigna las especies al array
         },
-        (error) => {
-          console.error('Error al cargar especies:', error);
-        }
       );
     }
   
@@ -75,9 +71,6 @@ export class MascotaPopupComponent {
         (data: Raza[]) => {
           this.razas = data; // Asigna las razas al array
         },
-        (error) => {
-          console.error('Error al cargar razas:', error);
-        }
       );
     }
 

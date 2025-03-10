@@ -29,24 +29,15 @@ export class MascotasComponent {
     idRaza: 0
   }
 
-  mascotasFiltradas: Animal[] = []
-  selectedFiltrado: Animal = {
-    nroHistClinica: 0,
-    nombre: '',
-    fechaNac: '',
-    idCliente: 0,
-    idRaza: 0
-  }
-
-  nomFiltro: string = ''
-  idClienteLogueado: number | null = null;
+  nomFilter: string = ''
+  loggedClientID: number | null = null;
 
   constructor(
     private animalService: AnimalService,
     private messageService: MessageService
   ) {
-    const idCliente = localStorage.getItem('id');
-    this.idClienteLogueado = idCliente ? parseInt(idCliente, 10) : null;
+    const clientID = localStorage.getItem('id');
+    this.loggedClientID = clientID ? parseInt(clientID, 10) : null;
    }
 
   ngOnInit() {
@@ -54,26 +45,20 @@ export class MascotasComponent {
   }
 
   findMascotas(): void {
-    if (this.idClienteLogueado !== null) {
-      this.animalService.findByClienteId(this.idClienteLogueado).subscribe(
+    if (this.loggedClientID !== null) {
+      this.animalService.findByClienteId(this.loggedClientID).subscribe(
         (data: Animal[]) => {
-                if (this.nomFiltro) {
-                  const filtroLowerCase = this.nomFiltro.toLowerCase();
+                if (this.nomFilter) {
+                  const lowerCaseFilter = this.nomFilter.toLowerCase();
                   this.mascotas = data.filter(mascota =>
-                    mascota.nombre.toLowerCase().includes(filtroLowerCase)
+                    mascota.nombre.toLowerCase().includes(lowerCaseFilter)
                   );
                 } else {
                   this.mascotas = data;
                 }
-              },
-        (error) => {
-          console.error('Error al buscar mascotas:', error);
-        }  
+              }, 
         );
-      } else {
-        console.error('ID del cliente logueado es null. No se puede buscar animales.');
       }
-  
     }
     
   findMascota(nroHistClinica: number): void {
@@ -81,9 +66,6 @@ export class MascotasComponent {
       (data: Animal) => {
         this.selected = data
       },
-      (error) => {
-        console.error(`Error al buscar mascota con id ${nroHistClinica}:`, error)
-      }
     )
   }
 
@@ -92,9 +74,6 @@ export class MascotasComponent {
     (newMascota: Animal) => {
       this.mascotas.push(newMascota); 
     },
-    (error) => {
-      console.error('Error al crear una mascota:', error);
-    }
   );
   }
 
@@ -104,9 +83,6 @@ export class MascotasComponent {
         const index = this.mascotas.findIndex(c => c.nroHistClinica === nroHistClinica);
         if (index > -1) this.mascotas[index] = updatedMascota;
       },
-      (error) => {
-        console.error(`Error al actualizar animal con id ${nroHistClinica}:`, error);
-      }
     );
   }
 
@@ -115,9 +91,6 @@ export class MascotasComponent {
       () => {
         this.mascotas = this.mascotas.filter(c => c.nroHistClinica !== nroHistClinica);
       },
-      (error) => {
-        console.error(`Error al eliminar mascota con id ${nroHistClinica}:`, error);
-      }
     );
   }
 

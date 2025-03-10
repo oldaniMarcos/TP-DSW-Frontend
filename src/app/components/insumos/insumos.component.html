@@ -8,14 +8,14 @@
   <div>
     <input
       type="text"
-      [(ngModel)]="insumoFiltro"
+      [(ngModel)]="supplyFilter"
       (input)="findInsumos()"
       placeholder="Buscar por nombre"
       class="search-input"
     />
   </div>
 
-  <div *ngFor="let insumo of insumos">
+  <div *ngFor="let insumo of supplies">
     <app-insumo-card [insumo]="insumo" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)" (select)="toggleSelectPopup($event)" (price)="togglePricePopup($event)">
     </app-insumo-card>
   </div>
@@ -26,7 +26,7 @@
 <!--update-->
 <app-insumo-popup [insumo]="selected" [(display)]="displayUpdatePopup" [isCreating]="false" (confirm)="onConfirmUpdate($event)" title="Editar insumo"></app-insumo-popup>
 
-<app-insumo-ver-popup [insumo]="selected" [tipoInsumo]="tipoInsumo" [(display)]="displaySelectPopup"></app-insumo-ver-popup>
+<app-insumo-ver-popup [supply]="selected" [supplyType]="supplyType" [(display)]="displaySelectPopup"></app-insumo-ver-popup>
 
 <app-insumo-precio [insumo]="selected" [precioInsumo]="selectedPrecio" [(display)]="displayPricePopup" title="Nuevo precio" ></app-insumo-precio>
 

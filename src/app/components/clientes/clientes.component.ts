@@ -32,20 +32,7 @@ export class ClientesComponent {
     rol: ''
   };
 
-  clientesFiltrados: Cliente[] = []
-  selectedFiltrado: Cliente = {
-    id: 0,
-    dni: '',
-    nombreYApellido: '',
-    telefono: '',
-    direccion: '',
-    email: '',
-    usuario: '',
-    password: '',
-    rol: ''
-  };
-
-  dniFiltro: string = '';
+  dniFilter: string = '';
 
   constructor(
     private clienteService: ClienteService,
@@ -60,17 +47,12 @@ export class ClientesComponent {
     this.clienteService.findAll().subscribe(
       (data: Cliente[]) => {
 
-        if (this.dniFiltro) {
-          // Filtra los clientes por DNI si se ingresó un filtro
-          this.clientes = data.filter(cliente => cliente.dni.includes(this.dniFiltro) && cliente.rol === 'cliente');
+        if (this.dniFilter) {
+          this.clientes = data.filter(cliente => cliente.dni.includes(this.dniFilter) && cliente.rol === 'cliente');
         } else {
-          // Si no hay filtro, muestra todos los clientes
           this.clientes = data.filter(cliente => cliente.rol === 'cliente');
         }
       },
-      (error) => {
-        console.error('Error al buscar clientes:', error);
-      }
     );
   }
 
@@ -79,9 +61,6 @@ export class ClientesComponent {
     (newCliente: Cliente) => {
       this.clientes.push(newCliente); 
     },
-    (error) => {
-      console.error('Error al crear un cliente:', error);
-    }
   );
   }
 
@@ -91,9 +70,6 @@ export class ClientesComponent {
         const index = this.clientes.findIndex(c => c.id === id);
         if (index > -1) this.clientes[index] = updatedCliente;
       },
-      (error) => {
-        console.error(`Error al actualizar cliente con id ${id}:`, error);
-      }
     );
   }
 
@@ -102,9 +78,6 @@ export class ClientesComponent {
       () => {
         this.clientes = this.clientes.filter(c => c.id !== id);
       },
-      (error) => {
-        console.error(`Error al eliminar cliente con id ${id}:`, error);
-      }
     );
   }
 
@@ -135,7 +108,7 @@ export class ClientesComponent {
     this.deleteCliente(cliente.id)
   }
 
-  // confirmaciones
+  // confirmations
 
   onConfirmCreate(cliente: Cliente) {
     this.createCliente(cliente)

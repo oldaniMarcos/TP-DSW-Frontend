@@ -3,15 +3,14 @@
   
     .p-inputtext {
       width: 100%;
-      font-size: 14px; // Ajusta el tamaño de la fuente
+      font-size: 14px;
     }
   
     .p-datepicker {
       width: 100%;
-      max-width: 300px; // Ajusta el ancho máximo del calendario
-      font-size: 14px; // Ajusta el tamaño de la fuente del calendario
+      max-width: 300px;
+      font-size: 14px;
   
-      // Estilos específicos para móviles
       @media (max-width: 768px) {
         position: fixed;
         top: 50% !important;

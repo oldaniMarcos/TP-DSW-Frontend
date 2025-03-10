@@ -12,8 +12,7 @@ import { ToastModule } from 'primeng/toast';
   standalone: true,
   imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule, ToastModule],
   providers: [MessageService],
-  templateUrl: './veterinario-popup.component.html',
-  styleUrl: './veterinario-popup.component.scss'
+  templateUrl: './veterinario-popup.component.html'
 })
 export class VeterinarioPopupComponent {
 

@@ -12,14 +12,10 @@ import { InsumoService } from '../../../services/insumo.service';
 })
 export class InsumoVerPopupComponent {
 
-  constructor(
-    private insumoService: InsumoService
-  ) { }
-
   @Input() display: boolean = false
 
-  @Input() insumo!: Insumo
-  @Input() tipoInsumo!: TipoInsumo
+  @Input() supply!: Insumo
+  @Input() supplyType!: TipoInsumo
 
   @Output() displayChange = new EventEmitter<boolean>()
 

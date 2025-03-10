@@ -1,6 +1,6 @@
 <p-dialog [title]="title" [(visible)]="display" [modal]="true" [closable]="false">
 
-    <div class="column gap-1 form-wrapper" [formGroup]="razaForm">
+    <div class="column gap-1 form-wrapper" [formGroup]="breedForm">
 
         <div class="row gap-05">
             <span class="label">Descripción:</span>
@@ -19,7 +19,7 @@
     </div>
 
     <p-footer>
-        <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!razaForm.valid">Confirmar</button>
+        <button type="button" class="btn" (click)="onConfirm()" [class.disabled]="!breedForm.valid">Confirmar</button>
 
         <button type="button" class="cancel" (click)="onCancel()">Cancelar</button>
     </p-footer>

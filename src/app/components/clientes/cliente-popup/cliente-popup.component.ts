@@ -13,8 +13,7 @@ import { TooltipModule } from 'primeng/tooltip';
   standalone: true,
   imports: [CommonModule, DialogModule, FormsModule, ReactiveFormsModule, ToastModule, TooltipModule],
   providers: [MessageService],
-  templateUrl: './cliente-popup.component.html',
-  styleUrl: './cliente-popup.component.scss'
+  templateUrl: './cliente-popup.component.html'
 })
 export class ClientePopupComponent {
 

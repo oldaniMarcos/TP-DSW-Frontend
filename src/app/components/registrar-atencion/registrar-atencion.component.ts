@@ -88,11 +88,7 @@ export class RegistrarAtencionComponent {
         map((data) => {
           return data ? null : { notFound: true };
         }),
-        catchError((error) => {
-          console.error('Error en animalValidator:', error);
-          return of({ notFound: true });
-      }))
-      
+        )
     };
   }
 
@@ -146,10 +142,7 @@ export class RegistrarAtencionComponent {
 
             this.messageService.add({severity: 'success', detail: 'Atencion registrada correctamente.', life: 2000});
           })
-          .catch((error) => {
-            console.error('Error al actualizar stock o calcular precios', error);
-            alert('No se pudo completar la operación.');
-          });
+        ;
       } else {
         this.confirm.emit({
           fechaHora: new Date().toISOString(),

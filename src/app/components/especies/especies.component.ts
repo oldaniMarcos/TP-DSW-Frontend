@@ -27,7 +27,7 @@ export class EspeciesComponent {
     descripcion: '',
   }
 
-  especieFiltro: string = '';
+  especieFilter: string = '';
 
   constructor(
     private especieService: EspecieService,
@@ -41,18 +41,15 @@ export class EspeciesComponent {
   findEspecies(): void {
     this.especieService.findAll().subscribe(
       (data: Especie[]) => {
-        if (this.especieFiltro) {
-          const filtroLowerCase = this.especieFiltro.toLowerCase();
+        if (this.especieFilter) {
+          const filterLowerCase = this.especieFilter.toLowerCase();
           this.especies = data.filter(especie =>
-            especie.descripcion.toLowerCase().includes(filtroLowerCase)
+            especie.descripcion.toLowerCase().includes(filterLowerCase)
           );
         } else {
           this.especies = data;
         }
       },
-      (error) => {
-        console.error('Error al buscar especies:', error);
-      }
     );
   }
 
@@ -61,9 +58,6 @@ export class EspeciesComponent {
       (data: Especie) => {
         this.selected = data
       },
-      (error) => {
-        console.error(`Error al buscar especie con ID ${codEspecie}:`, error)
-      }
     )
   }
 
@@ -72,9 +66,6 @@ export class EspeciesComponent {
     (newEspecie: Especie) => {
       this.especies.push(newEspecie); 
     },
-    (error) => {
-      console.error('Error al crear una especie:', error);
-    }
   );      
   }
 
@@ -84,9 +75,6 @@ export class EspeciesComponent {
         const index = this.especies.findIndex(c => c.codEspecie === codEspecie);
         if (index > -1) this.especies[index] = updatedEspecie;
       },
-      (error) => {
-        console.error(`Error al actualizar especie con código ${codEspecie}:`, error);
-      }
     );
   }
 
@@ -95,9 +83,6 @@ export class EspeciesComponent {
       () => {
         this.especies = this.especies.filter(c => c.codEspecie !== codEspecie);
       },
-      (error) => {
-        console.error(`Error al eliminar especie con código ${codEspecie}:`, error);
-      }
     );
   }
 

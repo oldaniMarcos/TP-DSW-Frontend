@@ -31,18 +31,7 @@ export class VeterinariosComponent {
     email: '',
   }
 
-  veterinariosFiltrados: Veterinario[] = []
-  selectedFiltrado: Veterinario = {
-    idVeterinario: 0,
-    nroMatricula: '',
-    dni: '',
-    nombreYApellido: '',
-    direccion: '',
-    telefono: '',
-    email: '',
-  }
-
-  matFiltro: string = ''
+  matFilter: string = ''
 
   constructor(
     private veterinarioService: VeterinarioService,
@@ -56,15 +45,12 @@ export class VeterinariosComponent {
   findVeterinarios(): void {
     this.veterinarioService.findAll().subscribe(
       (data: Veterinario[]) => {
-        if (this.matFiltro) {
-          this.veterinarios = data.filter(veterinario => veterinario.nroMatricula.includes(this.matFiltro))
+        if (this.matFilter) {
+          this.veterinarios = data.filter(veterinario => veterinario.nroMatricula.includes(this.matFilter))
         } else {
           this.veterinarios = data
         }
       },
-      (error) => {
-        console.error('Error al buscar veterinarios:', error)
-      }
     )
   }
 
@@ -73,9 +59,6 @@ export class VeterinariosComponent {
       (data: Veterinario) => {
         this.selected = data
       },
-      (error) => {
-        console.error(`Error al buscar veterinario con id ${idVeterinario}:`, error)
-      }
     )
   }
 
@@ -84,9 +67,6 @@ export class VeterinariosComponent {
     (newVeterinario: Veterinario) => {
       this.veterinarios.push(newVeterinario); 
     },
-    (error) => {
-      console.error('Error al crear un veterinario:', error);
-    }
   );
   }
 
@@ -96,9 +76,6 @@ export class VeterinariosComponent {
         const index = this.veterinarios.findIndex(c => c.idVeterinario === idVeterinario);
         if (index > -1) this.veterinarios[index] = updatedVeterinario;
       },
-      (error) => {
-        console.error(`Error al actualizar veterinario con id ${idVeterinario}:`, error);
-      }
     );
   }
 
@@ -107,9 +84,6 @@ export class VeterinariosComponent {
       () => {
         this.veterinarios = this.veterinarios.filter(c => c.idVeterinario !== idVeterinario);
       },
-      (error) => {
-        console.error(`Error al eliminar veterinario con id ${idVeterinario}:`, error);
-      }
     );
   }
 
@@ -145,7 +119,6 @@ export class VeterinariosComponent {
   onConfirmCreate(veterinario: Veterinario) {
     this.createVeterinario(veterinario)
     this.displayCreatePopup = false
-
     this.messageService.add({severity:'success', detail:'Veterinario creado correctamente.', life: 2000});
   }
 

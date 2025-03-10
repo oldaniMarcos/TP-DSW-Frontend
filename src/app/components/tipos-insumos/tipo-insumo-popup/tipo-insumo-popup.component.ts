@@ -8,8 +8,7 @@ import { DialogModule } from 'primeng/dialog';
   selector: 'app-tipo-insumo-popup',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, DialogModule],
-  templateUrl: './tipo-insumo-popup.component.html',
-  styleUrl: './tipo-insumo-popup.component.scss'
+  templateUrl: './tipo-insumo-popup.component.html'
 })
 export class TipoInsumoPopupComponent {
 

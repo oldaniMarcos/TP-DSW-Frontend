@@ -5,11 +5,11 @@
   <button class="btn" (click)="toggleCreatePopup()">Nuevo</button>
 
   <div>
-    <input type="text" [(ngModel)]="tipoInsumoFiltro" (input)="findTiposInsumos()" placeholder="Buscar por nombre"
+    <input type="text" [(ngModel)]="supplyTypeFilter" (input)="findTiposInsumos()" placeholder="Buscar por nombre"
       class="search-input" />
   </div>
 
-  <div *ngFor="let tipoInsumo of tiposInsumos">
+  <div *ngFor="let tipoInsumo of supplyTypes">
     <app-tipo-insumo-card [tipoInsumo]="tipoInsumo" (edit)="toggleUpdatePopup($event)" (delete)="toggleDeletePopup($event)">
     </app-tipo-insumo-card>
   </div>
