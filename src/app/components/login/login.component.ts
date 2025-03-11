@@ -18,8 +18,9 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
 
   loginData = { usuario: '', password: ''}
-  errorMessage: string = '';
-  clientes: Cliente[] = [];
+  errorMessage: string = ''
+  clientes: Cliente[] = []
+  rol = ''
 
   constructor(private clienteService: ClienteService
     , private router: Router
@@ -32,32 +33,49 @@ export class LoginComponent {
     this.authService.login(this.loginData.usuario, this.loginData.password).subscribe(
       (res) => {
         this.localStorage.setItem('token', res.token)
-        this.localStorage.setItem('rol', res.user.rol)
-        this.localStorage.setItem('id', res.user.id)
-        this.localStorage.setItem('nombreYApellido', res.user.nombreYApellido)
-        this.localStorage.setItem('dni', res.user.dni)
-        this.localStorage.setItem('email', res.user.email)
 
-        if (res.user.rol === 'admin') {
-          this.router.navigate(['/admin'])
-        }
-        else {
-          this.router.navigate(['/home'])
-        }
+        this.authService.fetchDetails().subscribe((res) => {
+
+          this.rol = res.rol
+
+          if (this.rol === 'admin') {      
+              
+            this.router.navigate(['/admin'])
+          }
+          else {
+            this.router.navigate(['/home'])
+          }
+
+
+        })
       },
       () => {
         this.errorMessage = 'Credenciales Incorrectas'
       }
     )
+
+    
+
+    
   }
 
   ngOnInit(): void {
-    const rol = this.localStorage.getItem('rol');
-    if (!rol) return
-    if (rol === 'admin') {
-      this.router.navigate(['/admin']);
-    } else {
-      this.router.navigate(['/home']);
+
+    const token = this.localStorage.getItem('token')
+
+    if (token) {
+
+      this.authService.fetchDetails().subscribe((res) => {
+
+        const rol = res.rol
+        
+        if (!rol) return
+        if (rol === 'admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/home']);
+        }
+      })
     }
   }
 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/header/header.component';
 import { CommonModule } from '@angular/common';
-import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
   selector: 'app-root',

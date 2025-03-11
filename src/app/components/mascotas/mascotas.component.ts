@@ -9,6 +9,8 @@ import { MascotaVerPopupComponent } from './mascota-ver-popup/mascota-ver-popup.
 import { AnimalService } from '../../services/animal.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { firstValueFrom } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-veterinarios',
@@ -30,35 +32,33 @@ export class MascotasComponent {
   }
 
   nomFilter: string = ''
-  loggedClientID: number | null = null;
 
   constructor(
     private animalService: AnimalService,
-    private messageService: MessageService
-  ) {
-    const clientID = localStorage.getItem('id');
-    this.loggedClientID = clientID ? parseInt(clientID, 10) : null;
-   }
+    private messageService: MessageService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.findMascotas()
   }
 
-  findMascotas(): void {
-    if (this.loggedClientID !== null) {
-      this.animalService.findByClienteId(this.loggedClientID).subscribe(
-        (data: Animal[]) => {
-                if (this.nomFilter) {
-                  const lowerCaseFilter = this.nomFilter.toLowerCase();
-                  this.mascotas = data.filter(mascota =>
-                    mascota.nombre.toLowerCase().includes(lowerCaseFilter)
-                  );
-                } else {
-                  this.mascotas = data;
-                }
-              }, 
-        );
-      }
+  async findMascotas() {
+
+      const res = await firstValueFrom(this.authService.fetchDetails());
+      const clientID = res.id;
+
+      this.animalService.findByClienteId(clientID!).subscribe((data: Animal[]) => {
+          if (this.nomFilter) {
+            const lowerCaseFilter = this.nomFilter.toLowerCase();
+            this.mascotas = data.filter(mascota =>
+              mascota.nombre.toLowerCase().includes(lowerCaseFilter)
+            );
+          } else {
+            this.mascotas = data;
+          }
+        }, 
+      );
     }
     
   findMascota(nroHistClinica: number): void {

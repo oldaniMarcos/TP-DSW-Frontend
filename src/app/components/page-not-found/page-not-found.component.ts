@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-page-not-found',
@@ -10,19 +11,22 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class PageNotFoundComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   return() {
-    
-    const rol = localStorage.getItem('rol')
 
-    if (rol === 'admin') {
-      this.router.navigate(['/admin']); 
-    } else if (rol === 'cliente') {
-      this.router.navigate(['/home']); 
-    } else {
-      this.router.navigate(['/login']); 
-    }
+    this.authService.fetchDetails().subscribe((res) => {
+
+      if (res.rol === 'admin') {
+        this.router.navigate(['/admin'])
+      } else if (res.rol === 'cliente') {
+        this.router.navigate(['/home']) 
+      } else {
+        this.router.navigate(['/login']) 
+      }
+      
+    })
+    
   }
 
 }

@@ -4,8 +4,6 @@ import { RazaService } from '../../services/raza.service';
 import { EspecieService } from '../../services/especie.service';
 import { of } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { RazaPopupComponent } from './raza-popup/raza-popup.component';
-import { RazaCardComponent } from './raza-card/raza-card.component';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 

@@ -7,7 +7,7 @@ import { VeterinarioService } from '../../services/veterinario.service';
 import { PrecioAtencionService } from '../../services/precio-atencion.service';
 import { InsumoService } from '../../services/insumo.service';
 import { AnimalService } from '../../services/animal.service';
-import { catchError, map, Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { PrecioInsumoService } from '../../services/precio-insumo.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';

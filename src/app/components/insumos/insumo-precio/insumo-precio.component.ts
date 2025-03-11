@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
-import { InsumoService } from '../../../services/insumo.service';
 import { Insumo, PrecioInsumo } from '../../../../types';
 import { PrecioInsumoService } from '../../../services/precio-insumo.service';
 

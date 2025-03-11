@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import {Location, NgStyle} from '@angular/common';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TruncateNamePipe } from '../../pipes/truncate-name.pipe';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,7 @@ export class HeaderComponent {
   constructor(private router: Router
     , private location: Location
     , private localStorage: LocalStorageService
+    , private authService: AuthService
   ) {}
 
   isHomeRoute = true
@@ -28,16 +30,16 @@ export class HeaderComponent {
   nombreYApellido: any = ''
   dni: any = ''
   email: any = ''
+  rol: any = ''
 
   goBack() {
     this.location.back()
   }
 
   isAdmin() {
-    const rol = this.localStorage.getItem('rol')
-    if (rol === 'admin') {
-      return true
-    } else return false
+
+    return this.rol === 'admin';
+    
   }
 
   logout() {
@@ -64,10 +66,18 @@ export class HeaderComponent {
 
     });
 
-    this.nombreYApellido = this.localStorage.getItem('nombreYApellido')
-    this.dni = this.localStorage.getItem('dni')
-    this.email = this.localStorage.getItem('email')
+    const token = this.localStorage.getItem('token')
 
+    if (token) {
+
+      this.authService.fetchDetails().subscribe((res) => {
+
+        this.rol = res.rol
+        this.nombreYApellido = res.nombreYApellido
+        this.dni = res.dni
+        this.email = res.email
+        
+      })
+    }
   }
-
 }

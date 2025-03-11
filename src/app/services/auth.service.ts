@@ -3,6 +3,7 @@ import { ApiService } from './api.service';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
+import { Cliente } from '../../types';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,10 @@ export class AuthService {
     this.localStorage.clear()
   }
 
-  isAuthenticated(): boolean {
-    return !!this.getToken()
+  fetchDetails() {
+    return this.apiService.get<Cliente>(`${this.URL}/me`, {
+      headers: { Authorization: `Bearer ${this.getToken()}` }
+    });
   }
 
 }

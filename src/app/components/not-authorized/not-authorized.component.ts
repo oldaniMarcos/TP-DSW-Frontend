@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-not-authorized',
@@ -10,19 +11,21 @@ import { Router } from '@angular/router';
 })
 export class NotAuthorizedComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   return() {
     
-    const rol = localStorage.getItem('rol')
+    this.authService.fetchDetails().subscribe((res) => {
 
-    if (rol === 'admin') {
-      this.router.navigate(['/admin']); 
-    } else if (rol === 'cliente') {
-      this.router.navigate(['/home']); 
-    } else {
-      this.router.navigate(['/login']); 
-    }
+      if (res.rol === 'admin') {
+        this.router.navigate(['/admin'])
+      } else if (res.rol === 'cliente') {
+        this.router.navigate(['/home'])
+      } else {
+        this.router.navigate(['/login'])
+      }
+      
+    })
   }
 
 }

@@ -7,7 +7,6 @@ import { InsumoPopupComponent } from './insumo-popup/insumo-popup.component';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { InsumoVerPopupComponent } from './insumo-ver-popup/insumo-ver-popup.component';
-import { Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { InsumoPrecioComponent } from './insumo-precio/insumo-precio.component';
 import { PrecioInsumoService } from '../../services/precio-insumo.service';

@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Animal, Atencion, PrecioAtencion } from '../../../types';
 import { AtencionService } from '../../services/atencion.service';
-import { PrecioAtencionService } from '../../services/precio-atencion.service';
 import { ButtonModule } from 'primeng/button';
 import { AtencionCardComponent } from './atencion-card/atencion-card.component';
-import { take } from 'rxjs';
+import { firstValueFrom, take } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { AtencionVerPopupComponent } from './atencion-ver-popup/atencion-ver-popup.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-atenciones-admin',
@@ -41,7 +41,7 @@ export class AtencionesComponent {
 
   constructor(
     private atencionService: AtencionService,
-    private precioAtencionService: PrecioAtencionService
+    private authService: AuthService
   ) { }
 
   precioAtencionActual: PrecioAtencion | null = null;
@@ -52,8 +52,10 @@ export class AtencionesComponent {
 
   selectedDate: string = '';
 
-  findAtenciones(): void {
-    const id = localStorage.getItem('id');
+  async findAtenciones() {
+    const res = await firstValueFrom(this.authService.fetchDetails());
+    const id = res.id
+    
     if (id) {
       this.atencionService.findByClienteId(+id).subscribe(
         (data: Atencion[]) => {

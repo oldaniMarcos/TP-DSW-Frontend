@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { DialogModule } from 'primeng/dialog';
 import { Animal, Especie, Raza } from '../../../../types';
 import { EspecieService } from '../../../services/especie.service';
+import { AuthService } from '../../../services/auth.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-mascota-popup',
@@ -15,7 +17,10 @@ export class MascotaPopupComponent {
 
   mascotaForm: FormGroup
 
-  constructor( private formBuilder: FormBuilder, private especieService: EspecieService) {
+  constructor( private formBuilder: FormBuilder
+    , private especieService: EspecieService
+    , private authService: AuthService
+  ) {
     this.mascotaForm = this.formBuilder.group({
       nroHistClinica: ['', [Validators.required]],
       nombre: ['', [Validators.required]],
@@ -74,9 +79,10 @@ export class MascotaPopupComponent {
       );
     }
 
-  onConfirm() {
+  async onConfirm() {
     const { nombre, fechaNac, idRaza} = this.mascotaForm.value
-    const idCliente = localStorage.getItem('id');
+    const res = await firstValueFrom(this.authService.fetchDetails());
+    const idCliente = res.id;
 
     this.confirm.emit({
       nombre: nombre || '',
