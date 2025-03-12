@@ -31,13 +31,13 @@ export class MascotaVerPopupComponent {
     }
   }
 
-  calculateAge(birthDat: string) {
-    const birthDate = new Date(birthDat);
+  calculateAge(date: string) {
+    const birthDate = new Date(date);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
-    const mes = today.getMonth() - birthDate.getMonth();
+    const month = today.getMonth() - birthDate.getMonth();
 
-    if (mes < 0 || (mes === 0 && today.getDate() < birthDate.getDate())) {
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
 

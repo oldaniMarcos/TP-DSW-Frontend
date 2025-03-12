@@ -21,7 +21,7 @@ export class EspeciePopupComponent {
   }
 
   @Input() display: boolean = false
-  @Input() title!: string //! -> siempre se provee
+  @Input() title!: string
 
   @Output() displayChange = new EventEmitter<boolean>()
   @Output() confirm = new EventEmitter<Especie>()

@@ -12,30 +12,30 @@ import { CommonModule } from '@angular/common';
 export class ClienteMascotaCardComponent implements OnInit {
   
   @Input() cliente!: Cliente;
-  @Input() mascotas: Animal[] = [];
+  @Input() pets: Animal[] = [];
 
   ngOnInit() {
-    this.mascotas.forEach(mascota => {
-      if (!mascota.edad && mascota.fechaNac) {
-        mascota.edad = this.calculateAge(mascota.fechaNac);
+    this.pets.forEach(pet => {
+      if (!pet.edad && pet.fechaNac) {
+        pet.edad = this.calculateAge(pet.fechaNac);
       }
     });
   }
 
-  calculateAge(birthDat: string | undefined): number | undefined {
-    if (!birthDat) return undefined;
+  calculateAge(date: string | undefined): number | undefined {
+    if (!date) return undefined;
 
-    const birthDate = new Date(birthDat);
-    if (isNaN(birthDate.getTime())) return undefined;  // Evita fechas inválidas
+    const birthDate = new Date(date);
+    if (isNaN(birthDate.getTime())) return undefined;
   
-    const hoy = new Date();
-    let edad = hoy.getFullYear() - birthDate.getFullYear();
-    const mes = hoy.getMonth() - birthDate.getMonth();
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const month = today.getMonth() - birthDate.getMonth();
   
-    if (mes < 0 || (mes === 0 && hoy.getDate() < birthDate.getDate())) {
-      edad--;
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
   
-    return edad >= 0 ? edad : undefined;  // Asegura un número válido o undefined
+    return age >= 0 ? age : undefined; 
   }
 }

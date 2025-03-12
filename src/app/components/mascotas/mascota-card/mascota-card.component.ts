@@ -44,11 +44,11 @@ export class MascotaCardComponent {
   
     this.atencionService.hasAnimal(this.animal.nroHistClinica).subscribe((tieneAtenciones) => {
       if (tieneAtenciones) {
-        this.messageService.add({ severity: 'warn', summary: 'No se puede eliminar', detail: 'Este animal tiene atenciones registradas.' });
+        this.messageService.add({ severity: 'warn', summary: 'No se puede eliminar', detail: 'Esta mascota tiene atenciones registradas.' });
       } else {
         this.confirmationService.confirm({
           target: this.deleteButton.nativeElement,
-          message: '¿Eliminar este animal?',
+          message: '¿Eliminar esta mascota?',
           accept: () => {
             this.deleteMascota();
           },
@@ -76,9 +76,9 @@ export class MascotaCardComponent {
     const birthDate = new Date(birthDat);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
-    const mes = today.getMonth() - birthDate.getMonth();
+    const month = today.getMonth() - birthDate.getMonth();
 
-    if (mes < 0 || (mes === 0 && today.getDate() < birthDate.getDate())) {
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
 

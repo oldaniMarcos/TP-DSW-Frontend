@@ -30,8 +30,8 @@ constructor(
       return;
     }
   
-    this.razaService.hasEspecie(this.especie.codEspecie).subscribe((tieneRazas) => {
-      if (tieneRazas) {
+    this.razaService.hasEspecie(this.especie.codEspecie).subscribe((hasRaza) => {
+      if (hasRaza) {
         this.messageService.add({ severity: 'warn', summary: 'No se puede eliminar', detail: 'Esta especie tiene razas registradas.' });
       } else {
         this.confirmationService.confirm({
@@ -47,10 +47,6 @@ constructor(
 
   deleteEspecie() {
     this.delete.emit(this.especie)
-  }
-
-  ngOnInit() {
-
   }
 
 }

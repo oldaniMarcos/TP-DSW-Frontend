@@ -28,7 +28,7 @@ export class RazasComponent {
     idEspecie: 0,
   }
 
-  speciess: Especie[] = []
+  species: Especie[] = []
 
   constructor (
     private razaService: RazaService, private especieService: EspecieService, private messageService: MessageService
@@ -57,7 +57,7 @@ export class RazasComponent {
   findEspecies(): void {
     this.especieService.findAll().subscribe(
       (data: Especie[]) => {
-        this.speciess = data
+        this.species = data
       },
     )
   }

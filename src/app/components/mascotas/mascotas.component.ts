@@ -45,21 +45,21 @@ export class MascotasComponent {
 
   async findMascotas() {
 
-      const res = await firstValueFrom(this.authService.fetchDetails());
-      const clientID = res.id;
+    const res = await firstValueFrom(this.authService.fetchDetails());
+    const clientID = res.id;
 
-      this.animalService.findByClienteId(clientID!).subscribe((data: Animal[]) => {
-          if (this.nomFilter) {
-            const lowerCaseFilter = this.nomFilter.toLowerCase();
-            this.mascotas = data.filter(mascota =>
-              mascota.nombre.toLowerCase().includes(lowerCaseFilter)
-            );
-          } else {
-            this.mascotas = data;
-          }
-        }, 
-      );
-    }
+    this.animalService.findByClienteId(clientID!).subscribe((data: Animal[]) => {
+        if (this.nomFilter) {
+          const lowerCaseFilter = this.nomFilter.toLowerCase();
+          this.mascotas = data.filter(mascota =>
+            mascota.nombre.toLowerCase().includes(lowerCaseFilter)
+          );
+        } else {
+          this.mascotas = data;
+        }
+      }, 
+    );
+  }
     
   findMascota(nroHistClinica: number): void {
     this.animalService.findOne(nroHistClinica).subscribe(

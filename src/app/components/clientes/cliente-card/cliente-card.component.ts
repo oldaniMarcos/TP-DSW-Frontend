@@ -35,8 +35,8 @@ export class ClienteCardComponent {
       return;
     }
   
-    this.animalService.hasCliente(this.cliente.id).subscribe((tieneAtenciones) => {
-      if (tieneAtenciones) {
+    this.animalService.hasCliente(this.cliente.id).subscribe((hasAnimals) => {
+      if (hasAnimals) {
         this.messageService.add({ severity: 'warn', summary: 'No se puede eliminar', detail: 'Este cliente tiene animales registrados.' });
       } else {
         this.confirmationService.confirm({

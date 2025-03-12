@@ -41,14 +41,14 @@ export class InsumoPrecioComponent {
   onConfirm() {
     if (!this.insumo.codInsumo) return;
 
-    const precio: PrecioInsumo = {
+    const price: PrecioInsumo = {
       fechaDesde: new Date().toISOString(),
       valor: Number(this.precioForm.value.valor),
       valorVenta: Number(this.precioForm.value.valorVenta),
       idInsumo: this.insumo.codInsumo,
     };
 
-    this.precioInsumoService.post(precio).subscribe(
+    this.precioInsumoService.post(price).subscribe(
       () => {
         this.display = false;
         this.displayChange.emit(this.display);
@@ -78,7 +78,5 @@ export class InsumoPrecioComponent {
       });
     }
   }
-
-  ngOnInit(): void {}
 
 }

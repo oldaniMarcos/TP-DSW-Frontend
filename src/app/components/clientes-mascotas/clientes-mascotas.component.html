@@ -9,6 +9,6 @@
 
 
   <div *ngFor="let cliente of clients">
-    <app-cliente-mascota-card [cliente]="cliente" [mascotas]="mascotasCliente[cliente.id!] || []">
+    <app-cliente-mascota-card [cliente]="cliente" [pets]="clientPets[cliente.id!] || []">
     </app-cliente-mascota-card>
   </div>

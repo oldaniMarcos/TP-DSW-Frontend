@@ -189,8 +189,6 @@ export class RegistrarAtencionComponent {
     
   }
 
-  //-----------------------------------------------------------------------------------
-
   addInsumoSelection(): void {
     const group = this.formBuilder.group({
       idInsumo: [null, Validators.required],
@@ -204,10 +202,10 @@ export class RegistrarAtencionComponent {
       } else {
         group.get('cantidad')?.enable();
       }
-  });
+    });
 
-  this.insumoSelections.push(group);
-}
+    this.insumoSelections.push(group);
+  }
 
 
   removeInsumoSelection(index: number): void {

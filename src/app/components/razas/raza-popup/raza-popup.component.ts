@@ -22,7 +22,7 @@ export class RazaPopupComponent {
     })
   }
 
-  especies: Especie[] = []
+  species: Especie[] = []
 
   @Input() display: boolean = false
   @Input() title!: string 
@@ -58,7 +58,7 @@ export class RazaPopupComponent {
 
   ngOnInit(): void {
     this.especieService.findAll().subscribe((data: Especie[]) => {
-      this.especies = data;
+      this.species = data;
     });
   }
 

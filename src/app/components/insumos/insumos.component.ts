@@ -61,9 +61,9 @@ export class InsumosComponent {
     this.insumoService.findAll().subscribe(
       (data: Insumo[]) => {
         if (this.supplyFilter) {
-          const filtroLowerCase = this.supplyFilter.toLowerCase();
-          this.supplies = data.filter(insumo =>
-            insumo.descripcion.toLowerCase().includes(filtroLowerCase)
+          const lowercaseFilter = this.supplyFilter.toLowerCase();
+          this.supplies = data.filter(supply =>
+            supply.descripcion.toLowerCase().includes(lowercaseFilter)
           );
         } else {
           this.supplies = data;
@@ -86,14 +86,14 @@ export class InsumosComponent {
 
       this.supplies.push(newInsumo);
 
-      const newPrecio: PrecioInsumo = {
+      const price: PrecioInsumo = {
         fechaDesde: new Date().toISOString(),
         valor,
         valorVenta,
         idInsumo: newInsumo.codInsumo!,
       };
 
-      this.precioInsumoService.post(newPrecio).subscribe();
+      this.precioInsumoService.post(price).subscribe();
     },
   );
   }
@@ -101,9 +101,9 @@ export class InsumosComponent {
   updateInsumo(codInsumo: number, insumo: Insumo): void {
 
     this.insumoService.patch(codInsumo, insumo).subscribe(
-      (updatedInsumo: Insumo) => {
+      (supply: Insumo) => {
         const index = this.supplies.findIndex(c => c.codInsumo === codInsumo);
-        if (index > -1) this.supplies[index] = updatedInsumo;
+        if (index > -1) this.supplies[index] = supply;
       },
     );
   }

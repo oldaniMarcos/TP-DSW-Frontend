@@ -17,8 +17,6 @@ export class AppComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-
-    //esconder el header en la pagina de login
     this.router.events.subscribe(() => {
       
       const currentRoute = this.router.url;

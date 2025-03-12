@@ -18,9 +18,9 @@ import { AtencionService } from '../../../services/atencion.service';
 export class VeterinarioCardComponent {
 
     constructor(
-        private confirmationService: ConfirmationService,
-        private atencionService: AtencionService,
-        private messageService: MessageService
+      private confirmationService: ConfirmationService,
+      private atencionService: AtencionService,
+      private messageService: MessageService
     ) {}
   @ViewChild('deleteButton') deleteButton: any
 
@@ -40,8 +40,8 @@ export class VeterinarioCardComponent {
       return;
     }
   
-    this.atencionService.hasVeterinario(this.veterinario.idVeterinario).subscribe((tieneAtenciones) => {
-      if (tieneAtenciones) {
+    this.atencionService.hasVeterinario(this.veterinario.idVeterinario).subscribe((hasAtencion) => {
+      if (hasAtencion) {
         this.messageService.add({ severity: 'warn', summary: 'No se puede eliminar', detail: 'Este veterinario tiene atenciones registradas.' });
       } else {
         this.confirmationService.confirm({

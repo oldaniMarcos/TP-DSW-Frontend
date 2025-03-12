@@ -32,7 +32,7 @@ export class MascotaPopupComponent {
   }
 
   @Input() display: boolean = false
-  @Input() title!: string //! -> siempre se provee
+  @Input() title!: string
 
   @Output() displayChange = new EventEmitter<boolean>()
   @Output() confirm = new EventEmitter<Animal>()
@@ -51,13 +51,13 @@ export class MascotaPopupComponent {
   idRaza: number = 0;
 
   ngOnInit(): void {
-      this.loadEspecies(); // Carga las especies al inicializar el componente
-    }
+    this.loadEspecies();
+  }
   
     loadEspecies(): void {
       this.especieService.findAll().subscribe(
         (data: Especie[]) => {
-          this.especies = data; // Asigna las especies al array
+          this.especies = data;
         },
       );
     }
@@ -71,13 +71,13 @@ export class MascotaPopupComponent {
       }
     }
   
-    loadRazasByEspecieId(especieId: number): void {
-      this.especieService.findRazasByEspecieId(especieId).subscribe(
-        (data: Raza[]) => {
-          this.razas = data; // Asigna las razas al array
-        },
-      );
-    }
+  loadRazasByEspecieId(especieId: number): void {
+    this.especieService.findRazasByEspecieId(especieId).subscribe(
+      (data: Raza[]) => {
+        this.razas = data;
+      },
+    );
+  }
 
   async onConfirm() {
     const { nombre, fechaNac, idRaza} = this.mascotaForm.value

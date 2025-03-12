@@ -10,7 +10,7 @@
         <div class="row gap-05">
             <label for="idEspecie">Especie:</label>
             <select id="idEspecie" formControlName="idEspecie">
-              <option *ngFor="let especie of especies" [value]="especie.codEspecie">
+              <option *ngFor="let especie of species" [value]="especie.codEspecie">
                 {{ especie.descripcion }}
               </option>
             </select>

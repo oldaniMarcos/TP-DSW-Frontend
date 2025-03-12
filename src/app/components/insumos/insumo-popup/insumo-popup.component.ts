@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { DialogModule } from 'primeng/dialog';
 import { Insumo, TipoInsumo } from '../../../../types';
 import { InsumoService } from '../../../services/insumo.service';
-import { PrecioInsumoService } from '../../../services/precio-insumo.service';
 
 @Component({
   selector: 'app-insumo-popup',
@@ -16,7 +15,7 @@ export class InsumoPopupComponent {
 
   insumoForm: FormGroup
 
-  constructor( private formBuilder: FormBuilder, private insumoService: InsumoService, private precioInsumoService: PrecioInsumoService) {
+  constructor( private formBuilder: FormBuilder, private insumoService: InsumoService) {
     this.insumoForm = this.formBuilder.group({
       descripcion: ['', [Validators.required]],
       stock: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],

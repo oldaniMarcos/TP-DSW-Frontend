@@ -16,7 +16,7 @@ import { AnimalService } from '../../services/animal.service';
 export class ClientesMascotasComponent {
 
   clients: Cliente[] = []
-  mascotasCliente: { [id: number]: Animal[] } = {}
+  clientPets: { [id: number]: Animal[] } = {}
 
   dniFilter: string = '';
 
@@ -47,31 +47,31 @@ export class ClientesMascotasComponent {
   findMascotas(): void {
     this.clients.forEach(cliente => {
       this.animalService.findByClienteId(cliente.id!).subscribe(
-        (mascotas: Animal[]) => {
-          this.mascotasCliente[cliente.id!] = mascotas.map(mascota => ({
-            ...mascota,
-            edad: this.calculateAge(mascota.fechaNac) ?? undefined 
+        (pets: Animal[]) => {
+          this.clientPets[cliente.id!] = pets.map(pet => ({
+            ...pet,
+            edad: this.calculateAge(pet.fechaNac) ?? undefined 
           }));
         },
       );
     });
   }
   
-  calculateAge(birthDat: string | undefined): number | undefined {
-    if (!birthDat) return undefined;
+  calculateAge(date: string | undefined): number | undefined {
+    if (!date) return undefined;
   
-    const birthDate = new Date(birthDat);
+    const birthDate = new Date(date);
     if (isNaN(birthDate.getTime())) return undefined;
   
-    const hoy = new Date();
-    let edad = hoy.getFullYear() - birthDate.getFullYear();
-    const mes = hoy.getMonth() - birthDate.getMonth();
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const month = today.getMonth() - birthDate.getMonth();
   
-    if (mes < 0 || (mes === 0 && hoy.getDate() < birthDate.getDate())) {
-      edad--;
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
   
-    return edad >= 0 ? edad : undefined;
+    return age >= 0 ? age : undefined;
   }
   
   

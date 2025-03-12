@@ -17,7 +17,6 @@ export class LocalStorageService {
     if (typeof localStorage !== 'undefined') {
       return localStorage.getItem(key);
     } else {
-      //console.warn('localStorage no esta disponible')
       return null
     }
   }

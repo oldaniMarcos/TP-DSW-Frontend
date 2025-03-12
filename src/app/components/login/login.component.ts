@@ -19,8 +19,8 @@ export class LoginComponent {
 
   loginData = { usuario: '', password: ''}
   errorMessage: string = ''
-  clientes: Cliente[] = []
-  rol = ''
+  clients: Cliente[] = []
+  role = ''
 
   constructor(private clienteService: ClienteService
     , private router: Router
@@ -36,9 +36,9 @@ export class LoginComponent {
 
         this.authService.fetchDetails().subscribe((res) => {
 
-          this.rol = res.rol
+          this.role = res.rol
 
-          if (this.rol === 'admin') {      
+          if (this.role === 'admin') {      
               
             this.router.navigate(['/admin'])
           }
@@ -52,11 +52,7 @@ export class LoginComponent {
       () => {
         this.errorMessage = 'Credenciales Incorrectas'
       }
-    )
-
-    
-
-    
+    )    
   }
 
   ngOnInit(): void {
@@ -67,10 +63,10 @@ export class LoginComponent {
 
       this.authService.fetchDetails().subscribe((res) => {
 
-        const rol = res.rol
+        const role = res.rol
         
-        if (!rol) return
-        if (rol === 'admin') {
+        if (!role) return
+        if (role === 'admin') {
           this.router.navigate(['/admin']);
         } else {
           this.router.navigate(['/home']);
@@ -79,10 +75,10 @@ export class LoginComponent {
     }
   }
 
-  createCliente(cliente: Cliente): void {
-    this.clienteService.post(cliente).subscribe(
-      (newCliente: Cliente) => {
-        this.clientes.push(newCliente); 
+  createCliente(client: Cliente): void {
+    this.clienteService.post(client).subscribe(
+      (newClient: Cliente) => {
+        this.clients.push(newClient); 
       },
     );      
   }
